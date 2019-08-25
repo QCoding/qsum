@@ -14,4 +14,4 @@ install:
 script:
   - pytest --cov-report term-missing --cov=qsum qsum/
 after_success:
-  - codecov
+   - bash <(curl -s https://codecov.io/bash)
