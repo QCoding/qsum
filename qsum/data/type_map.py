@@ -1,8 +1,10 @@
-from qsum.data.to_binary import str_to_binary
-from qsum.data.wrappers import encode_wrapper
+from qsum.data.to_bytes import str_to_bytes, repr_to_bytes
 
-# maps a type to the function used to generate the binary data that will be hashed in to a checksum
-TYPE_TO_BINARY_FUNCTION = {
-    int: encode_wrapper(repr),
-    str: str_to_binary,
+# maps a type to the function used to generate the bytes data that will be hashed in to a checksum
+from qsum.data.to_static import bool_to_static
+
+TYPE_TO_BYTES_FUNCTION = {
+    int: repr_to_bytes,
+    str: str_to_bytes,
+    bool: bool_to_static,
 }

@@ -12,3 +12,8 @@ class QSumInvalidTypeException(QSumException):
 
 class QSumInvalidPrefixException(QSumException):
     pass
+
+
+class QSumStaticLookupMissException(QSumException):
+    """Based on the type value was expected to have a static checksum but it failed to"""
+    pass
