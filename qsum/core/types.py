@@ -20,7 +20,7 @@ class QSumInvalidPrefixException(QSumException):
 
 def type_to_prefix(obj_type):
     try:
-        TYPE_TO_PREFIX[obj_type]
+        return TYPE_TO_PREFIX[obj_type]
     except KeyError as e:
         raise QSumInvalidTypeException("{} type does not have a registered type".format(obj_type)) from e
 
