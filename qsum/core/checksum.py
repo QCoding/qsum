@@ -1,4 +1,4 @@
-from qsum.core.data import data_checksum
+from qsum.data import data_checksum
 from qsum.core.types import type_checksum
 
 
@@ -24,4 +24,6 @@ def checksum(obj, return_type='digest'):
     """
     # let's just call this once
     obj_type = type(obj)
+
+    # Combine the type with the data checksum
     return type_checksum(obj_type) + data_checksum(obj, obj_type)
