@@ -1,5 +1,5 @@
 from qsum.data import data_checksum
-from qsum.core.types import type_checksum, checksum_to_type
+from qsum.types.logic import checksum_to_type, type_checksum
 
 
 class Checksum(object):
