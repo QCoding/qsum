@@ -1,21 +1,9 @@
-from qsum.core.exceptions import QSumException
-
-TYPE_TO_PREFIX = {
-    int: b'\x00\x00',
-    str: b'\x00\x01',
-}
-
-PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}
-
-PREFIX_BYTES = 2
+from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException
+from qsum.types.type_map import PREFIX_BYTES, TYPE_TO_PREFIX, PREFIX_TO_TYPE
 
 
-class QSumInvalidTypeException(QSumException):
-    pass
-
-
-class QSumInvalidPrefixException(QSumException):
-    pass
+def all_prefix_types():
+    return TYPE_TO_PREFIX.keys()
 
 
 def type_to_prefix(obj_type):

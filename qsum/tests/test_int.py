@@ -1,5 +1,5 @@
 from qsum.core.checksum import checksum
-from qsum.core.types import checksum_to_type
+from qsum.types.logic import checksum_to_type
 from qsum.tests.constants import BYTES_IN_CHECKSUM
 
 # noinspection PyUnresolvedReferences

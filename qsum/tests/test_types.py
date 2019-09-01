@@ -1,8 +1,7 @@
 import pytest
 
 from qsum import checksum
-from qsum.core.types import QSumInvalidTypeException
-from qsum.data.logic import QSumInvalidDataTypeException
+from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidTypeException
 
 
 class Custom:

@@ -1,5 +1,5 @@
 from qsum.data import data_checksum
-from qsum.core.types import type_checksum
+from qsum.types.logic import checksum_to_type, type_checksum
 
 
 class Checksum(object):
@@ -10,6 +10,10 @@ class Checksum(object):
 
     def __repr__(self):
         return self.__value
+
+    @property
+    def type(self):
+        return checksum_to_type(self.__value)
 
 
 def checksum(obj, return_type='digest'):
