@@ -1,7 +1,7 @@
 import pytest
 
 from qsum import checksum
-from qsum.tests.constants import BYTES_IN_PREFIX
+from qsum.core.constants import BYTES_IN_PREFIX
 from qsum.types.logic import checksum_to_type
 from qsum.types.type_map import TYPE_TO_PREFIX
 

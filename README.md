@@ -27,7 +27,16 @@ Intuitive and extendable checksumming for python objects
 * Build a toolkit for using and manipulating checksums
 * Test it all and provide support for python 3.4, 3.5, 3.6, and 3.7
 
+## Relationship to `__hash__`
+* Respect the same contract as `__hash__` with regards to: 'The only required property is that objects which compare equal have the same hash value'
+* Do not salt hash values and maintain as much stability in checksums as possible throughout python sessions, python versions, and versions of this package
+* PYTHONHASHSEED should have no effect on checksums
+* Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
+* QSum represents all checksums as bytes but provides toolkits to view more human readable formats like hexdigests
+
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
 
 [Python Hashlib](https://docs.python.org/3/library/hashlib.html)
+
+[Python `__hash__`](https://docs.python.org/3/reference/datamodel.html#object.__hash__)

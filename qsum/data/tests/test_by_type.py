@@ -5,7 +5,7 @@ Generalized parametrized tests that should be added for every support type
 import pytest
 
 from qsum import checksum
-from qsum.tests.constants import BYTES_IN_CHECKSUM
+from qsum.core.constants import BYTES_IN_CHECKSUM
 
 
 @pytest.mark.parametrize('value', ["adsfsdfdgerrgdgdggddg", -353535, True])
