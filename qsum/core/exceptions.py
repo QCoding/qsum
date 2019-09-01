@@ -1,0 +1,2 @@
+class QSumException(Exception):
+    pass
