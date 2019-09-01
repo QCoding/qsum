@@ -4,6 +4,10 @@ from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.type_map import TYPE_TO_BINARY_FUNCTION
 
 
+def all_data_types():
+    return TYPE_TO_BINARY_FUNCTION.keys()
+
+
 def data_checksum(obj, obj_type):
     """Generate a checksum for the object data
 

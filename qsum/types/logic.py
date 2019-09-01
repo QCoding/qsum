@@ -2,6 +2,10 @@ from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixExce
 from qsum.types.type_map import PREFIX_BYTES, TYPE_TO_PREFIX, PREFIX_TO_TYPE
 
 
+def all_prefix_types():
+    return TYPE_TO_PREFIX.keys()
+
+
 def type_to_prefix(obj_type):
     try:
         return TYPE_TO_PREFIX[obj_type]
