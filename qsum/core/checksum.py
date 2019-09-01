@@ -3,7 +3,7 @@ from qsum.types.logic import checksum_to_type, type_checksum
 
 
 class Checksum(object):
-    """Class for decoding and combining checksums"""
+    """Class for working with checksums"""
 
     def __init__(self, value):
         self.__value = value
@@ -16,12 +16,11 @@ class Checksum(object):
         return checksum_to_type(self.__value)
 
 
-def checksum(obj, return_type='digest'):
+def checksum(obj):
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
         obj: object to generate a checksum for
-        return_type: return_type of the checksum
 
     Returns:
         string representing a checksum of the object
