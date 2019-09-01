@@ -1,11 +1,7 @@
 import hashlib
 
-from qsum.core.exceptions import QSumException
+from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.type_map import TYPE_TO_BINARY_FUNCTION
-
-
-class QSumInvalidDataTypeException(QSumException):
-    pass
 
 
 def data_checksum(obj, obj_type):

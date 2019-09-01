@@ -1,13 +1,5 @@
-from qsum.core.exceptions import QSumException
+from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException
 from qsum.types.type_map import PREFIX_BYTES, TYPE_TO_PREFIX, PREFIX_TO_TYPE
-
-
-class QSumInvalidTypeException(QSumException):
-    pass
-
-
-class QSumInvalidPrefixException(QSumException):
-    pass
 
 
 def type_to_prefix(obj_type):
