@@ -16,9 +16,6 @@ class Checksum(object):
     def __init__(self, checksum_bytes):
         self._checksum_bytes = checksum_bytes
 
-    def __repr__(self):
-        return self._checksum_bytes
-
     @property
     def type(self):
         return checksum_to_type(self._checksum_bytes)
