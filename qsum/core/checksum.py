@@ -5,8 +5,11 @@ from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
 
 
-class Checksum(object):
-    """Class for working with checksums"""
+class Checksum:
+    """Class for working with checksums
+
+    All manipulations of checksums should utilize this class
+    """
 
     @classmethod
     def checksum(cls, obj):
