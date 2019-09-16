@@ -1,8 +1,30 @@
 import binascii
+import sys
 
 from qsum.core.constants import BYTES_IN_PREFIX
 from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
+
+
+def checksum(obj):
+    """Generate a checksum for a given object based on it's type and contents
+
+    Args:
+        obj: object to generate a checksum for
+
+    Returns:
+        string representing a checksum of the object
+
+    >>> from qsum import checksum
+    >>> c = checksum('a nice word')
+    >>> len(c)
+    34
+    """
+    # let's just call this once
+    obj_type = type(obj)
+
+    # Combine the type with the data checksum
+    return type_checksum(obj_type) + data_checksum(obj, obj_type)
 
 
 class Checksum:
@@ -28,8 +50,10 @@ class Checksum:
         return self._checksum_bytes
 
     def hexdigest(self):
-        # TODO: for python 3.5 and above we could use: https://docs.python.org/3.7/library/stdtypes.html#bytes.hex
-        return binascii.hexlify(self._checksum_bytes).decode()
+        if sys.version_info < (3, 5):
+            return binascii.hexlify(self._checksum_bytes).decode()
+        else:
+            return self._checksum_bytes.hex()
 
     def __repr__(self):
         return 'Checksum({})'.format(self._checksum_bytes)
@@ -42,20 +66,4 @@ class Checksum:
         """Use the hex digest and get the type name for the nicer representation"""
         # The first BYTES_IN_PREFIX * 2 (since we're going from bytes to hex) are the type prefix
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
-        return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes), self.hexdigest()[BYTES_IN_PREFIX*2:])
-
-
-def checksum(obj):
-    """Generate a checksum for a given object based on it's type and contents
-
-    Args:
-        obj: object to generate a checksum for
-
-    Returns:
-        string representing a checksum of the object
-    """
-    # let's just call this once
-    obj_type = type(obj)
-
-    # Combine the type with the data checksum
-    return type_checksum(obj_type) + data_checksum(obj, obj_type)
+        return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes), self.hexdigest()[BYTES_IN_PREFIX * 2:])

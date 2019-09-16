@@ -1,12 +1,18 @@
-from qsum.data.to_bytes import str_to_bytes, repr_to_bytes, bytes_to_bytes, float_to_bytes
+from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, float_to_bytes
 
 # maps a type to the function used to generate the bytes data that will be hashed in to a checksum
-from qsum.data.to_static import bool_to_static
 
 TYPE_TO_BYTES_FUNCTION = {
-    int: repr_to_bytes,
+    # simply get the bytes from the repr of the object
+    int: bytes_from_repr,
+    bool: bytes_from_repr,
+
+    # string can be encoded in to bytes
     str: str_to_bytes,
-    bool: bool_to_static,
+
+    # bytes are bytes
     bytes: bytes_to_bytes,
+
+    # some custom logic required
     float: float_to_bytes,
 }
