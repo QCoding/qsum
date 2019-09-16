@@ -34,6 +34,10 @@ Intuitive and extendable checksumming for python objects
 * Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
 * QSum represents all checksums as bytes but provides toolkits to view more human readable formats like hexdigests
 
+## Checksum Design
+* The first two bytes of every checksum representing the type with functionality provided to extract it
+* The rest of the checksum in a digest of the byte representation of the data
+
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
 
