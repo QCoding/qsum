@@ -17,6 +17,12 @@ def test_str_uniqueness(range_2_16):
     assert len(value_checksums) == len(range_2_16)
 
 
+def test_float_uniqueness(range_2_16):
+    float_values = map(float, range_2_16)
+    value_checksums = set(map(checksum, float_values))
+    assert len(value_checksums) == len(range_2_16)
+
+
 def test_float_0_0_equality():
     assert checksum(0.0) == checksum(-0.0)
     assert checksum(-0.0) == checksum(0.0)
