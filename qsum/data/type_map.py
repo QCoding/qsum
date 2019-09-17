@@ -1,7 +1,6 @@
 import functools
 
-from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, float_to_bytes, \
-    bytes_from_repr_with_overrides
+from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides
 
 # maps a type to the function used to generate the bytes data that will be hashed in to a checksum
 
