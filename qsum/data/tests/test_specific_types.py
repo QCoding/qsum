@@ -23,6 +23,12 @@ def test_float_uniqueness(range_2_16):
     assert len(value_checksums) == len(range_2_16)
 
 
+def test_complex_uniqueness(range_2_16):
+    complex_values = [complex(re, im) for re, im in zip(range_2_16, reversed(range_2_16))]
+    complex_checksums = set(map(checksum, complex_values))
+    assert len(complex_checksums) == len(range_2_16)
+
+
 def test_float_0_0_equality():
     assert checksum(0.0) == checksum(-0.0)
     assert checksum(-0.0) == checksum(0.0)

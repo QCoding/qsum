@@ -15,5 +15,6 @@ TYPE_TO_PREFIX = {
     bool: b'\x00\x02',
     bytes: b'\x00\x03',
     float: b'\x00\x04',
+    complex: b'\x00\x05',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}
