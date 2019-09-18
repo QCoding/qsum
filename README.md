@@ -20,7 +20,7 @@ Intuitive and extendable checksumming for python objects
 </table>
 
 ## Goals
-* Provide a high level checksumming toolkit for python with builtin support for common types
+* Provide a high level checksumming toolkit for python with out of the box support for common types
 * Provide a framework for implementing customized checksumming logic
 * Produce high quality checksums with extraordinarily low collision rates
 * Build a toolkit for using and manipulating checksums
