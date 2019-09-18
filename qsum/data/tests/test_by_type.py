@@ -13,10 +13,9 @@ TYPE_TO_VALUE_EXAMPLES = {
     bool: True,
     bytes: b"\x0a02\x043b\x1721",
     float: 3535.2524,
+    complex: complex('145.2424-1.5j'),
 }
 
-# DO NOT USE A DICT HERE, we don't want to rely on cross type equality
-# TODO: use hex strings
 VALUE_TO_CHECKSUM_EXAMPLES = (
     # Bool
     (True, '00023cbc87c7681f34db4617feaa2c8801931bc5e42d8d0f560e756dd4cd92885f18'),
@@ -34,7 +33,10 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     # Float
     (31134.234, '000486a1d4952afbd6d7405835833f325b995e30afa4be7bfba10c966c65a7532d76'),
     (0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
-    (-0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7')
+    (-0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
+
+    # Complex
+    (complex('-5.1+17.0j'), '0005bd889c362cd9496951986d4901bc8301d725026178da790719b3809a7282700e')
 )
 
 

@@ -1,4 +1,4 @@
-"""Functions to convert various types in to bytes that can be hashed"""
+"""Generic functions to convert various types in to bytes that can be hashed"""
 
 
 def bytes_to_bytes(obj):
