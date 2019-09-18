@@ -20,11 +20,11 @@ Intuitive and extendable checksumming for python objects
 </table>
 
 ## Goals
-* Provide a high level checksumming toolkit for python with builtin support for common types
+* Provide a high level checksumming toolkit for python with out of the box support for common types
 * Provide a framework for implementing customized checksumming logic
 * Produce high quality checksums with extraordinarily low collision rates
 * Build a toolkit for using and manipulating checksums
-* Test it all and provide support for python 3.4, 3.5, 3.6, and 3.7
+* Test it all and provide support for python 3.5, 3.6, and 3.7
 
 ## Relationship to `__hash__`
 * Respect the same contract as `__hash__` with regards to: 'The only required property is that objects which compare equal have the same hash value'
@@ -32,6 +32,7 @@ Intuitive and extendable checksumming for python objects
 * PYTHONHASHSEED should have no effect on checksums
 * Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
 * Represent all checksums as bytes but provide toolkits to view more human readable formats like hexdigests
+* Permit the calculation of checksums on mutable objects
 
 ## Checksum Design
 * The first two bytes of every checksum representing the type with functionality provided to extract it

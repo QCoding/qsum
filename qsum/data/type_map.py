@@ -14,6 +14,7 @@ TYPE_TO_BYTES_FUNCTION = {
 
     # bytes are bytes
     bytes: bytes_to_bytes,
+    bytearray: bytes_to_bytes,
 
     # some custom logic required
     float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'}),
