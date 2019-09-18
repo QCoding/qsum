@@ -1,4 +1,6 @@
-from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, float_to_bytes
+import functools
+
+from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides
 
 # maps a type to the function used to generate the bytes data that will be hashed in to a checksum
 
@@ -14,5 +16,5 @@ TYPE_TO_BYTES_FUNCTION = {
     bytes: bytes_to_bytes,
 
     # some custom logic required
-    float: float_to_bytes,
+    float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'})
 }
