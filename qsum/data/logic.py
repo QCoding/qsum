@@ -1,4 +1,5 @@
 import hashlib
+import typing
 
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.type_map import TYPE_TO_BYTES_FUNCTION
@@ -8,7 +9,7 @@ def all_data_types():
     return TYPE_TO_BYTES_FUNCTION.keys()
 
 
-def bytes_to_digest(bytes_data):
+def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray]) -> bytes:
     hasher = hashlib.sha256()
     hasher.update(bytes_data)
     return hasher.digest()

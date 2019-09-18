@@ -16,5 +16,6 @@ TYPE_TO_PREFIX = {
     bytes: b'\x00\x03',
     float: b'\x00\x04',
     complex: b'\x00\x05',
+    bytearray: b'\x00\x06',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}
