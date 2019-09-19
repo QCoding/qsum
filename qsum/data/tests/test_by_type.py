@@ -50,7 +50,7 @@ def test_bytes_in_checksum(value):
 
 @pytest.mark.parametrize('value,expected_checksum', VALUE_TO_CHECKSUM_EXAMPLES)
 def test_expected_checksum(value, expected_checksum):
-    c = Checksum.checksum(value).hexdigest()
+    c = Checksum.checksum(value).hex()
     assert c == expected_checksum, "Got '{}'\nExpected '{}' for the checksum of '{}'".format(c, expected_checksum,
                                                                                              value)
 

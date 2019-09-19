@@ -9,6 +9,8 @@ table, please observe the following reserved groups:
 #
 PREFIX_BYTES = 2
 
+RESERVED_INVALID_PREFIX = b'\xff\xff'
+
 TYPE_TO_PREFIX = {
     int: b'\x00\x00',
     str: b'\x00\x01',

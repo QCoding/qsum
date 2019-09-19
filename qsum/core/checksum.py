@@ -49,15 +49,12 @@ class Checksum:
     def checksum_bytes(self):
         return self._checksum_bytes
 
-    def hexdigest(self):
-        if sys.version_info < (3, 5):
-            return binascii.hexlify(self._checksum_bytes).decode()
-        else:
-            return self._checksum_bytes.hex()
+    def hex(self):
+        return self._checksum_bytes.hex()
 
     def __repr__(self):
         """Use the hexdigest as repr is a string so the bytes are actually a less efficient representation"""
-        return 'Checksum({})'.format(self.hexdigest())
+        return 'Checksum({})'.format(self.hex())
 
     def __eq__(self, other):
         """Equality is determined by comparing the raw bytes of the checksum"""
@@ -67,4 +64,4 @@ class Checksum:
         """Use the hex digest and get the type name for the nicer representation"""
         # The first BYTES_IN_PREFIX * 2 (since we're going from bytes to hex) are the type prefix
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
-        return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__, self.hexdigest()[BYTES_IN_PREFIX * 2:])
+        return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__, self.hex()[BYTES_IN_PREFIX * 2:])
