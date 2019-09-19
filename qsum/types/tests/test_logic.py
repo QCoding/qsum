@@ -1,7 +1,9 @@
 import pytest
 
 from qsum import checksum
-from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidTypeException
+from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException
+from qsum.types.logic import prefix_to_type
+from qsum.types.type_map import RESERVED_INVALID_PREFIX
 
 
 class Custom:
@@ -12,3 +14,8 @@ class Custom:
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_invalid_type():
     c = checksum(Custom())
+
+
+@pytest.mark.xfail(raises=QSumInvalidPrefixException)
+def test_prefix_to_type():
+    prefix_to_type(RESERVED_INVALID_PREFIX)
