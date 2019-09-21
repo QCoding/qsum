@@ -1,4 +1,7 @@
-from qsum.core.constants import BYTES_IN_PREFIX
+import operator
+from functools import reduce
+
+from qsum.core.constants import BYTES_IN_PREFIX, SUPPORTED_CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES
 from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
 
@@ -20,8 +23,17 @@ def checksum(obj):
     # let's just call this once
     obj_type = type(obj)
 
-    # Combine the type with the data checksum
-    return type_checksum(obj_type) + data_checksum(obj, obj_type)
+    if obj_type in SUPPORTED_CONTAINER_TYPES:
+        if obj_type in MAPPABLE_CONTAINER_TYPES:
+            # compute the checksums of the elements of the mappable collection and build up a byte array
+            # we are capturing the type and data checksums of all of the elements here
+            checksum_bytes = reduce(operator.add, map(checksum, obj), bytearray())
+
+            # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
+            return type_checksum(obj_type) + data_checksum(checksum_bytes, bytes)
+    else:
+        # For a simple object combine the type with the data checksum
+        return type_checksum(obj_type) + data_checksum(obj, obj_type)
 
 
 class Checksum:

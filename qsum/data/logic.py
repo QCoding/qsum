@@ -3,6 +3,7 @@ import typing
 
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.type_map import TYPE_TO_BYTES_FUNCTION
+from qsum.types.type_map import PREFIX_BYTES
 
 
 def all_data_types():
@@ -33,3 +34,7 @@ def data_checksum(obj, obj_type):
         raise QSumInvalidDataTypeException("{} is not a recognized checksummable type".format(obj_type)) from e
 
     return bytes_to_digest(bytes_data_func(obj))
+
+def data_digest_from_checksum(checksum):
+    """Extract the data digest bytes from the checksum"""
+    return checksum[PREFIX_BYTES:]
