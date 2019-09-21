@@ -34,14 +34,15 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     # bytearray
     (bytearray(range(10)), '00061f825aa2f0020ef7cf91dfa30da4668d791c5d4824fc8e41354b89ec05795ab3'),
 
-     # float
-     (31134.234, '000486a1d4952afbd6d7405835833f325b995e30afa4be7bfba10c966c65a7532d76'),
-     (0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
-     (-0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
+    # float
+    (31134.234, '000486a1d4952afbd6d7405835833f325b995e30afa4be7bfba10c966c65a7532d76'),
+    (0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
+    (-0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
 
-     # complex
-     (complex('-5.1+17.0j'), '0005bd889c362cd9496951986d4901bc8301d725026178da790719b3809a7282700e')
-     )
+    # complex
+    (complex('-5.1+17.0j'), '0005bd889c362cd9496951986d4901bc8301d725026178da790719b3809a7282700e')
+)
+
 
 @pytest.mark.parametrize('value', TYPE_TO_VALUE_EXAMPLES.values())
 def test_bytes_in_checksum(value):

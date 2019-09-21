@@ -1,6 +1,3 @@
-import binascii
-import sys
-
 from qsum.core.constants import BYTES_IN_PREFIX
 from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
@@ -64,4 +61,5 @@ class Checksum:
         """Use the hex digest and get the type name for the nicer representation"""
         # The first BYTES_IN_PREFIX * 2 (since we're going from bytes to hex) are the type prefix
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
-        return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__, self.hex()[BYTES_IN_PREFIX * 2:])
+        return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__,
+                                        self.hex()[BYTES_IN_PREFIX * 2:])
