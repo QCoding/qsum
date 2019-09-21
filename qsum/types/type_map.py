@@ -12,6 +12,7 @@ PREFIX_BYTES = 2
 RESERVED_INVALID_PREFIX = b'\xff\xff'
 
 TYPE_TO_PREFIX = {
+    # \x00: builtin python types that represent individual objects
     int: b'\x00\x00',
     str: b'\x00\x01',
     bool: b'\x00\x02',
@@ -19,5 +20,8 @@ TYPE_TO_PREFIX = {
     float: b'\x00\x04',
     complex: b'\x00\x05',
     bytearray: b'\x00\x06',
+
+    # \x01: builtin python collections
+    tuple: b'\x01\x00',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}

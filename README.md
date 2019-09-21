@@ -31,12 +31,12 @@ Intuitive and extendable checksumming for python objects
 * Do not salt hash values and maintain as much stability in checksums as possible throughout python sessions, python versions, and versions of this package
 * PYTHONHASHSEED should have no effect on checksums
 * Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
-* Represent all checksums as bytes but provide toolkits to view more human readable formats like hexdigests
+* Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
 * Permit the calculation of checksums on mutable objects
 
 ## Checksum Design
-* The first two bytes of every checksum representing the type with functionality provided to extract it
-* The rest of the checksum in a digest of the byte representation of the data
+* The first two bytes of every checksum represent the type
+* The rest of the checksum in a digest of the byte representation of the object
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
