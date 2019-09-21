@@ -16,9 +16,10 @@ def checksum(obj):
         string representing a checksum of the object
 
     >>> from qsum import checksum
-    >>> c = checksum('a nice word')
-    >>> len(c)
-    34
+    >>> checksum('a nice word').hex()
+    '000177bdb96414925834c784c7497b14ca73a7ecead6d0542a5666bcb0598813bf9d'
+    >>> checksum(('a', 'nice', 'word')).hex()
+    '010086eb00a39e1bd72ae55e30fc9638b12803a495b0e45f54fba9438d60e3310e9a'
     """
     # let's just call this once
     obj_type = type(obj)

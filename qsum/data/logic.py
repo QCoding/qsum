@@ -35,6 +35,7 @@ def data_checksum(obj, obj_type):
 
     return bytes_to_digest(bytes_data_func(obj))
 
+
 def data_digest_from_checksum(checksum):
     """Extract the data digest bytes from the checksum"""
     return checksum[PREFIX_BYTES:]

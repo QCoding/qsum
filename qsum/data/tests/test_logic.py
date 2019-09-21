@@ -1,7 +1,9 @@
 import pytest
 
+from qsum import checksum
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data import data_checksum
+from qsum.data.logic import data_digest_from_checksum
 
 
 class Custom:
@@ -13,3 +15,8 @@ class Custom:
 def test_invalid_type():
     custom = Custom()
     c = data_checksum(custom, type(custom))
+
+
+def test_data_digest_from_checksum():
+    assert data_digest_from_checksum(
+        checksum('123')).hex() == 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3'
