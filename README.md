@@ -35,8 +35,8 @@ Intuitive and extendable checksumming for python objects
 * Permit the calculation of checksums on mutable objects
 
 ## Checksum Design
-* The first two bytes of every checksum representing the type with functionality provided to extract it
-* The rest of the checksum in a digest of the byte representation of the data
+* The first two bytes of every checksum represent the type
+* The rest of the checksum in a digest of the byte representation of the object
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
