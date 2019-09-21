@@ -1,7 +1,7 @@
 import operator
 from functools import reduce
 
-from qsum.core.constants import BYTES_IN_PREFIX, SUPPORTED_CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES
+from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES
 from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
 
@@ -23,7 +23,7 @@ def checksum(obj):
     # let's just call this once
     obj_type = type(obj)
 
-    if obj_type in SUPPORTED_CONTAINER_TYPES:
+    if obj_type in CONTAINER_TYPES:
         if obj_type in MAPPABLE_CONTAINER_TYPES:
             # compute the checksums of the elements of the mappable collection and build up a byte array
             # we are capturing the type and data checksums of all of the elements here
