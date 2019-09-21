@@ -15,6 +15,7 @@ TYPE_TO_VALUE_EXAMPLES = {
     float: 3535.2524,
     complex: complex('145.2424-1.5j'),
     bytearray: bytearray(10),
+    tuple: ('a','b','c','d','e'),
 }
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -40,7 +41,10 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     (-0.0, '00048aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7'),
 
     # complex
-    (complex('-5.1+17.0j'), '0005bd889c362cd9496951986d4901bc8301d725026178da790719b3809a7282700e')
+    (complex('-5.1+17.0j'), '0005bd889c362cd9496951986d4901bc8301d725026178da790719b3809a7282700e'),
+
+    # tuple
+    ((1,2,3), '010020b387396ae6fae6804de8566844ab008e5597825326ee53181515dbf5538570'),
 )
 
 
