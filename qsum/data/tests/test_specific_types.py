@@ -37,3 +37,11 @@ def test_float_0_0_equality():
 def test_tuple_changes():
     assert checksum((0, 1, 2)) != checksum((-1, 1, 2))
     assert checksum((0, 1, 2)) != checksum((2, 1, 0))
+
+
+def test_list_changes():
+    example_list = [1, 2, 3]
+    c_1 = checksum(example_list)
+    example_list.append(4)
+    c_2 = checksum(example_list)
+    assert c_1 != c_2
