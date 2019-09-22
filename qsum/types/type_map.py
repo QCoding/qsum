@@ -23,5 +23,6 @@ TYPE_TO_PREFIX = {
 
     # \x01: builtin python collections
     tuple: b'\x01\x00',
+    list: b'\x01\x01',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}
