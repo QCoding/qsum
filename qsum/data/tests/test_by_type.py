@@ -15,7 +15,8 @@ TYPE_TO_VALUE_EXAMPLES = {
     float: 3535.2524,
     complex: complex('145.2424-1.5j'),
     bytearray: bytearray(10),
-    tuple: ('a','b','c','d','e'),
+    tuple: ('a', 'b', 'c', 'd', 'e'),
+    list: [0.1, 0.2, 0.3]
 }
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -44,13 +45,21 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     (complex('-5.1+17.0j'), '0005bd889c362cd9496951986d4901bc8301d725026178da790719b3809a7282700e'),
 
     # tuple
-    ((1,2,3), '010020b387396ae6fae6804de8566844ab008e5597825326ee53181515dbf5538570'),
+    ((1, 2, 3), '010020b387396ae6fae6804de8566844ab008e5597825326ee53181515dbf5538570'),
+
+    # list
+    (['a', 'b', 'c'], '0101525f861900d34d6361808f22790f48bee9b28f7a09ac41ba7a545595ce795fff'),
 )
 
 
 @pytest.mark.parametrize('value', TYPE_TO_VALUE_EXAMPLES.values())
 def test_bytes_in_checksum(value):
     assert len(checksum(value)) == BYTES_IN_CHECKSUM, "Validate the number of bytes of the checksum"
+
+
+@pytest.mark.parametrize('obj_type,value', [(t, v) for t, v in TYPE_TO_VALUE_EXAMPLES.items()])
+def test_expected_type(obj_type, value):
+    assert type(value) == Checksum.checksum(value).type == obj_type
 
 
 @pytest.mark.parametrize('value,expected_checksum', VALUE_TO_CHECKSUM_EXAMPLES)
