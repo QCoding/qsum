@@ -7,6 +7,8 @@ table, please observe the following reserved groups:
 \x00: python builtin types
 """
 #
+from collections import deque
+
 PREFIX_BYTES = 2
 
 RESERVED_INVALID_PREFIX = b'\xff\xff'
@@ -21,8 +23,9 @@ TYPE_TO_PREFIX = {
     complex: b'\x00\x05',
     bytearray: b'\x00\x06',
 
-    # \x01: builtin python collections
+    # \x01: builtin python containers and collections
     tuple: b'\x01\x00',
     list: b'\x01\x01',
+    deque: b'\x01\x02',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}
