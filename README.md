@@ -44,3 +44,7 @@ Intuitive and extendable checksumming for python objects
 [Python Hashlib](https://docs.python.org/3/library/hashlib.html)
 
 [Python `__hash__`](https://docs.python.org/3/reference/datamodel.html#object.__hash__)
+
+## Useful Background Posts
+
+[What Happens When You Mess With Hashing In Python](https://www.asmeurer.com/blog/posts/what-happens-when-you-mess-with-hashing-in-python/)
