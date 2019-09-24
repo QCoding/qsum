@@ -6,14 +6,14 @@ from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
 
 
-def checksum(obj):
+def checksum(obj) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
         obj: object to generate a checksum for
 
     Returns:
-        string representing a checksum of the object
+        checksum bytes
 
     >>> from qsum import checksum
     >>> checksum('a nice word').hex()
@@ -21,9 +21,24 @@ def checksum(obj):
     >>> checksum(('a', 'nice', 'word')).hex()
     '010086eb00a39e1bd72ae55e30fc9638b12803a495b0e45f54fba9438d60e3310e9a'
     """
-    # let's just call this once
     obj_type = type(obj)
+    return _checksum(obj, obj_type, obj_type)
 
+
+def _checksum(obj, obj_type, checksum_type) ->bytes:
+    """Checksum the given object of the given type
+
+    Args:
+        obj: object to checksum
+        obj_type: the type of logic to use for checksumming the data
+        checksum_type:
+            the type to use for the checksum prefix, useful when the process of checksumming one object involves
+             transforming the data to another type but we want to return the original object type
+
+    Returns:
+        checksum bytes
+
+    """
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if obj_type in CONTAINER_TYPES:
         if obj_type in MAPPABLE_CONTAINER_TYPES:
@@ -32,10 +47,18 @@ def checksum(obj):
             checksum_bytes = reduce(operator.add, map(checksum, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
-            return type_checksum(obj_type) + data_checksum(checksum_bytes, bytes)
+            return type_checksum(checksum_type) + data_checksum(checksum_bytes, bytes)
+
+        if obj_type == dict:
+            # for dictionaries we need to stable sort the keys then get the values in that order
+            # when sorting the k,v tuples sorted should only be considering the k since no two keys should be equal
+            # if that is not the case then the odd behavior of sorting on the value will occur
+            # sorted(obj.items()) returns a list of tuples, which we already how to checksum
+            # obj_type=dict for the prefix, but we're pass list to the data_checksum as we've extracted list like data
+            return _checksum(sorted(obj.items()), list, obj_type)
     else:
         # For a simple object combine the type with the data checksum
-        return type_checksum(obj_type) + data_checksum(obj, obj_type)
+        return type_checksum(checksum_type) + data_checksum(obj, obj_type)
 
 
 class Checksum:
