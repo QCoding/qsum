@@ -8,19 +8,19 @@ import pytest
 from qsum import checksum, Checksum
 from qsum.core.constants import BYTES_IN_CHECKSUM
 
-TYPE_TO_VALUE_EXAMPLES = {
-    str: "adsfsdfdgerrgdgdggddg",
-    int: -353535,
-    bool: True,
-    bytes: b"\x0a02\x043b\x1721",
-    float: 3535.2524,
-    complex: complex('145.2424-1.5j'),
-    bytearray: bytearray(10),
-    tuple: ('a', 'b', 'c', 'd', 'e'),
-    list: [0.1, 0.2, 0.3],
-    deque: deque(['item_1', 'item_2', 'item_3']),
-    dict: {'a': 1, 'b': 2}
-}
+TYPE_TO_VALUE_EXAMPLES = (
+    (str, "adsfsdfdgerrgdgdggddg"),
+    (int, -353535),
+    (bool, True),
+    (bytes, b"\x0a02\x043b\x1721"),
+    (float, 3535.2524),
+    (complex, complex('145.2424-1.5j')),
+    (bytearray, bytearray(10)),
+    (tuple, ('a', 'b', 'c', 'd', 'e')),
+    (list, [0.1, 0.2, 0.3]),
+    (deque, deque(['item_1', 'item_2', 'item_3'])),
+    (dict, {'a': 1, 'b': 2}),
+)
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
     # bool
@@ -63,12 +63,12 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 )
 
 
-@pytest.mark.parametrize('value', TYPE_TO_VALUE_EXAMPLES.values())
+@pytest.mark.parametrize('value', [x for _, x in TYPE_TO_VALUE_EXAMPLES])
 def test_bytes_in_checksum(value):
     assert len(checksum(value)) == BYTES_IN_CHECKSUM, "Validate the number of bytes of the checksum"
 
 
-@pytest.mark.parametrize('obj_type,value', [(t, v) for t, v in TYPE_TO_VALUE_EXAMPLES.items()])
+@pytest.mark.parametrize('obj_type,value', TYPE_TO_VALUE_EXAMPLES)
 def test_expected_type(obj_type, value):
     assert type(value) == Checksum.checksum(value).type == obj_type
 
