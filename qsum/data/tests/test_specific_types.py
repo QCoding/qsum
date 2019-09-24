@@ -1,6 +1,6 @@
 """Some type specific tests that are hard to do in test_by_type"""
 
-from qsum.core.checksum import checksum
+from qsum.core.checksum import checksum, Checksum
 
 # noinspection PyUnresolvedReferences
 from qsum.tests.fixtures import *
@@ -45,3 +45,8 @@ def test_list_changes():
     example_list.append(4)
     c_2 = checksum(example_list)
     assert c_1 != c_2
+
+
+def test_nested_dict():
+    d = {'a': {'b': {'c': 1}}}
+    assert Checksum.checksum(d).type == dict
