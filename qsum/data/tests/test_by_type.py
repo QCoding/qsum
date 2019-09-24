@@ -19,6 +19,7 @@ TYPE_TO_VALUE_EXAMPLES = {
     tuple: ('a', 'b', 'c', 'd', 'e'),
     list: [0.1, 0.2, 0.3],
     deque: deque(['item_1', 'item_2', 'item_3']),
+    dict: {'a': 1, 'b': 2}
 }
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -53,7 +54,12 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     (['a', 'b', 'c'], '0101525f861900d34d6361808f22790f48bee9b28f7a09ac41ba7a545595ce795fff'),
 
     # deque
-    (deque([complex('-5.1+17.0j'), 21442, 12.1]), '0102be57788e518c3307f05cdf6959480b5268f37977e300465b799aadd82f246cfa')
+    (deque([complex('-5.1+17.0j'), 21442, 12.1]),
+     '0102be57788e518c3307f05cdf6959480b5268f37977e300465b799aadd82f246cfa'),
+
+    # dict
+    ({'a': [1, 2, 3], 'b': (1, 2, 3), 'c': deque([1, 2, 3])},
+     '01033e95026bed200c7b2794a5a55a0cbde7a73faa1c3722e1fcc947a767c2e8660e'),
 )
 
 

@@ -20,20 +20,22 @@ def checksum(obj) -> bytes:
     '000177bdb96414925834c784c7497b14ca73a7ecead6d0542a5666bcb0598813bf9d'
     >>> checksum(('a', 'nice', 'word')).hex()
     '010086eb00a39e1bd72ae55e30fc9638b12803a495b0e45f54fba9438d60e3310e9a'
+    >>> checksum({'a': 1, 'nice': 2, 'word': 3}).hex()
+    '01031868b5b50ea11c7c2fd16344ad1e3b518557f3f0ae5a658461fc732d4e49b92d'
     """
     obj_type = type(obj)
     return _checksum(obj, obj_type, obj_type)
 
 
-def _checksum(obj, obj_type, checksum_type) ->bytes:
-    """Checksum the given object of the given type
+def _checksum(obj, obj_type, checksum_type) -> bytes:
+    """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
         obj: object to checksum
         obj_type: the type of logic to use for checksumming the data
         checksum_type:
             the type to use for the checksum prefix, useful when the process of checksumming one object involves
-             transforming the data to another type but we want to return the original object type
+            transforming the data to another type but we want to return the original object type
 
     Returns:
         checksum bytes
