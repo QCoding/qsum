@@ -1,4 +1,3 @@
-import hashlib
 import typing
 
 from qsum.core.exceptions import QSumInvalidDataTypeException
@@ -10,20 +9,31 @@ def all_data_types():
     return TYPE_TO_BYTES_FUNCTION.keys()
 
 
-def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray]) -> bytes:
-    hasher = hashlib.sha256()
+def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo) -> bytes:
+    """Convert bytes in to message digest using the given hash algo
+
+    Args:
+        bytes_data:
+        hash_algo:  the hash algorithm to use to convert the bytes to a message digest
+
+    Returns:
+
+    """
+    hasher = hash_algo()
     hasher.update(bytes_data)
     return hasher.digest()
 
 
-def data_checksum(obj, obj_type):
+def data_checksum(obj, obj_type, hash_algo) -> bytes:
     """Generate a checksum for the object data
 
     Args:
-        obj:
-        obj_type:
+        obj: object to generate a checksum of
+        obj_type: the type of the object or the designed type of object methodology to checksum the data
+        hash_algo: the hash algorithm to use to convert the bytes to a message digest
 
     Returns:
+        a message digest representing the obj
 
     """
 
@@ -33,9 +43,15 @@ def data_checksum(obj, obj_type):
     except KeyError as e:
         raise QSumInvalidDataTypeException("{} is not a recognized checksummable type".format(obj_type)) from e
 
-    return bytes_to_digest(bytes_data_func(obj))
+    return bytes_to_digest(bytes_data_func(obj), hash_algo)
 
 
-def data_digest_from_checksum(checksum):
-    """Extract the data digest bytes from the checksum"""
+def data_digest_from_checksum(checksum) -> bytes:
+    """Extract the data digest bytes from the checksum
+
+    Args:
+        checksum:
+
+    Returns:
+    """
     return checksum[PREFIX_BYTES:]
