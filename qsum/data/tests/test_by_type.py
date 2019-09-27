@@ -6,7 +6,7 @@ from collections import deque
 import pytest
 
 from qsum import checksum, Checksum
-from qsum.core.constants import BYTES_IN_CHECKSUM
+from qsum.core.constants import DEFAULT_BYTES_IN_CHECKSUM
 
 TYPE_TO_VALUE_EXAMPLES = (
     (str, "adsfsdfdgerrgdgdggddg"),
@@ -69,7 +69,7 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
 @pytest.mark.parametrize('value', [x for _, x in TYPE_TO_VALUE_EXAMPLES])
 def test_bytes_in_checksum(value):
-    assert len(checksum(value)) == BYTES_IN_CHECKSUM, "Validate the number of bytes of the checksum"
+    assert len(checksum(value)) == DEFAULT_BYTES_IN_CHECKSUM, "Validate the number of bytes of the checksum"
 
 
 @pytest.mark.parametrize('obj_type,value', TYPE_TO_VALUE_EXAMPLES)

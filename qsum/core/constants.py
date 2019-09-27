@@ -5,10 +5,8 @@ from collections import deque
 DEFAULT_HASH_ALGO = hashlib.sha256
 
 BYTES_IN_PREFIX = 2
-
-# TODO: this depends on the hash algo
-BYTES_IN_DATA = 32
-BYTES_IN_CHECKSUM = BYTES_IN_PREFIX + BYTES_IN_DATA
+DEFAULT_BYTES_IN_DATA = 32
+DEFAULT_BYTES_IN_CHECKSUM = BYTES_IN_PREFIX + DEFAULT_BYTES_IN_DATA
 
 # containers we can simple apply a map to
 MAPPABLE_CONTAINER_TYPES = {tuple, list, deque}
