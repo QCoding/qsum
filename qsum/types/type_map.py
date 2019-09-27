@@ -22,6 +22,7 @@ TYPE_TO_PREFIX = {
     float: b'\x00\x04',
     complex: b'\x00\x05',
     bytearray: b'\x00\x06',
+    type: b'\x00\x07',
 
     # \x01: builtin python containers and collections
     tuple: b'\x01\x00',
