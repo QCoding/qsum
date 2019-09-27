@@ -1,1 +1,1 @@
-from qsum.core.checksum import checksum, Checksum
+from qsum.core.logic import checksum, Checksum
