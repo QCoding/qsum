@@ -1,6 +1,12 @@
+import hashlib
 from collections import deque
 
+# the default hash algo to use
+DEFAULT_HASH_ALGO = hashlib.sha256
+
 BYTES_IN_PREFIX = 2
+
+# TODO: this depends on the hash algo
 BYTES_IN_DATA = 32
 BYTES_IN_CHECKSUM = BYTES_IN_PREFIX + BYTES_IN_DATA
 

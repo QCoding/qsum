@@ -1,20 +1,23 @@
+import functools
+import hashlib
 import operator
 from functools import reduce
 
-from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES
+from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO
 from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
 from qsum.types.type_map import TYPE_TO_PREFIX
 
 
-def checksum(obj) -> bytes:
+def checksum(obj, hash_algo=DEFAULT_HASH_ALGO) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
-        obj: object to generate a checksum for
+        obj: object to generate a checksum of
+        hash_algo: the hash algorithm to use to convert the bytes to a message digest
 
     Returns:
-        checksum bytes
+        checksum bytes representing the object's type and a message digest of the data
 
     >>> from qsum import checksum
     >>> checksum('a nice word').hex()
@@ -25,10 +28,10 @@ def checksum(obj) -> bytes:
     '01031868b5b50ea11c7c2fd16344ad1e3b518557f3f0ae5a658461fc732d4e49b92d'
     """
     obj_type = type(obj)
-    return _checksum(obj, obj_type, obj_type)
+    return _checksum(obj, obj_type, obj_type, hash_algo)
 
 
-def _checksum(obj, obj_type, checksum_type) -> bytes:
+def _checksum(obj, obj_type, checksum_type, hash_algo) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
@@ -37,6 +40,7 @@ def _checksum(obj, obj_type, checksum_type) -> bytes:
         checksum_type:
             the type to use for the checksum prefix, useful when the process of checksumming one object involves
             transforming the data to another type but we want to return the original object type
+        hash_algo: the hash algorithm to use to convert the bytes to a message digest
 
     Returns:
         checksum bytes
@@ -45,12 +49,13 @@ def _checksum(obj, obj_type, checksum_type) -> bytes:
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if obj_type in CONTAINER_TYPES:
         if obj_type in MAPPABLE_CONTAINER_TYPES:
+            checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo)
             # compute the checksums of the elements of the mappable collection and build up a byte array
             # we are capturing the type and data checksums of all of the elements here
-            checksum_bytes = reduce(operator.add, map(checksum, obj), bytearray())
+            checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
-            return type_checksum(checksum_type) + data_checksum(checksum_bytes, bytes)
+            return type_checksum(checksum_type) + data_checksum(checksum_bytes, bytes, hash_algo)
 
         if obj_type == dict:
             # for dictionaries we need to stable sort the keys then get the values in that order
@@ -58,10 +63,10 @@ def _checksum(obj, obj_type, checksum_type) -> bytes:
             # if that is not the case then the odd behavior of sorting on the value will occur
             # sorted(obj.items()) returns a list of tuples, which we already how to checksum
             # obj_type=dict for the prefix, but we're pass list to the data_checksum as we've extracted list like data
-            return _checksum(sorted(obj.items()), list, obj_type)
+            return _checksum(sorted(obj.items()), list, obj_type, hash_algo)
     else:
         # For a simple object combine the type with the data checksum
-        return type_checksum(checksum_type) + data_checksum(obj, obj_type)
+        return type_checksum(checksum_type) + data_checksum(obj, obj_type, hash_algo)
 
 
 class Checksum:

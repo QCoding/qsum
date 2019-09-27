@@ -1,6 +1,7 @@
 import pytest
 
 from qsum import checksum
+from qsum.core.constants import DEFAULT_HASH_ALGO
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data import data_checksum
 from qsum.data.logic import data_digest_from_checksum
@@ -14,7 +15,7 @@ class Custom:
 @pytest.mark.xfail(raises=QSumInvalidDataTypeException, strict=True)
 def test_invalid_type():
     custom = Custom()
-    c = data_checksum(custom, type(custom))
+    c = data_checksum(custom, type(custom), hash_algo=DEFAULT_HASH_ALGO)
 
 
 def test_data_digest_from_checksum():
