@@ -3,8 +3,8 @@ For any given type we would like a fixed prefix value to guarantee types match w
 
 We reserve 2 bytes (65536 unique values) for the compact representation of the type tyhat can be looked up against this
 table, please observe the following reserved groups:
-
-\x00: python builtin types
+    \x00: builtin python types that represent individual objects
+    \x01: builtin python containers and collections
 """
 #
 from collections import deque
