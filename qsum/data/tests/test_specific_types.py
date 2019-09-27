@@ -1,6 +1,6 @@
 """Some type specific tests that are hard to do in test_by_type"""
 
-from qsum.core.checksum import checksum, Checksum
+from qsum.core.logic import checksum, Checksum
 
 # noinspection PyUnresolvedReferences
 from qsum.tests.fixtures import *

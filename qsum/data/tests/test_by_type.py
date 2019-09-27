@@ -20,6 +20,7 @@ TYPE_TO_VALUE_EXAMPLES = (
     (list, [0.1, 0.2, 0.3]),
     (deque, deque(['item_1', 'item_2', 'item_3'])),
     (dict, {'a': 1, 'b': 2}),
+    (type, str),
 )
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -60,6 +61,9 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     # dict
     ({'a': [1, 2, 3], 'b': (1, 2, 3), 'c': deque([1, 2, 3])},
      '01033e95026bed200c7b2794a5a55a0cbde7a73faa1c3722e1fcc947a767c2e8660e'),
+
+    # type (note we're just using int as an example type here)
+    (int, '0007f918a1a5caa5f9fe881535f5846de4549fb2809063c3fc932c258d864fc0c17c'),
 )
 
 

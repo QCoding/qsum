@@ -4,6 +4,7 @@ from functools import reduce
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES
 from qsum.data import data_checksum
 from qsum.types.logic import checksum_to_type, type_checksum
+from qsum.types.type_map import TYPE_TO_PREFIX
 
 
 def checksum(obj) -> bytes:
@@ -102,3 +103,15 @@ class Checksum:
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
         return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__,
                                         self.hex()[BYTES_IN_PREFIX * 2:])
+
+
+def is_supported_type(the_type: type) -> bool:
+    """
+    Determine if the given type is supported by checking against the prefix map
+    Args:
+        the_type: type to check
+
+    Returns:
+        Whether the given type is checksummable
+    """
+    return the_type in TYPE_TO_PREFIX

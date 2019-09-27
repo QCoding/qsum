@@ -8,6 +8,7 @@ TYPE_TO_BYTES_FUNCTION = {
     # simply get the bytes from the repr of the object
     int: bytes_from_repr,
     bool: bytes_from_repr,
+    type: bytes_from_repr,
 
     # string can be encoded in to bytes
     str: str_to_bytes,
