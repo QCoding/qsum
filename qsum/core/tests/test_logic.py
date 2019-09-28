@@ -1,3 +1,6 @@
+# pylint: disable=missing-function-docstring
+# pylint: disable=too-few-public-methods
+# pylint: disable=missing-class-docstring
 import hashlib
 
 import pytest

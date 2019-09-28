@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring
 from qsum.data.to_bytes import bytes_from_repr_with_overrides
 
 

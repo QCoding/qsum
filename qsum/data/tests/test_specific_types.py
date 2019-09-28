@@ -1,3 +1,8 @@
+# pylint: disable=redefined-outer-name
+# pylint: disable=missing-function-docstring
+# pylint: disable=wildcard-import
+# pylint: disable=unused-wildcard-import
+
 """Some type specific tests that are hard to do in test_by_type"""
 
 from qsum.core.logic import checksum, Checksum
@@ -48,5 +53,5 @@ def test_list_changes():
 
 
 def test_nested_dict():
-    d = {'a': {'b': {'c': 1}}}
-    assert Checksum.checksum(d).type == dict
+    my_dict = {'a': {'b': {'c': 1}}}
+    assert Checksum.checksum(my_dict).type == dict
