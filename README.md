@@ -17,6 +17,14 @@ Intuitive and extendable checksumming for python objects
     </a>
   </td>
 </tr>
+<tr>
+<td>License</td>
+<td>
+  <a href="https://opensource.org/licenses/MIT">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license" />
+  </a>
+</td>
+</tr>
 </table>
 
 ## Goals
