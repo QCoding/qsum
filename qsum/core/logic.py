@@ -1,5 +1,4 @@
 import functools
-import hashlib
 import operator
 from functools import reduce
 

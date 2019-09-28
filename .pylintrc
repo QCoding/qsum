@@ -60,6 +60,7 @@ confidence=
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
+# QSUM Override: disable missing-module-docstring as not all modules require docstrings
 disable=print-statement,
         parameter-unpacking,
         unpacking-in-except,
@@ -138,7 +139,8 @@ disable=print-statement,
         xreadlines-attribute,
         deprecated-sys-function,
         exception-escape,
-        comprehension-escape
+        comprehension-escape,
+        missing-module-docstring
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -309,7 +311,8 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=100
+# QSUM Override: match PyCharm
+max-line-length=120
 
 # Maximum number of lines in a module.
 max-module-lines=1000
