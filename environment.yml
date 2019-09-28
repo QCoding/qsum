@@ -1,0 +1,7 @@
+name: qsum_dev
+dependencies:
+  - python=3.7
+  - pylint
+  - pytest>=4.4.0
+  - pytest-cov
+  - pytest-xdist
