@@ -1,3 +1,5 @@
+# pylint: disable=missing-function-docstring
+# pylint: disable=unidiomatic-typecheck
 """
 Generalized parametrized tests that should be added for every support type
 """
@@ -79,9 +81,9 @@ def test_expected_type(obj_type, value):
 
 @pytest.mark.parametrize('value,expected_checksum', VALUE_TO_CHECKSUM_EXAMPLES)
 def test_expected_checksum(value, expected_checksum):
-    c = Checksum.checksum(value).hex()
-    assert c == expected_checksum, "Got '{}'\nExpected '{}' for the checksum of '{}'".format(c, expected_checksum,
-                                                                                             value)
+    checksum_bytes = Checksum.checksum(value).hex()
+    assert checksum_bytes == expected_checksum, "Got '{}'\nExpected '{}' for the checksum of '{}'".format(
+        checksum_bytes, expected_checksum, value)
 
 
 @pytest.mark.parametrize('values', [[True, False]])

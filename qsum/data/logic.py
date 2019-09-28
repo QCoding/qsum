@@ -6,6 +6,7 @@ from qsum.types.type_map import PREFIX_BYTES
 
 
 def all_data_types():
+    """Return all of the data types available"""
     return TYPE_TO_BYTES_FUNCTION.keys()
 
 
@@ -40,8 +41,8 @@ def data_checksum(obj, obj_type, hash_algo) -> bytes:
     # attempt to get the key and raise if we fail to, try and forgive style but raise a nicer exception then KeyError
     try:
         bytes_data_func = TYPE_TO_BYTES_FUNCTION[obj_type]
-    except KeyError as e:
-        raise QSumInvalidDataTypeException("{} is not a recognized checksummable type".format(obj_type)) from e
+    except KeyError as err:
+        raise QSumInvalidDataTypeException("{} is not a recognized checksummable type".format(obj_type)) from err
 
     return bytes_to_digest(bytes_data_func(obj), hash_algo)
 

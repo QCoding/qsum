@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name
+# pylint: disable=missing-function-docstring
 import pytest
 
 from qsum import checksum, Checksum

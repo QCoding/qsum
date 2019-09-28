@@ -1,3 +1,6 @@
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=too-few-public-methods
 import pytest
 
 from qsum import checksum
@@ -13,7 +16,7 @@ class Custom:
 
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_invalid_type():
-    c = checksum(Custom())
+    _ = checksum(Custom())
 
 
 @pytest.mark.xfail(raises=QSumInvalidPrefixException)

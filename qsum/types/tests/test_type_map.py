@@ -1,3 +1,4 @@
+# pylint: disable=missing-function-docstring
 import pytest
 
 from qsum import checksum
@@ -7,8 +8,8 @@ from qsum.types.type_map import TYPE_TO_PREFIX
 
 
 def test_types_prefix_bytes():
-    for v in TYPE_TO_PREFIX.values():
-        assert len(v) == BYTES_IN_PREFIX
+    for value in TYPE_TO_PREFIX.values():
+        assert len(value) == BYTES_IN_PREFIX
 
 
 @pytest.mark.parametrize('value,expected_type',

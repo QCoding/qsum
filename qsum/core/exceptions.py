@@ -1,19 +1,22 @@
 class QSumException(Exception):
-    pass
+    """Base exception class for QSum"""
 
 
 class QSumInvalidDataTypeException(QSumException):
-    pass
+    """Indicates an invalid data type was hit"""
 
 
 class QSumInvalidTypeException(QSumException):
-    pass
+    """Indicates an invalid type was hit"""
 
 
 class QSumInvalidPrefixException(QSumException):
-    pass
+    """Indicates an invalid type prefix was hit"""
 
 
 class QSumStaticLookupMissException(QSumException):
     """Based on the type value was expected to have a static checksum but it failed to"""
-    pass
+
+
+class QSumUnhandledContainerType(QSumException):
+    """An un-supported container type has been used"""

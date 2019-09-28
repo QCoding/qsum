@@ -1,3 +1,6 @@
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=too-few-public-methods
 import pytest
 
 from qsum import checksum
@@ -15,7 +18,7 @@ class Custom:
 @pytest.mark.xfail(raises=QSumInvalidDataTypeException, strict=True)
 def test_invalid_type():
     custom = Custom()
-    c = data_checksum(custom, type(custom), hash_algo=DEFAULT_HASH_ALGO)
+    _ = data_checksum(custom, type(custom), hash_algo=DEFAULT_HASH_ALGO)
 
 
 def test_data_digest_from_checksum():
