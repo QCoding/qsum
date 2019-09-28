@@ -16,3 +16,7 @@ class QSumInvalidPrefixException(QSumException):
 
 class QSumStaticLookupMissException(QSumException):
     """Based on the type value was expected to have a static checksum but it failed to"""
+
+
+class QSumUnhandledContainerType(QSumException):
+    """An un-supported container type has been used"""

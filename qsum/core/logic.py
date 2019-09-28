@@ -3,8 +3,9 @@ import operator
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO
+from qsum.core.exceptions import QSumUnhandledContainerType
 from qsum.data import data_checksum
-from qsum.types.logic import checksum_to_type, type_checksum
+from qsum.types.logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
 
 
@@ -54,7 +55,7 @@ def _checksum(obj, obj_type, checksum_type, hash_algo) -> bytes:
             checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
-            return type_checksum(checksum_type) + data_checksum(checksum_bytes, bytes, hash_algo)
+            return type_to_prefix(checksum_type) + data_checksum(checksum_bytes, bytes, hash_algo)
 
         if obj_type == dict:
             # for dictionaries we need to stable sort the keys then get the values in that order
@@ -63,9 +64,10 @@ def _checksum(obj, obj_type, checksum_type, hash_algo) -> bytes:
             # sorted(obj.items()) returns a list of tuples, which we already how to checksum
             # obj_type=dict for the prefix, but we're pass list to the data_checksum as we've extracted list like data
             return _checksum(sorted(obj.items()), list, obj_type, hash_algo)
-    else:
-        # For a simple object combine the type with the data checksum
-        return type_checksum(checksum_type) + data_checksum(obj, obj_type, hash_algo)
+        raise QSumUnhandledContainerType("{} has no checksumming implementation available".format(obj_type))
+
+    # For a simple object combine the type with the data checksum
+    return type_to_prefix(checksum_type) + data_checksum(obj, obj_type, hash_algo)
 
 
 class Checksum:
@@ -83,14 +85,17 @@ class Checksum:
         self._checksum_bytes = checksum_bytes
 
     @property
-    def type(self):
+    def type(self) -> type:
+        """type of the checksum"""
         return checksum_to_type(self._checksum_bytes)
 
     @property
-    def checksum_bytes(self):
+    def checksum_bytes(self) -> bytes:
+        """The raw bytes of the checksum"""
         return self._checksum_bytes
 
-    def hex(self):
+    def hex(self) -> str:
+        """The hex representation of the checksum"""
         return self._checksum_bytes.hex()
 
     def __repr__(self):
