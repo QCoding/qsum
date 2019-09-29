@@ -1,7 +1,7 @@
 import typing
 
 from qsum.core.exceptions import QSumInvalidDataTypeException
-from qsum.data.type_map import TYPE_TO_BYTES_FUNCTION
+from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION
 from qsum.types.type_map import PREFIX_BYTES
 
 

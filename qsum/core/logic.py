@@ -5,7 +5,7 @@ from functools import reduce
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO
 from qsum.core.exceptions import QSumUnhandledContainerType
 from qsum.data import data_checksum
-from qsum.types.logic import checksum_to_type, type_to_prefix
+from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
 
 

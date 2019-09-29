@@ -7,7 +7,7 @@ from qsum import checksum
 from qsum.core.constants import DEFAULT_HASH_ALGO
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data import data_checksum
-from qsum.data.logic import data_digest_from_checksum
+from qsum.data.data_logic import data_digest_from_checksum
 
 
 class Custom:
