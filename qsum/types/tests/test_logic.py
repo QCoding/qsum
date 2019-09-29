@@ -5,7 +5,7 @@ import pytest
 
 from qsum import checksum
 from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException
-from qsum.types.logic import prefix_to_type
+from qsum.types.type_logic import prefix_to_type
 from qsum.types.type_map import RESERVED_INVALID_PREFIX
 
 

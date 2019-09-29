@@ -1,6 +1,6 @@
 from qsum.core.constants import CONTAINER_TYPES
-from qsum.data.logic import all_data_types
-from qsum.types.logic import all_prefix_types
+from qsum.data.data_logic import all_data_types
+from qsum.types.type_logic import all_prefix_types
 
 
 def test_prefix_and_data_support():
