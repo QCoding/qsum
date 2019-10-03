@@ -18,6 +18,9 @@ TYPE_TO_BYTES_FUNCTION = {
     bytes: bytes_to_bytes,
     bytearray: bytes_to_bytes,
 
+    # some types already implement __bytes__
+    memoryview: bytes,
+
     # some custom logic required
     float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'}),
     complex: complex_to_bytes,
