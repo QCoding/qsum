@@ -9,6 +9,7 @@ TYPE_TO_BYTES_FUNCTION = {
     int: bytes_from_repr,
     bool: bytes_from_repr,
     type: bytes_from_repr,
+    range: bytes_from_repr,
 
     # string can be encoded in to bytes
     str: str_to_bytes,

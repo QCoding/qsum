@@ -29,5 +29,6 @@ TYPE_TO_PREFIX = {
     list: b'\x01\x01',
     deque: b'\x01\x02',
     dict: b'\x01\x03',
+    range: b'\x01\x04',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}
