@@ -23,6 +23,8 @@ TYPE_TO_VALUE_EXAMPLES = (
     (deque, deque(['item_1', 'item_2', 'item_3'])),
     (dict, {'a': 1, 'b': 2}),
     (type, str),
+    (range, range(0)),
+    (memoryview, memoryview(b'abc'))
 )
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -66,6 +68,12 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
     # type (note we're just using int as an example type here)
     (int, '0007f918a1a5caa5f9fe881535f5846de4549fb2809063c3fc932c258d864fc0c17c'),
+
+    # range
+    (range(0, 10, 3), '0008547cc0cc2d8a96bf35d2bee0a2df9cbf9bc7ffae2b87e95cf87d1903b914cf0d'),
+
+    # memoryview
+    (memoryview(b'def'), '0009cb8379ac2098aa165029e3938a51da0bcecfc008fd6795f401178647f96c5b34')
 )
 
 

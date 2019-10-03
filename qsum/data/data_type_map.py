@@ -9,6 +9,7 @@ TYPE_TO_BYTES_FUNCTION = {
     int: bytes_from_repr,
     bool: bytes_from_repr,
     type: bytes_from_repr,
+    range: bytes_from_repr,
 
     # string can be encoded in to bytes
     str: str_to_bytes,
@@ -16,6 +17,9 @@ TYPE_TO_BYTES_FUNCTION = {
     # bytes are bytes
     bytes: bytes_to_bytes,
     bytearray: bytes_to_bytes,
+
+    # some types already implement __bytes__
+    memoryview: bytes,
 
     # some custom logic required
     float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'}),

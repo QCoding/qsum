@@ -23,8 +23,10 @@ TYPE_TO_PREFIX = {
     complex: b'\x00\x05',
     bytearray: b'\x00\x06',
     type: b'\x00\x07',
+    range: b'\x00\x08',
+    memoryview: b'\x00\x09',
 
-    # \x01: builtin python containers and collections
+    # \x01: builtin python containers and collections that require custom logic to handle breaking open contents
     tuple: b'\x01\x00',
     list: b'\x01\x01',
     deque: b'\x01\x02',
