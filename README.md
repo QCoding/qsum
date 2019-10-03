@@ -40,7 +40,7 @@ Intuitive and extendable checksumming for python objects
 * PYTHONHASHSEED should have no effect on checksums
 * Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
 * Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
-* Permit the calculation of checksums on mutable objects
+* Base checksums on object contents and permit the calculation of checksums on mutable objects
 
 ## Checksum Design
 * The first two bytes of every checksum represent the type
@@ -52,7 +52,5 @@ Intuitive and extendable checksumming for python objects
 [Python Hashlib](https://docs.python.org/3/library/hashlib.html)
 
 [Python `__hash__`](https://docs.python.org/3/reference/datamodel.html#object.__hash__)
-
-## Useful Background Posts
 
 [What Happens When You Mess With Hashing In Python](https://www.asmeurer.com/blog/posts/what-happens-when-you-mess-with-hashing-in-python/)
