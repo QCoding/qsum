@@ -1,0 +1,3 @@
+Type,Custom Logic,Custom Bytes Logic,Notes,Issues
+range,No,No,"Since range is basically 3 ints and the repr of ints is safe, we can just use the repr.",
+type,No,No,consider some custom logic here but the module of a class is included in the repr of the type so the default approach seems like a resonable first cut,
