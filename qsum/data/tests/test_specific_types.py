@@ -55,3 +55,23 @@ def test_list_changes():
 def test_nested_dict():
     my_dict = {'a': {'b': {'c': 1}}}
     assert Checksum.checksum(my_dict).type == dict
+
+
+def test_unsorted_set():
+    set_1 = {'a', 'b', 'c'}
+    set_2 = {'b', 'a', 'c'}
+    set_3 = {'c', 'a', 'b'}
+    assert checksum(set_1) == checksum(set_2) == checksum(set_3)
+
+
+def test_unsorted_dict():
+    dict_1 = {'a': 1, 'b': 2, 'c': 3}
+    dict_2 = {'b': 2, 'a': 1, 'c': 3}
+    dict_3 = {'c': 3, 'a': 1, 'b': 2}
+    assert checksum(dict_1) == checksum(dict_2) == checksum(dict_3)
+
+
+def test_nested_changing_dict():
+    dict_1 = {'a': {'b': 2}}
+    dict_2 = {'a': {'b': 3}}
+    assert checksum(dict_1) != checksum(dict_2)

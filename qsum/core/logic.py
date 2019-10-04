@@ -2,7 +2,8 @@ import functools
 import operator
 from functools import reduce
 
-from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO
+from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
+    UNORDERED_CONTAINER_TYPES
 from qsum.core.exceptions import QSumUnhandledContainerType
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
@@ -25,7 +26,7 @@ def checksum(obj, hash_algo=DEFAULT_HASH_ALGO) -> bytes:
     >>> checksum(('a', 'nice', 'word')).hex()
     '010086eb00a39e1bd72ae55e30fc9638b12803a495b0e45f54fba9438d60e3310e9a'
     >>> checksum({'a': 1, 'nice': 2, 'word': 3}).hex()
-    '01031868b5b50ea11c7c2fd16344ad1e3b518557f3f0ae5a658461fc732d4e49b92d'
+    '0103ed71fada8381439167d30ca1310e87af60e8f41e1fa320e0f626775f5b8cd908'
     """
     obj_type = type(obj)
     return _checksum(obj, obj_type, obj_type, hash_algo)
@@ -50,20 +51,27 @@ def _checksum(obj, obj_type, checksum_type, hash_algo) -> bytes:
     if obj_type in CONTAINER_TYPES:
         if obj_type in MAPPABLE_CONTAINER_TYPES:
             checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo)
-            # compute the checksums of the elements of the mappable collection and build up a byte array
-            # we are capturing the type and data checksums of all of the elements here
-            checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
+            if obj_type in UNORDERED_CONTAINER_TYPES:
+                # compute the checksums and sort the checksums as we don't trust native python sorting across types
+                checksum_bytes = reduce(operator.add, sorted(map(checksum_func_with_args, obj)), bytearray())
+            else:
+                # compute the checksums of the elements of the mappable collection and build up a byte array
+                # we are capturing the type and data checksums of all of the elements here
+                # container types that hit this logic should have a predicable iteration order
+                checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
             return type_to_prefix(checksum_type) + data_checksum(checksum_bytes, bytes, hash_algo)
 
         if obj_type == dict:
-            # for dictionaries we need to stable sort the keys then get the values in that order
-            # when sorting the k,v tuples sorted should only be considering the k since no two keys should be equal
-            # if that is not the case then the odd behavior of sorting on the value will occur
-            # sorted(obj.items()) returns a list of tuples, which we already how to checksum
-            # obj_type=dict for the prefix, but we're pass list to the data_checksum as we've extracted list like data
-            return _checksum(sorted(obj.items()), list, obj_type, hash_algo)
+            # obj.items() returns dict_items which appear list like but in fact we don't want to trust the stability
+            # of the order of the items, so let's treat it like an unordered set (no need to actually make it a set,
+            # in fact that may cause issues if the values aren't hashable, i.e. dict of dicts) and use the sort of the
+            # checksums as our method for stabilizing the overall checksum of the object
+            # for python 3.7 this means that even though dicts are ordered, we will ignore that order, this is a design
+            # decision and may need to be re-visited/potentially have an option to pick the methodology
+            return _checksum(obj.items(), set, obj_type, hash_algo=hash_algo)
+
         raise QSumUnhandledContainerType("{} has no checksumming implementation available".format(obj_type))
 
     # For a simple object combine the type with the data checksum
