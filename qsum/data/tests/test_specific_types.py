@@ -75,3 +75,9 @@ def test_nested_changing_dict():
     dict_1 = {'a': {'b': 2}}
     dict_2 = {'a': {'b': 3}}
     assert checksum(dict_1) != checksum(dict_2)
+
+
+def test_multi_key_type_dict():
+    dict_1 = {'a': 10, 2: 20, 3.0: 30}
+    dict_2 = {2: 20, 3.0: 30, 'a': 10}
+    assert checksum(dict_1) == checksum(dict_2)
