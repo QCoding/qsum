@@ -1,6 +1,4 @@
-# pylint: disable=missing-function-docstring
-# pylint: disable=missing-class-docstring
-# pylint: disable=too-few-public-methods
+# pylint: disable=missing-function-docstring,missing-class-docstring,too-few-public-methods
 import pytest
 
 from qsum import checksum

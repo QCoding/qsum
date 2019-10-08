@@ -1,5 +1,4 @@
-# pylint: disable=missing-function-docstring
-# pylint: disable=unidiomatic-typecheck
+# pylint: disable=missing-function-docstring,unidiomatic-typecheck
 """
 Generalized parametrized tests that should be added for every support type
 """
@@ -27,6 +26,7 @@ TYPE_TO_VALUE_EXAMPLES = (
     (memoryview, memoryview(b'abc')),
     (set, set([1, 2, 3])),
     (frozenset, frozenset([3, 4.3, 5])),
+    (type(None), None),
 )
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -82,6 +82,9 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
     # frozenset
     (frozenset(['a', b'\xff', False]), '01052051878e48ce6d4925bd329fb4e6cb3147fc0f06edd5dc32a020f04a10193797'),
+
+    # None
+    (None, '000adc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91')
 )
 
 

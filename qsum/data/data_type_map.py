@@ -10,6 +10,7 @@ TYPE_TO_BYTES_FUNCTION = {
     bool: bytes_from_repr,
     type: bytes_from_repr,
     range: bytes_from_repr,
+    type(None): bytes_from_repr,
 
     # string can be encoded in to bytes
     str: str_to_bytes,
