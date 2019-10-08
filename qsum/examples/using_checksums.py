@@ -2,6 +2,7 @@ from qsum import checksum
 
 
 def main():
+    """Example of using checksums to determine if the contents of a dict have changed """
     sub_dict = {1: 42, 2: 82}
     big_dict = {
         'a': sub_dict,
