@@ -1,4 +1,5 @@
 import functools
+import typing
 
 from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides
 from qsum.data.to_bytes_custom import complex_to_bytes
@@ -25,4 +26,4 @@ TYPE_TO_BYTES_FUNCTION = {
     # some custom logic required
     float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'}),
     complex: complex_to_bytes,
-}
+}  # type: typing.Dict[typing.Type, typing.Callable]

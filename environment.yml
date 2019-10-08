@@ -6,3 +6,6 @@ dependencies:
   - pytest-cov
   - pytest-pylint
   - pytest-xdist
+  - pip:
+    - pytest-mypy
+
