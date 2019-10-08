@@ -24,7 +24,9 @@ TYPE_TO_VALUE_EXAMPLES = (
     (dict, {'a': 1, 'b': 2}),
     (type, str),
     (range, range(0)),
-    (memoryview, memoryview(b'abc'))
+    (memoryview, memoryview(b'abc')),
+    (set, set([1, 2, 3])),
+    (frozenset, frozenset([3, 4.3, 5])),
 )
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -64,7 +66,7 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
     # dict
     ({'a': [1, 2, 3], 'b': (1, 2, 3), 'c': deque([1, 2, 3])},
-     '01033e95026bed200c7b2794a5a55a0cbde7a73faa1c3722e1fcc947a767c2e8660e'),
+     '010329703d1740514032aee0de4de342933fb231822ca62edb413d31f77bf1e32e32'),
 
     # type (note we're just using int as an example type here)
     (int, '0007f918a1a5caa5f9fe881535f5846de4549fb2809063c3fc932c258d864fc0c17c'),
@@ -73,7 +75,13 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     (range(0, 10, 3), '0008547cc0cc2d8a96bf35d2bee0a2df9cbf9bc7ffae2b87e95cf87d1903b914cf0d'),
 
     # memoryview
-    (memoryview(b'def'), '0009cb8379ac2098aa165029e3938a51da0bcecfc008fd6795f401178647f96c5b34')
+    (memoryview(b'def'), '0009cb8379ac2098aa165029e3938a51da0bcecfc008fd6795f401178647f96c5b34'),
+
+    # set
+    ({1, 1.1, complex('1.2')}, '0104b96e73b739fbcf74e0f2d385df2ed8003b0eaaa4a9404e7ed0e8361641fb4bfd'),
+
+    # frozenset
+    (frozenset(['a', b'\xff', False]), '01052051878e48ce6d4925bd329fb4e6cb3147fc0f06edd5dc32a020f04a10193797'),
 )
 
 
