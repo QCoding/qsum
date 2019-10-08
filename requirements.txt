@@ -1,5 +1,6 @@
 pylint
 pytest>=4.4.0
 pytest-cov
+pytest-mypy
 pytest-pylint
 pytest-xdist
