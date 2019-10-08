@@ -1,5 +1,6 @@
 import functools
 import operator
+import typing
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
@@ -93,7 +94,7 @@ class Checksum:
         self._checksum_bytes = checksum_bytes
 
     @property
-    def type(self) -> type:
+    def type(self) -> typing.Type:
         """type of the checksum"""
         return checksum_to_type(self._checksum_bytes)
 
