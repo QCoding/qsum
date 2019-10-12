@@ -20,3 +20,7 @@ class QSumStaticLookupMissException(QSumException):
 
 class QSumUnhandledContainerType(QSumException):
     """An un-supported container type has been used"""
+
+
+class QSumInvalidChecksum(QSumException):
+    """Where a checksum like object was expected an invalid object was given"""

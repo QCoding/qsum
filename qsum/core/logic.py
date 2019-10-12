@@ -11,7 +11,7 @@ from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
 
 
-def checksum(obj, hash_algo=DEFAULT_HASH_ALGO) -> bytes:
+def checksum(obj, hash_algo: typing.Callable = DEFAULT_HASH_ALGO) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -33,7 +33,7 @@ def checksum(obj, hash_algo=DEFAULT_HASH_ALGO) -> bytes:
     return _checksum(obj, obj_type, obj_type, hash_algo)
 
 
-def _checksum(obj, obj_type, checksum_type, hash_algo) -> bytes:
+def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: typing.Callable) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
@@ -83,15 +83,39 @@ class Checksum:
     """Class for working with checksums
 
     All manipulations of checksums should utilize this class
+    >>> Checksum('foo').hex()
+    '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+    >>> Checksum.from_checksum(checksum('foo')).hex()
+    '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+    >>> Checksum('foo') == '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+    True
     """
 
     @classmethod
-    def checksum(cls, obj):
-        """Generate the checksum and wrap in a Checksum object"""
-        return Checksum(checksum(obj))
+    def checksum(cls, obj: typing.Any, **kwargs):
+        """Create a checksum class from a given object with the given kwawrgs passed to the checksum function"""
+        return Checksum(obj, is_checksum=False, **kwargs)
 
-    def __init__(self, checksum_bytes):
-        self._checksum_bytes = checksum_bytes
+    @classmethod
+    def from_checksum(cls, obj):
+        """Wrap an existing checksum bytes in an object"""
+        return Checksum(obj, is_checksum=True)
+
+    def __init__(self, obj: typing.Any, is_checksum: bool = False, **kwargs):
+        """Checksum the given obj using the given kwargs and set the result to checksum bytes
+
+        Args:
+            obj: object to checksum
+            is_checksum: whether the obj being passed is already a checksum
+            **kwargs: kwargs to pass to checksum
+        """
+
+        # if the obj is already a checksum
+        if is_checksum:
+            self._checksum_bytes = obj
+        else:
+            # compute the checksum with the given args
+            self._checksum_bytes = checksum(obj, **kwargs)
 
     @property
     def type(self) -> typing.Type:
@@ -113,6 +137,14 @@ class Checksum:
 
     def __eq__(self, other):
         """Equality is determined by comparing the raw bytes of the checksum"""
+        if isinstance(other, bytes):
+            # if comparing to raw bytes then just compare to the checksum_bytes
+            return self._checksum_bytes == other
+        if isinstance(other, str):
+            # if comparing to a string use the hex
+            return self.hex() == other
+
+        # otherwise assume we have been given a Checksum like object and try to pull the checksum_bytes from it
         return self._checksum_bytes == other.checksum_bytes
 
     def __str__(self):

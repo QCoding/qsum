@@ -1,6 +1,6 @@
 import typing
 
-from qsum.core.exceptions import QSumInvalidDataTypeException
+from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
 from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION
 from qsum.types.type_map import PREFIX_BYTES
 
@@ -47,12 +47,18 @@ def data_checksum(obj: typing.Any, obj_type, hash_algo) -> bytes:
     return bytes_to_digest(bytes_data_func(obj), hash_algo)
 
 
-def data_digest_from_checksum(checksum) -> bytes:
+def data_digest_from_checksum(checksum: typing.Union[bytes, str]) -> typing.Union[bytes, str]:
     """Extract the data digest bytes from the checksum
 
     Args:
-        checksum:
+        checksum: checksum to extra the data digest from
 
     Returns:
+        just the data digest portion of the checksum
     """
-    return checksum[PREFIX_BYTES:]
+    if isinstance(checksum, bytes):
+        return checksum[PREFIX_BYTES:]
+    if isinstance(checksum, str):
+        # if hex then the type prefix is twice as long
+        return checksum[PREFIX_BYTES * 2:]
+    raise QSumInvalidChecksum("{} is not a valid checksum type".format(checksum))
