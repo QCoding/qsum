@@ -1,22 +1,22 @@
 """Generic functions to convert various types in to bytes that can be hashed"""
 
 
-def bytes_to_bytes(obj):
+def bytes_to_bytes(obj) -> bytes:
     """Identity function"""
     return obj
 
 
-def str_to_bytes(obj):
+def str_to_bytes(obj) -> bytes:
     """Convenience method around encode"""
     return obj.encode()
 
 
-def bytes_from_repr(obj):
+def bytes_from_repr(obj) -> bytes:
     """Encode the repr string of an object in to bytes"""
     return repr(obj).encode()
 
 
-def bytes_from_repr_with_overrides(obj, value_overrides=None, repr_overrides=None):
+def bytes_from_repr_with_overrides(obj, value_overrides=None, repr_overrides=None) -> bytes:
     """
     bytes_from_repr but with the ability to specify overrides
 
