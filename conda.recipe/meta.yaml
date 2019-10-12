@@ -1,0 +1,26 @@
+package:
+  name: qsum
+  version: 0.0.1
+source:
+  git_url: ../
+requirements:
+  build:
+    - python
+    - setuptools
+
+  run:
+    - python >= 3.5.0
+
+test:
+  requires:
+    pytest>=4.4.0
+    pytest-cov
+    pytest-mypy
+    pytest-pylint
+    pytest-xdist
+  commands:
+    - pytest --cov-report term-missing --cov=qsum -n=auto qsum/
+
+  about:
+    home: https://github.com/QCoding/qsum
+    license: MIT
