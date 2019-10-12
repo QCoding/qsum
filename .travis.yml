@@ -1,5 +1,8 @@
 language: python
 cache: pip
+git:
+  quiet: true
+  submodules: false
 python:
   - "3.5"
   - "3.6"      # current default Python on Travis CI
