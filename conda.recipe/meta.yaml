@@ -3,25 +3,37 @@
 package:
   name: qsum
   version: {{data.get('version')}}
+
 source:
   git_url: ../
+
+build:
+  noarch: python
+  number: 0
+  script: python -m pip install --no-deps --ignore-installed .
+
 requirements:
   build:
     - python >=3.5.0
     - setuptools
 
   run:
-    - python >=3.5.0
+    - python >=3.5
 
 test:
   requires:
     - pytest >=4.4.0
-    - pytest-cov
     - pytest-pylint
-    - pytest-xdist
+  imports:
+    - qsum
+    - qsum.core
+    - qsum.data
+    - qsum.types
+    - qsum.core.logic
+    - qsum.core.constants
   commands:
-    - pytest --cov-report term-missing --cov=qsum -n=auto qsum/
+    - pytest
 
-  about:
-    license: MIT
-    home: {{data.get('url')}}
+about:
+  license: MIT
+  home: {{data.get('url')}}
