@@ -83,6 +83,12 @@ class Checksum:
     """Class for working with checksums
 
     All manipulations of checksums should utilize this class
+    >>> Checksum('foo').hex()
+    '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+    >>> Checksum.from_checksum(checksum('foo')).hex()
+    '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+    >>> Checksum('foo') == '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
+    True
     """
 
     @classmethod
