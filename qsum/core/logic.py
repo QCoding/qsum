@@ -10,8 +10,11 @@ from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
 
+# a checksum can be represented by a Checksum object, bytes or a hexidecimal string
+ChecksumType = typing.Union['Checksum', bytes, str]
 
-def checksum(obj, hash_algo: typing.Callable = DEFAULT_HASH_ALGO) -> bytes:
+
+def checksum(obj: typing.Any, hash_algo: typing.Callable = DEFAULT_HASH_ALGO) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -92,12 +95,12 @@ class Checksum:
     """
 
     @classmethod
-    def checksum(cls, obj: typing.Any, **kwargs):
+    def checksum(cls, obj: typing.Any, **kwargs) -> 'Checksum':
         """Create a checksum class from a given object with the given kwawrgs passed to the checksum function"""
         return Checksum(obj, is_checksum=False, **kwargs)
 
     @classmethod
-    def from_checksum(cls, obj):
+    def from_checksum(cls, obj) -> 'Checksum':
         """Wrap an existing checksum bytes in an object"""
         return Checksum(obj, is_checksum=True)
 
@@ -131,11 +134,11 @@ class Checksum:
         """The hex representation of the checksum"""
         return self._checksum_bytes.hex()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Use the hexdigest as repr is a string so the bytes are actually a less efficient representation"""
         return 'Checksum({})'.format(self.hex())
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Equality is determined by comparing the raw bytes of the checksum"""
         if isinstance(other, bytes):
             # if comparing to raw bytes then just compare to the checksum_bytes
@@ -147,7 +150,7 @@ class Checksum:
         # otherwise assume we have been given a Checksum like object and try to pull the checksum_bytes from it
         return self._checksum_bytes == other.checksum_bytes
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Use the hex digest and get the type name for the nicer representation"""
         # The first BYTES_IN_PREFIX * 2 (since we're going from bytes to hex) are the type prefix
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
