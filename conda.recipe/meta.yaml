@@ -1,6 +1,8 @@
+{% set data = load_setup_py_data() %}
+
 package:
   name: qsum
-  version: 0.0.1
+  version: {{data.get('version')}}
 source:
   git_url: ../
 requirements:
@@ -21,5 +23,5 @@ test:
     - pytest --cov-report term-missing --cov=qsum -n=auto qsum/
 
   about:
-    home: https://github.com/QCoding/qsum
     license: MIT
+    home: {{data.get('url')}}
