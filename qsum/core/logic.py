@@ -11,7 +11,7 @@ from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
 
 
-def checksum(obj, hash_algo: typing.Callable=DEFAULT_HASH_ALGO) -> bytes:
+def checksum(obj, hash_algo: typing.Callable = DEFAULT_HASH_ALGO) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -86,9 +86,14 @@ class Checksum:
     """
 
     @classmethod
+    def checksum(cls, obj: typing.Any, **kwargs):
+        """Create a checksum class from a given object with the given kwawrgs passed to the checksum function"""
+        return Checksum(obj, is_checksum=False)
+
+    @classmethod
     def from_checksum(cls, obj):
         """Wrap an existing checksum bytes in an object"""
-        return Checksum(checksum(obj, is_checksum=True))
+        return Checksum(obj, is_checksum=True)
 
     def __init__(self, obj: typing.Any, is_checksum: bool = False, **kwargs):
         """Checksum the given obj using the given kwargs and set the result to checksum bytes
