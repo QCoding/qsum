@@ -6,12 +6,12 @@ python:
   - "3.7"
 # whenever you want to re-create the pip environment from scratch
 env:
-  CACHE_VERSION=2
+  CACHE_VERSION=3
 # command to install dependencies
 install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - pytest --cov-report term-missing --cov=qsum -n=auto qsum/
+  - pytest --cov-report term-missing --cov=qsum -n=auto --mypy --pylint qsum/
 after_success:
    - bash <(curl -s https://codecov.io/bash) -Z
