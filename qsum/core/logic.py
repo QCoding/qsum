@@ -88,7 +88,7 @@ class Checksum:
     @classmethod
     def checksum(cls, obj: typing.Any, **kwargs):
         """Create a checksum class from a given object with the given kwawrgs passed to the checksum function"""
-        return Checksum(obj, is_checksum=False)
+        return Checksum(obj, is_checksum=False, **kwargs)
 
     @classmethod
     def from_checksum(cls, obj):
@@ -131,6 +131,14 @@ class Checksum:
 
     def __eq__(self, other):
         """Equality is determined by comparing the raw bytes of the checksum"""
+        if isinstance(other, bytes):
+            # if comparing to raw bytes then just compare to the checksum_bytes
+            return self._checksum_bytes == other
+        if isinstance(other, str):
+            # if comparing to a string use the hex
+            return self.hex() == other
+
+        # otherwise assume we have been given a Checksum like object and try to pull the checksum_bytes from it
         return self._checksum_bytes == other.checksum_bytes
 
     def __str__(self):
