@@ -38,7 +38,7 @@ test:
     - qsum.core.logic
     - qsum.core.constants
   commands:
-    - python -c "import qsum; qsum.test()"
+    - python -c "import qsum; qsum.test(use_default_args=False)"
 
 about:
   license_file: LICENSE
