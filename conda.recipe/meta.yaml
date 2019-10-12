@@ -45,4 +45,4 @@ about:
   license: {{data.get('license')}}
   home: {{data.get('url')}}
   description: {{data.get('description')}}
-  summary: Python Checksumming
+  summary: {{data.get('summary')}}

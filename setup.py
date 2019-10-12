@@ -18,6 +18,7 @@ def setup_package():
         packages=packages,
         url="https://github.com/QCoding/qsum",
         description="Intuitive and extendable checksumming for python objects",
+        summary="Python Checksumming Library",
         python_requires='>=3.5',
     )
 
