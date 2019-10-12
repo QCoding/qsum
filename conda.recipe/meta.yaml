@@ -17,11 +17,16 @@ requirements:
   build:
     - python >=3.5.0
     - setuptools
-
   run:
+    - python >=3.5
+  host:
     - python >=3.5
 
 test:
+  files:
+    - ../pytest.ini
+    - ../mypy.ini
+    - ../.pylintrc
   requires:
     - pytest >=4.4.0
     - pytest-pylint
@@ -36,6 +41,8 @@ test:
     - python -c "import qsum; qsum.test()"
 
 about:
+  license_file: LICENSE
   license: {{data.get('license')}}
   home: {{data.get('url')}}
   description: {{data.get('description')}}
+  summary: Python Checksumming
