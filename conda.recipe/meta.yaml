@@ -9,11 +9,11 @@ requirements:
     - setuptools
 
   run:
-    - python >= 3.5.0
+    - python >=3.5.0
 
 test:
   requires:
-    pytest>=4.4.0
+    pytest >=4.4.0
     pytest-cov
     pytest-mypy
     pytest-pylint
