@@ -1,3 +1,4 @@
+# https://conda.io/projects/conda-build/en/latest/resources/define-metadata.html
 {% set data = load_setup_py_data() %}
 
 package:
@@ -32,8 +33,9 @@ test:
     - qsum.core.logic
     - qsum.core.constants
   commands:
-    - pytest
+    - python -c "import qsum; qsum.test()"
 
 about:
-  license: MIT
+  license: {{data.get('license')}}
   home: {{data.get('url')}}
+  description: {{data.get('description')}}
