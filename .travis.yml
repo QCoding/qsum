@@ -15,6 +15,6 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - pytest --cov-report term-missing --cov=qsum -n=auto --mypy --pylint qsum/
+  - python -c "import qsum; qsum.test()"
 after_success:
-   - bash <(curl -s https://codecov.io/bash) -Z
+  - bash <(curl -s https://codecov.io/bash) -Z

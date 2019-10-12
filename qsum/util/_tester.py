@@ -6,10 +6,14 @@ Entrypoint for testing from the top-level namespace
 import os
 import sys
 
+import typing
+
 PKG = os.path.dirname(os.path.dirname(__file__))
 
+DEFAULT_ARGS = ["--cov-report=term-missing", "--cov=qsum", "-n=auto", "--mypy", "--pylint"]
 
-def test(extra_args=None) -> None:
+
+def test(use_default_args: bool = True, extra_args: typing.Union[str, list] = None) -> None:
     """
     Run the test suite for qsum
     Args:
@@ -21,7 +25,7 @@ def test(extra_args=None) -> None:
         import pytest
     except ImportError:
         raise ImportError("Need pytest to run tests")
-    cmd = []  # type: list
+    cmd = DEFAULT_ARGS if use_default_args else None
     if extra_args:
         if not isinstance(extra_args, list):
             extra_args = [extra_args]
