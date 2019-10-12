@@ -61,4 +61,4 @@ def data_digest_from_checksum(checksum: typing.Union[bytes, str]) -> typing.Unio
     if isinstance(checksum, str):
         # if hex then the type prefix is twice as long
         return checksum[PREFIX_BYTES * 2:]
-    raise QSumInvalidChecksum("{} is not a valid checksum".format(checksum))
+    raise QSumInvalidChecksum("{} is not a valid checksum type".format(checksum))
