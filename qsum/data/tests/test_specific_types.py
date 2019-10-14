@@ -81,3 +81,12 @@ def test_multi_key_type_dict():
     dict_1 = {'a': 10, 2: 20, 3.0: 30}
     dict_2 = {2: 20, 3.0: 30, 'a': 10}
     assert checksum(dict_1) == checksum(dict_2)
+
+
+def test_different_singleton_types_unequal():
+    assert checksum(None) != checksum(Ellipsis)
+
+
+@pytest.mark.parametrize('obj', [None, Ellipsis])
+def test_singleton_constant(obj):
+    assert checksum(obj) == checksum(obj)

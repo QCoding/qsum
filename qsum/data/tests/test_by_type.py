@@ -27,6 +27,7 @@ TYPE_TO_VALUE_EXAMPLES = (
     (set, set([1, 2, 3])),
     (frozenset, frozenset([3, 4.3, 5])),
     (type(None), None),
+    (type(Ellipsis), Ellipsis),
 )
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -84,7 +85,10 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     (frozenset(['a', b'\xff', False]), '01052051878e48ce6d4925bd329fb4e6cb3147fc0f06edd5dc32a020f04a10193797'),
 
     # None
-    (None, '000adc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91')
+    (None, '000a6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d'),
+
+    # Ellipsis
+    (Ellipsis, '000b6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d'),
 )
 
 

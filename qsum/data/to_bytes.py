@@ -1,4 +1,5 @@
 """Generic functions to convert various types in to bytes that can be hashed"""
+import typing
 
 
 def bytes_to_bytes(obj) -> bytes:
@@ -37,3 +38,15 @@ def bytes_from_repr_with_overrides(obj, value_overrides=None, repr_overrides=Non
         obj_repr = repr_overrides.get(obj_repr, obj_repr)
 
     return obj_repr.encode()
+
+
+def singleton_to_bytes(obj: typing.Any) -> bytes:
+    """ Return a single with 0 value for singleton objects
+
+    Args:
+        obj: any singleton object
+
+    Returns: one byte of 0
+
+    """
+    return b'\x00'
