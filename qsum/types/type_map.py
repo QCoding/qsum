@@ -27,6 +27,7 @@ TYPE_TO_PREFIX = {
     memoryview: b'\x00\x09',
     # https://stackoverflow.com/questions/15844714/why-am-i-getting-an-error-message-in-python-cannot-import-name-nonetype
     type(None): b'\x00\x0a',
+    type(Ellipsis): b'\x00\x0b',
 
     ### \x01: builtin python containers and collections that require custom logic to handle breaking open contents ###
     tuple: b'\x01\x00',
