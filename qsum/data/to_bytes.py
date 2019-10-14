@@ -40,11 +40,11 @@ def bytes_from_repr_with_overrides(obj, value_overrides=None, repr_overrides=Non
     return obj_repr.encode()
 
 
-def singleton_to_bytes(obj: typing.Any) -> bytes:
+def singleton_to_bytes(_: typing.Any) -> bytes:
     """ Return a single with 0 value for singleton objects
 
     Args:
-        obj: any singleton object
+        _: any singleton object
 
     Returns: one byte of 0
 
