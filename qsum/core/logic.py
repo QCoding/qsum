@@ -82,6 +82,26 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
     return type_to_prefix(checksum_type) + data_checksum(obj, obj_type, hash_algo)
 
 
+def checksum_hex(obj: typing.Any, hash_algo: typing.Callable = DEFAULT_HASH_ALGO):
+    """Generate a checksum hex for a given object based on it's type and contents
+
+    Args:
+        obj: object to generate a checksum of
+        hash_algo: the hash algorithm to use to convert the bytes to a message digest
+
+    Returns:
+        checksum string representing the object's type and a message digest of the data
+    >>> from qsum import checksum
+    >>> checksum_hex('a nice word')
+    '000177bdb96414925834c784c7497b14ca73a7ecead6d0542a5666bcb0598813bf9d'
+    >>> checksum_hex(('a', 'nice', 'word'))
+    '010086eb00a39e1bd72ae55e30fc9638b12803a495b0e45f54fba9438d60e3310e9a'
+    >>> checksum_hex({'a': 1, 'nice': 2, 'word': 3})
+    '0103ed71fada8381439167d30ca1310e87af60e8f41e1fa320e0f626775f5b8cd908'
+    """
+    return checksum(obj=obj, hash_algo=hash_algo).hex()
+
+
 class Checksum:
     """Class for working with checksums
 
