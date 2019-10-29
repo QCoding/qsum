@@ -1,5 +1,7 @@
+import hashlib
 import typing
 
+from qsum.core.constants import HashAlgoType
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
 from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION
 from qsum.types.type_map import PREFIX_BYTES
@@ -10,7 +12,26 @@ def all_data_types():
     return TYPE_TO_BYTES_FUNCTION.keys()
 
 
-def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo) -> bytes:
+def resolve_hash_algo(hash_algo: HashAlgoType) -> typing.Callable:
+    """Resolve the hash_algo to a callable function
+
+    Args:
+        hash_algo: a str of a method in hashlib or the callable itself
+
+    Returns:
+        a callable hash_algo
+
+    >>> resolve_hash_algo('md5')
+    <built-in function openssl_md5>
+    >>> resolve_hash_algo(hashlib.md5)
+    <built-in function openssl_md5>
+    """
+    if isinstance(hash_algo, str):
+        return getattr(hashlib, hash_algo)
+    return hash_algo
+
+
+def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo: HashAlgoType) -> bytes:
     """Convert bytes in to message digest using the given hash algo
 
     Args:
@@ -20,12 +41,12 @@ def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo) -> by
     Returns:
 
     """
-    hasher = hash_algo()
+    hasher = resolve_hash_algo(hash_algo)()
     hasher.update(bytes_data)
     return hasher.digest()
 
 
-def data_checksum(obj: typing.Any, obj_type, hash_algo) -> bytes:
+def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType) -> bytes:
     """Generate a checksum for the object data
 
     Args:

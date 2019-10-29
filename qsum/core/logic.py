@@ -4,17 +4,14 @@ import typing
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
-    UNORDERED_CONTAINER_TYPES
+    UNORDERED_CONTAINER_TYPES, HashAlgoType
 from qsum.core.exceptions import QSumUnhandledContainerType
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
 
-# a checksum can be represented by a Checksum object, bytes or a hexidecimal string
-ChecksumType = typing.Union['Checksum', bytes, str]
 
-
-def checksum(obj: typing.Any, hash_algo: typing.Callable = DEFAULT_HASH_ALGO) -> bytes:
+def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -36,7 +33,7 @@ def checksum(obj: typing.Any, hash_algo: typing.Callable = DEFAULT_HASH_ALGO) ->
     return _checksum(obj, obj_type, obj_type, hash_algo)
 
 
-def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: typing.Callable) -> bytes:
+def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: HashAlgoType) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
@@ -82,7 +79,7 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
     return type_to_prefix(checksum_type) + data_checksum(obj, obj_type, hash_algo)
 
 
-def checksum_hex(obj: typing.Any, hash_algo: typing.Callable = DEFAULT_HASH_ALGO):
+def checksum_hex(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO):
     """Generate a checksum hex for a given object based on it's type and contents
 
     Args:

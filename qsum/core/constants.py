@@ -1,5 +1,8 @@
 # pylint: disable=invalid-name
+
+# BE REALLY CAREFUL WHAT YOU IMPORT HERE, constants should be lowest level module
 import hashlib
+import typing
 from collections import deque
 
 # the default hash algo to use
@@ -20,3 +23,9 @@ CUSTOM_CONTAINER_TYPES = {dict}  # type: set
 
 # all supported container types
 CONTAINER_TYPES = CUSTOM_CONTAINER_TYPES.union(MAPPABLE_CONTAINER_TYPES)  # type: set
+
+# a checksum can be represented by a Checksum object, bytes or a hexidecimal string
+ChecksumType = typing.Union['Checksum', bytes, str]
+
+# hash algo can be a str of a method in hashlib or the callable itself
+HashAlgoType = typing.Union['str', typing.Callable]

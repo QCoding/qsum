@@ -1,11 +1,13 @@
 # pylint: disable=missing-function-docstring,missing-class-docstring,too-few-public-methods
+import hashlib
+
 import pytest
 
 from qsum import checksum
 from qsum.core.constants import DEFAULT_HASH_ALGO
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
 from qsum.data import data_checksum
-from qsum.data.data_logic import data_digest_from_checksum
+from qsum.data.data_logic import data_digest_from_checksum, resolve_hash_algo
 
 
 class Custom:
@@ -27,3 +29,7 @@ def test_data_digest_from_checksum():
 @pytest.mark.xfail(raises=QSumInvalidChecksum)
 def test_invalid_type_passed_to_data_digest_from_checksum():
     data_digest_from_checksum(123)
+
+
+def test_consistent_hash_algo_resolution():
+    assert resolve_hash_algo('sha256') == resolve_hash_algo(hashlib.sha256)
