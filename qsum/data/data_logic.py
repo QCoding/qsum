@@ -28,8 +28,7 @@ def resolve_hash_algo(hash_algo: HashAlgoType) -> typing.Callable:
     """
     if isinstance(hash_algo, str):
         return getattr(hashlib, hash_algo)
-    else:
-        return hash_algo
+    return hash_algo
 
 
 def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo: HashAlgoType) -> bytes:
