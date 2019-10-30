@@ -160,7 +160,7 @@ class Checksum:
 
     def __repr__(self) -> str:
         """Use the hexdigest as repr is a string so the bytes are actually a less efficient representation"""
-        return 'Checksum({},is_checksum=True)'.format(self.hex())
+        return "Checksum('{}',is_checksum=True)".format(self.hex())
 
     def __eq__(self, other) -> bool:
         """Equality is determined by comparing the raw bytes of the checksum"""
