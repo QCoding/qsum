@@ -24,8 +24,11 @@ CUSTOM_CONTAINER_TYPES = {dict}  # type: set
 # all supported container types
 CONTAINER_TYPES = CUSTOM_CONTAINER_TYPES.union(MAPPABLE_CONTAINER_TYPES)  # type: set
 
+# Used for typing in places where we can't impor the class directly
+CHECKSUM_CLASS_NAME = 'Checksum'
+
 # a checksum can be represented by a Checksum object, bytes or a hexidecimal string
-ChecksumType = typing.Union['Checksum', bytes, str]
+ChecksumType = typing.Union[CHECKSUM_CLASS_NAME, bytes, str]
 
 # hash algo can be a str of a method in hashlib or the callable itself
 HashAlgoType = typing.Union['str', typing.Callable]

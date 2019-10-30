@@ -4,11 +4,11 @@ import typing
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
-    UNORDERED_CONTAINER_TYPES, HashAlgoType
+    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
-from qsum.types.type_map import TYPE_TO_PREFIX
+from qsum.types.type_map import TYPE_TO_PREFIX, CombinedChecksum
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO) -> bytes:
@@ -112,12 +112,12 @@ class Checksum:
     """
 
     @classmethod
-    def checksum(cls, obj: typing.Any, **kwargs) -> 'Checksum':
+    def checksum(cls, obj: typing.Any, **kwargs) -> CHECKSUM_CLASS_NAME:
         """Create a checksum class from a given object with the given kwawrgs passed to the checksum function"""
         return Checksum(obj, is_checksum=False, **kwargs)
 
     @classmethod
-    def from_checksum(cls, obj) -> 'Checksum':
+    def from_checksum(cls, obj) -> CHECKSUM_CLASS_NAME:
         """Wrap an existing checksum bytes in an object"""
         return Checksum(obj, is_checksum=True)
 
@@ -180,6 +180,20 @@ class Checksum:
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
         return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__,
                                         self.hex()[BYTES_IN_PREFIX * 2:])
+
+    def __add__(self, other: CHECKSUM_CLASS_NAME):
+        """Combine two checksum objects together
+
+        Args:
+            other: another instance of a Checksum object
+
+        Returns:
+            Checksum object with _checksum_bytes having the special Checksum prefix type
+
+        """
+        return Checksum.from_checksum(
+            _checksum(self._checksum_bytes + other.checksum_bytes, obj_type=bytes, checksum_type=CombinedChecksum,
+                      hash_algo=DEFAULT_HASH_ALGO))
 
 
 def is_supported_type(the_type: type) -> bool:
