@@ -1,4 +1,6 @@
 # pylint: disable=redefined-outer-name,missing-function-docstring
+import functools
+
 import pytest
 
 from qsum import checksum, Checksum
@@ -50,3 +52,12 @@ def test_checksum_eq(checksum_class):
 
 def test_checksum_not_eq(checksum_class):
     assert Checksum(CHECKSUM_CLASS_VALUE + 1).hex() != checksum_class
+
+
+def test_checksum_class_init():
+    Checksum_is_checksum = functools.partial(Checksum, is_checksum=True)
+    checksums = list(
+        map(Checksum_is_checksum,
+            (Checksum('foo'), '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae',
+             b'\x00\x01,&\xb4kh\xff\xc6\x8f\xf9\x9bE<\x1d0A4\x13B-pd\x83\xbf\xa0\xf9\x8a^\x88bf\xe7\xae')))
+    assert checksums[0].checksum_bytes == checksums[1].checksum_bytes == checksums[2].checksum_bytes

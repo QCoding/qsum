@@ -5,7 +5,7 @@ from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
     UNORDERED_CONTAINER_TYPES, HashAlgoType
-from qsum.core.exceptions import QSumUnhandledContainerType
+from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
@@ -132,7 +132,14 @@ class Checksum:
 
         # if the obj is already a checksum
         if is_checksum:
-            self._checksum_bytes = obj
+            if isinstance(obj, bytes):
+                self._checksum_bytes = obj
+            elif isinstance(obj, str):
+                self._checksum_bytes = bytes.fromhex(obj)
+            elif isinstance(obj, Checksum):
+                self._checksum_bytes = obj.checksum_bytes
+            else:
+                raise QSumInvalidChecksum("Specified is_checksum but didn't pass a checksum like object")
         else:
             # compute the checksum with the given args
             self._checksum_bytes = checksum(obj, **kwargs)
@@ -153,7 +160,7 @@ class Checksum:
 
     def __repr__(self) -> str:
         """Use the hexdigest as repr is a string so the bytes are actually a less efficient representation"""
-        return 'Checksum({})'.format(self.hex())
+        return 'Checksum({},is_checksum=True)'.format(self.hex())
 
     def __eq__(self, other) -> bool:
         """Equality is determined by comparing the raw bytes of the checksum"""
