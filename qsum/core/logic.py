@@ -48,6 +48,8 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
         checksum bytes
 
     """
+    # TODO: CombinedChecksum needs to return itself since checksumming a checksum simply returns that checksum
+
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if obj_type in CONTAINER_TYPES:
         if obj_type in MAPPABLE_CONTAINER_TYPES:
