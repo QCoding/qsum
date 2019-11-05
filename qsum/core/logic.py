@@ -73,7 +73,8 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
             # decision and may need to be re-visited/potentially have an option to pick the methodology
             return _checksum(obj.items(), set, obj_type, hash_algo=hash_algo)
 
-        raise QSumUnhandledContainerType("{} has no checksumming implementation available".format(obj_type))
+        raise QSumUnhandledContainerType(
+            "{} has no checksumming implementation available".format(obj_type))  # pragma: no cover
 
     # For a simple object combine the type with the data checksum
     return type_to_prefix(checksum_type) + data_checksum(obj, obj_type, hash_algo)
