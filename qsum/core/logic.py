@@ -4,11 +4,11 @@ import typing
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
-    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME
+    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
-from qsum.types.type_map import TYPE_TO_PREFIX, ChecksumCollection
+from qsum.types.type_map import TYPE_TO_PREFIX
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO) -> bytes:
@@ -48,8 +48,6 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
         checksum bytes
 
     """
-    # TODO: CombinedChecksum needs to return itself since checksumming a checksum simply returns that checksum
-
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if obj_type in CONTAINER_TYPES:
         if obj_type in MAPPABLE_CONTAINER_TYPES:

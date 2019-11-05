@@ -10,15 +10,12 @@ table, please observe the following reserved groups:
 #
 from collections import deque
 
+from qsum.core.constants import ChecksumCollection
+
 PREFIX_BYTES = 2
 
 CHECKSUM_TYPE_PREFIX = b'\xff\x00'
 RESERVED_INVALID_PREFIX = b'\xff\xff'
-
-
-class ChecksumCollection:
-    """Dummy class to provide a type for combined checksums"""
-
 
 TYPE_TO_PREFIX = {
     ### \x00: builtin python types that represent individual objects ###

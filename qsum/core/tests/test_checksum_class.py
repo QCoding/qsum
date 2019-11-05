@@ -29,7 +29,7 @@ def test_checksum_class_checksum_hexdigest(checksum_class):
 
 def test_checksum_class_repr(checksum_class):
     assert repr(
-        checksum_class) == "Checksum({})".format(EXPECTED_CHECKSUM)
+        checksum_class) == "Checksum('{}',is_checksum=True)".format(EXPECTED_CHECKSUM)
 
 
 def test_checksum_class_str(checksum_class):
@@ -55,17 +55,17 @@ def test_checksum_not_eq(checksum_class):
 
 
 def test_checksum_class_init():
-    Checksum_is_checksum = functools.partial(Checksum, is_checksum=True)
+    checksum_is_checksum = functools.partial(Checksum, is_checksum=True)
 
     # three types of checksum objects supported
     checksums = list(
-        map(Checksum_is_checksum,
+        map(checksum_is_checksum,
             (Checksum('foo'), '00012c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae',
              b'\x00\x01,&\xb4kh\xff\xc6\x8f\xf9\x9bE<\x1d0A4\x13B-pd\x83\xbf\xa0\xf9\x8a^\x88bf\xe7\xae')))
 
     assert checksums[0].checksum_bytes == checksums[1].checksum_bytes == checksums[2].checksum_bytes
 
 
-def test_checksum_class_repr(checksum_class):
+def test_checksum_class_repr_eval(checksum_class):
     checksum_repr = repr(checksum_class)
-    assert checksum_class.checksum_bytes == eval(checksum_repr).checksum_bytes
+    assert checksum_class.checksum_bytes == eval(checksum_repr).checksum_bytes  # pylint: disable=eval-used
