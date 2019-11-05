@@ -4,7 +4,8 @@
 # pylint: disable=unused-wildcard-import
 
 """Some type specific tests that are hard to do in test_by_type"""
-
+from qsum.core.constants import ChecksumCollection
+from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.core.logic import checksum, Checksum
 
 # noinspection PyUnresolvedReferences
@@ -90,3 +91,9 @@ def test_different_singleton_types_unequal():
 @pytest.mark.parametrize('obj', [None, Ellipsis])
 def test_singleton_constant(obj):
     assert checksum(obj) == checksum(obj)
+
+
+@pytest.mark.xfail(raises=QSumInvalidDataTypeException)
+def test_checksum_collection():
+    checksum_collection = ChecksumCollection()
+    checksum(checksum_collection)

@@ -5,12 +5,16 @@ We reserve 2 bytes (65536 unique values) for the compact representation of the t
 table, please observe the following reserved groups:
     \x00: builtin python types that represent individual objects
     \x01: builtin python containers and collections
+    \xff: special types used by qsum
 """
 #
 from collections import deque
 
+from qsum.core.constants import ChecksumCollection
+
 PREFIX_BYTES = 2
 
+CHECKSUM_TYPE_PREFIX = b'\xff\x00'
 RESERVED_INVALID_PREFIX = b'\xff\xff'
 
 TYPE_TO_PREFIX = {
@@ -36,5 +40,8 @@ TYPE_TO_PREFIX = {
     dict: b'\x01\x03',
     set: b'\x01\x04',
     frozenset: b'\x01\x05',
+
+    ### \xff: special types used by qsum
+    ChecksumCollection: b'\xff\x11',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}

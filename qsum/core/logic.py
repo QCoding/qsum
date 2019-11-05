@@ -4,8 +4,8 @@ import typing
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
-    UNORDERED_CONTAINER_TYPES, HashAlgoType
-from qsum.core.exceptions import QSumUnhandledContainerType
+    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection
+from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
 from qsum.types.type_map import TYPE_TO_PREFIX
@@ -73,7 +73,8 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
             # decision and may need to be re-visited/potentially have an option to pick the methodology
             return _checksum(obj.items(), set, obj_type, hash_algo=hash_algo)
 
-        raise QSumUnhandledContainerType("{} has no checksumming implementation available".format(obj_type))
+        raise QSumUnhandledContainerType(
+            "{} has no checksumming implementation available".format(obj_type))  # pragma: no cover
 
     # For a simple object combine the type with the data checksum
     return type_to_prefix(checksum_type) + data_checksum(obj, obj_type, hash_algo)
@@ -112,12 +113,12 @@ class Checksum:
     """
 
     @classmethod
-    def checksum(cls, obj: typing.Any, **kwargs) -> 'Checksum':
+    def checksum(cls, obj: typing.Any, **kwargs) -> CHECKSUM_CLASS_NAME:
         """Create a checksum class from a given object with the given kwawrgs passed to the checksum function"""
         return Checksum(obj, is_checksum=False, **kwargs)
 
     @classmethod
-    def from_checksum(cls, obj) -> 'Checksum':
+    def from_checksum(cls, obj) -> CHECKSUM_CLASS_NAME:
         """Wrap an existing checksum bytes in an object"""
         return Checksum(obj, is_checksum=True)
 
@@ -132,7 +133,14 @@ class Checksum:
 
         # if the obj is already a checksum
         if is_checksum:
-            self._checksum_bytes = obj
+            if isinstance(obj, bytes):
+                self._checksum_bytes = obj
+            elif isinstance(obj, str):
+                self._checksum_bytes = bytes.fromhex(obj)
+            elif isinstance(obj, Checksum):
+                self._checksum_bytes = obj.checksum_bytes
+            else:
+                raise QSumInvalidChecksum("Specified is_checksum but didn't pass a checksum like object")
         else:
             # compute the checksum with the given args
             self._checksum_bytes = checksum(obj, **kwargs)
@@ -153,7 +161,7 @@ class Checksum:
 
     def __repr__(self) -> str:
         """Use the hexdigest as repr is a string so the bytes are actually a less efficient representation"""
-        return 'Checksum({})'.format(self.hex())
+        return "Checksum('{}',is_checksum=True)".format(self.hex())
 
     def __eq__(self, other) -> bool:
         """Equality is determined by comparing the raw bytes of the checksum"""
@@ -173,6 +181,20 @@ class Checksum:
         # we remove this prefix from the hexdigest as we're displaying the human readable version beforehand
         return 'Checksum({}:{})'.format(checksum_to_type(self._checksum_bytes).__name__,
                                         self.hex()[BYTES_IN_PREFIX * 2:])
+
+    def __add__(self, other: CHECKSUM_CLASS_NAME):
+        """Combine two checksum objects together
+
+        Args:
+            other: another instance of a Checksum object
+
+        Returns:
+            Checksum object with _checksum_bytes having the special Checksum prefix type
+
+        """
+        return Checksum.from_checksum(
+            _checksum(self._checksum_bytes + other.checksum_bytes, obj_type=bytes, checksum_type=ChecksumCollection,
+                      hash_algo=DEFAULT_HASH_ALGO))
 
 
 def is_supported_type(the_type: type) -> bool:
