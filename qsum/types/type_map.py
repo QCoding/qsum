@@ -16,7 +16,7 @@ CHECKSUM_TYPE_PREFIX = b'\xff\x00'
 RESERVED_INVALID_PREFIX = b'\xff\xff'
 
 
-class CombinedChecksum:
+class ChecksumCollection:
     """Dummy class to provide a type for combined checksums"""
 
 
@@ -45,6 +45,6 @@ TYPE_TO_PREFIX = {
     frozenset: b'\x01\x05',
 
     ### \xff: special types used by qsum
-    CombinedChecksum: b'\xff\x11',
+    ChecksumCollection: b'\xff\x11',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}

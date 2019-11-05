@@ -8,7 +8,7 @@ from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTA
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
-from qsum.types.type_map import TYPE_TO_PREFIX, CombinedChecksum
+from qsum.types.type_map import TYPE_TO_PREFIX, ChecksumCollection
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO) -> bytes:
@@ -194,7 +194,7 @@ class Checksum:
 
         """
         return Checksum.from_checksum(
-            _checksum(self._checksum_bytes + other.checksum_bytes, obj_type=bytes, checksum_type=CombinedChecksum,
+            _checksum(self._checksum_bytes + other.checksum_bytes, obj_type=bytes, checksum_type=ChecksumCollection,
                       hash_algo=DEFAULT_HASH_ALGO))
 
 
