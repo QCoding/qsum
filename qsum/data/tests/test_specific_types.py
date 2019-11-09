@@ -9,7 +9,7 @@ from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.core.logic import checksum, Checksum
 
 # noinspection PyUnresolvedReferences
-from qsum.tests.fixtures import *
+from qsum.tests.helpers import *
 
 
 def test_integers_generate_unique_checksums(range_2_16):

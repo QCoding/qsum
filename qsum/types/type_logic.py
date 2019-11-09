@@ -1,4 +1,5 @@
-from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException
+from qsum.core.constants import ChecksumType, CHECKSUM_CLASS_NAME
+from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException, QSumInvalidChecksum
 from qsum.types.type_map import PREFIX_BYTES, TYPE_TO_PREFIX, PREFIX_TO_TYPE
 
 
@@ -15,7 +16,7 @@ def type_to_prefix(obj_type) -> bytes:
         raise QSumInvalidTypeException("{} type does not have a registered type".format(obj_type)) from err
 
 
-def prefix_to_type(type_prefix) -> type:
+def prefix_to_type(type_prefix: bytes) -> type:
     """Converts a two byte prefix to a type"""
     try:
         return PREFIX_TO_TYPE[type_prefix]
@@ -23,6 +24,13 @@ def prefix_to_type(type_prefix) -> type:
         raise QSumInvalidPrefixException("{} is not a valid prefix".format(type_prefix)) from err
 
 
-def checksum_to_type(checksum):
+def checksum_to_type(checksum: ChecksumType):
     """Extract the prefix bytes from the checksum and lookup the type"""
-    return prefix_to_type(checksum[:PREFIX_BYTES])
+    if isinstance(checksum, bytes):
+        return prefix_to_type(checksum[:PREFIX_BYTES])
+    if isinstance(checksum, str):
+        # if hex then the type prefix is twice as long
+        return prefix_to_type(bytes.fromhex(checksum[:PREFIX_BYTES * 2]))
+    if type(checksum).__name__ == CHECKSUM_CLASS_NAME:
+        return prefix_to_type(checksum.checksum_bytes[:PREFIX_BYTES])
+    raise QSumInvalidChecksum("{} is not a valid checksum type".format(checksum))
