@@ -93,7 +93,7 @@ def test_singleton_constant(obj):
     assert checksum(obj) == checksum(obj)
 
 
-@pytest.mark.xfail(raises=QSumInvalidDataTypeException)
+@pytest.mark.xfail(raises=QSumInvalidDataTypeException, strict=True)
 def test_checksum_collection():
     checksum_collection = ChecksumCollection()
     checksum(checksum_collection)
