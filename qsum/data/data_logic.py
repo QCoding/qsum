@@ -1,7 +1,7 @@
 import hashlib
 import typing
 
-from qsum.core.constants import HashAlgoType
+from qsum.core.constants import HashAlgoType, ChecksumType, CHECKSUM_CLASS_NAME
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
 from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION
 from qsum.types.type_map import PREFIX_BYTES
@@ -35,11 +35,11 @@ def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo: HashA
     """Convert bytes in to message digest using the given hash algo
 
     Args:
-        bytes_data:
+        bytes_data: the bytes representing the data
         hash_algo:  the hash algorithm to use to convert the bytes to a message digest
 
     Returns:
-
+        a digest of the bytes
     """
     hasher = resolve_hash_algo(hash_algo)()
     hasher.update(bytes_data)
@@ -68,7 +68,7 @@ def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType) -> bytes:
     return bytes_to_digest(bytes_data_func(obj), hash_algo)
 
 
-def data_digest_from_checksum(checksum: typing.Union[bytes, str]) -> typing.Union[bytes, str]:
+def data_digest_from_checksum(checksum: ChecksumType) -> typing.Union[bytes, str]:
     """Extract the data digest bytes from the checksum
 
     Args:
@@ -82,4 +82,7 @@ def data_digest_from_checksum(checksum: typing.Union[bytes, str]) -> typing.Unio
     if isinstance(checksum, str):
         # if hex then the type prefix is twice as long
         return checksum[PREFIX_BYTES * 2:]
+    if type(checksum).__name__ == CHECKSUM_CLASS_NAME:
+        return checksum.checksum_bytes[PREFIX_BYTES:]
+
     raise QSumInvalidChecksum("{} is not a valid checksum type".format(checksum))
