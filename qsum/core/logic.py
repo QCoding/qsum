@@ -4,7 +4,7 @@ import typing
 from functools import reduce
 
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
-    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection
+    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
@@ -100,6 +100,24 @@ def checksum_hex(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO):
     return checksum(obj=obj, hash_algo=hash_algo).hex()
 
 
+def _checksum_to_bytes(checksum_obj: ChecksumType) -> bytes:
+    """Convert a checksum like object to bytes
+
+    Args:
+        checksum_obj: a checksum like object
+
+    Returns:
+        checksum bytes
+    """
+    if isinstance(checksum_obj, bytes):
+        return checksum_obj
+    if isinstance(checksum_obj, str):
+        return bytes.fromhex(checksum_obj)
+    if isinstance(checksum_obj, Checksum):
+        return checksum_obj.checksum_bytes
+    raise QSumInvalidChecksum("Specified is_checksum but didn't pass a checksum like object")
+
+
 class Checksum:
     """Class for working with checksums
 
@@ -133,14 +151,7 @@ class Checksum:
 
         # if the obj is already a checksum
         if is_checksum:
-            if isinstance(obj, bytes):
-                self._checksum_bytes = obj
-            elif isinstance(obj, str):
-                self._checksum_bytes = bytes.fromhex(obj)
-            elif isinstance(obj, Checksum):
-                self._checksum_bytes = obj.checksum_bytes
-            else:
-                raise QSumInvalidChecksum("Specified is_checksum but didn't pass a checksum like object")
+            self._checksum_bytes = _checksum_to_bytes(obj)
         else:
             # compute the checksum with the given args
             self._checksum_bytes = checksum(obj, **kwargs)
