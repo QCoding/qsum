@@ -10,7 +10,7 @@ python:
   - "3.8"
 # whenever you want to re-create the pip environment from scratch
 env:
-  CACHE_VERSION=3
+  CACHE_VERSION=4
 # command to install dependencies
 install:
   - pip install -r requirements.txt
