@@ -61,6 +61,7 @@ confidence=
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
 # QSUM Override: disable missing-module-docstring as not all modules require docstrings
+# QSUM Override: disable fixme as we want to keep this in code
 disable=print-statement,
         parameter-unpacking,
         unpacking-in-except,
@@ -140,7 +141,8 @@ disable=print-statement,
         deprecated-sys-function,
         exception-escape,
         comprehension-escape,
-        missing-module-docstring
+        missing-module-docstring,
+        fixme
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
