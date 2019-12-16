@@ -13,16 +13,16 @@ DEFAULT_BYTES_IN_DATA = 32  # type: int
 DEFAULT_BYTES_IN_CHECKSUM = BYTES_IN_PREFIX + DEFAULT_BYTES_IN_DATA  # type: int
 
 # containers we can simple apply a map to
-MAPPABLE_CONTAINER_TYPES = {tuple, list, deque, set, frozenset}  # type: set
+MAPPABLE_CONTAINER_TYPES = (tuple, list, deque, set, frozenset)  # type: tuple
 
 # containers we'll have to apply sorting to before hashing
-UNORDERED_CONTAINER_TYPES = {set, frozenset, dict}  # type: set
+UNORDERED_CONTAINER_TYPES = (set, frozenset, dict)  # type: tuple
 
 # containers that require more customized logic
-CUSTOM_CONTAINER_TYPES = {dict}  # type: set
+CUSTOM_CONTAINER_TYPES = (dict,)  # type: tuple
 
 # all supported container types
-CONTAINER_TYPES = CUSTOM_CONTAINER_TYPES.union(MAPPABLE_CONTAINER_TYPES)  # type: set
+CONTAINER_TYPES = CUSTOM_CONTAINER_TYPES + MAPPABLE_CONTAINER_TYPES  # type: tuple
 
 # Used for typing in places where we can't impor the class directly
 CHECKSUM_CLASS_NAME = 'Checksum'

@@ -3,6 +3,7 @@ import operator
 import typing
 from functools import reduce
 
+from qsum.core.cache import is_sub_class
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
     UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
@@ -49,10 +50,10 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
 
     """
     # Handle containers with multiple objects that need to be individual checksummed and then combined
-    if obj_type in CONTAINER_TYPES:
-        if obj_type in MAPPABLE_CONTAINER_TYPES:
+    if is_sub_class(obj_type, CONTAINER_TYPES):
+        if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
             checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo)
-            if obj_type in UNORDERED_CONTAINER_TYPES:
+            if is_sub_class(obj_type, tuple(UNORDERED_CONTAINER_TYPES)):
                 # compute the checksums and sort the checksums as we don't trust native python sorting across types
                 checksum_bytes = reduce(operator.add, sorted(map(checksum_func_with_args, obj)), bytearray())
             else:
@@ -64,7 +65,7 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
             return type_to_prefix(checksum_type) + data_checksum(checksum_bytes, bytes, hash_algo)
 
-        if obj_type == dict:
+        if is_sub_class(obj_type, dict):
             # obj.items() returns dict_items which appear list like but in fact we don't want to trust the stability
             # of the order of the items, so let's treat it like an unordered set (no need to actually make it a set,
             # in fact that may cause issues if the values aren't hashable, i.e. dict of dicts) and use the sort of the
