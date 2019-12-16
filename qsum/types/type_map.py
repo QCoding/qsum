@@ -14,6 +14,8 @@ from qsum.core.constants import ChecksumCollection
 
 PREFIX_BYTES = 2
 
+# special  prefixes
+UNREGISTERED_TYPE_PREFIX = b'\xff\xaa'
 CHECKSUM_TYPE_PREFIX = b'\xff\x00'
 RESERVED_INVALID_PREFIX = b'\xff\xff'
 

@@ -1,6 +1,6 @@
 from qsum.core.constants import ChecksumType, CHECKSUM_CLASS_NAME
 from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException, QSumInvalidChecksum
-from qsum.types.type_map import PREFIX_BYTES, TYPE_TO_PREFIX, PREFIX_TO_TYPE
+from qsum.types.type_map import PREFIX_BYTES, TYPE_TO_PREFIX, PREFIX_TO_TYPE, UNREGISTERED_TYPE_PREFIX
 
 
 def all_prefix_types():
@@ -8,11 +8,22 @@ def all_prefix_types():
     return TYPE_TO_PREFIX.keys()
 
 
-def type_to_prefix(obj_type) -> bytes:
-    """Coverts a type to two byte prefix"""
+def type_to_prefix(obj_type, allow_unregistered: bool = True) -> bytes:
+    """Coverts a type to two byte prefix
+
+    Args:
+        obj_type: type of the object
+        allow_unregistered: if True provide a generic key for unregistered types
+
+    Returns:
+        prefix representing the type
+
+    """
     try:
         return TYPE_TO_PREFIX[obj_type]
     except KeyError as err:
+        if allow_unregistered:
+            return UNREGISTERED_TYPE_PREFIX
         raise QSumInvalidTypeException("{} type does not have a registered type".format(obj_type)) from err
 
 
