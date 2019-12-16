@@ -40,10 +40,10 @@ def test_checksum_to_type_invalid_type():
     checksum_to_type(Custom)
 
 
-def test_type_to_prefix_custom():
+def test_type_to_prefix_custom_registered():
     assert type_to_prefix(Custom, allow_unregistered=True) == UNREGISTERED_TYPE_PREFIX
 
 
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
-def test_type_to_prefix_custom():
+def test_type_to_prefix_custom_unregistered():
     type_to_prefix(Custom, allow_unregistered=False)
