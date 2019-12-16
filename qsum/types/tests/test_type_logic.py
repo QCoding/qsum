@@ -51,4 +51,4 @@ def test_type_to_prefix_custom_unregistered():
 
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_expected_custom_type():
-    Checksum.checksum(Custom()).type
+    _ = Checksum.checksum(Custom()).type
