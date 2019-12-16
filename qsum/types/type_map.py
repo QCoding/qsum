@@ -7,17 +7,17 @@ table, please observe the following reserved groups:
     \x01: builtin python containers and collections
     \xff: special types used by qsum
 """
-#
 from collections import deque
 
 from qsum.core.constants import ChecksumCollection
 
 PREFIX_BYTES = 2
 
-# special  prefixes
-UNREGISTERED_TYPE_PREFIX = b'\xff\xaa'
-CHECKSUM_TYPE_PREFIX = b'\xff\x00'
-RESERVED_INVALID_PREFIX = b'\xff\xff'
+# *** special prefixes ***
+CHECKSUM_TYPE_PREFIX = b'\xff\x00'  # Checksum class
+UNREGISTERED_TYPE_PREFIX = b'\xff\xaa'  # An unregistered type
+RESERVED_INVALID_PREFIX = b'\xff\xff'  # Invalid prefix for testing
+# *************************
 
 TYPE_TO_PREFIX = {
     # \x00: builtin python types that represent individual objects
