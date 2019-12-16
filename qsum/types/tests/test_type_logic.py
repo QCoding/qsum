@@ -16,8 +16,13 @@ class Custom:
 
 
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
-def test_invalid_type():
-    _ = checksum(Custom())
+def test_invalid_type_without_allowing_unregistered():
+    _ = checksum(Custom(), allow_unregistered=False)
+
+
+@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
+def test_invalid_type_with_allow_unregistered():
+    _ = checksum(Custom(), allow_unregistered=True)
 
 
 @pytest.mark.xfail(raises=QSumInvalidPrefixException, strict=True)

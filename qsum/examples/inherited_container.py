@@ -7,9 +7,13 @@ class CustomDict(dict):
         return sorted(self.keys())
 
 
-if __name__ == "__main__":
+def main():
     my_custom_dict = CustomDict()
     my_custom_dict['b'] = 1
     my_custom_dict['a'] = 2
 
     print(Checksum(my_custom_dict).hex())
+
+
+if __name__ == "__main__":
+    main()

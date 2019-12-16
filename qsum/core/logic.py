@@ -5,7 +5,8 @@ from functools import reduce
 
 from qsum.core.cache import is_sub_class
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
-    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType
+    UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType, \
+    DEFAULT_ALLOW_UNREGISTERED
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
@@ -13,7 +14,7 @@ from qsum.types.type_map import TYPE_TO_PREFIX, UNREGISTERED_TYPE_PREFIX
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
-             allow_unregistered: bool = True) -> bytes:
+             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -38,7 +39,7 @@ def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
 
 
 def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: HashAlgoType,
-              allow_unregistered: bool = True) -> bytes:
+              allow_unregistered) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
@@ -70,7 +71,7 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
                 checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
-            prefix = type_to_prefix(checksum_type)
+            prefix = type_to_prefix(checksum_type, allow_unregistered=allow_unregistered)
             # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
             return prefix + data_checksum(checksum_bytes, bytes, hash_algo,
                                           checksum_type=checksum_type if prefix == UNREGISTERED_TYPE_PREFIX else None)
@@ -219,7 +220,7 @@ class Checksum:
         """
         return Checksum.from_checksum(
             _checksum(self._checksum_bytes + other.checksum_bytes, obj_type=bytes, checksum_type=ChecksumCollection,
-                      hash_algo=DEFAULT_HASH_ALGO))
+                      hash_algo=DEFAULT_HASH_ALGO, allow_unregistered=DEFAULT_ALLOW_UNREGISTERED))
 
 
 def is_supported_type(the_type: type) -> bool:

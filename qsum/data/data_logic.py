@@ -46,7 +46,8 @@ def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo: HashA
     return hasher.digest()
 
 
-def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType, checksum_type: typing.Optional[type] = None) -> bytes:
+def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType,
+                  checksum_type: typing.Optional[type] = None) -> bytes:
     """Generate a checksum for the object data
 
     Args:

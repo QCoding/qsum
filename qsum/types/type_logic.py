@@ -8,7 +8,7 @@ def all_prefix_types():
     return TYPE_TO_PREFIX.keys()
 
 
-def type_to_prefix(obj_type, allow_unregistered: bool = True) -> bytes:
+def type_to_prefix(obj_type, allow_unregistered: bool = False) -> bytes:
     """Coverts a type to two byte prefix
 
     Args:

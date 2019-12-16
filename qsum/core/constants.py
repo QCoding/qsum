@@ -8,6 +8,9 @@ from collections import deque
 # the default hash algo to use
 DEFAULT_HASH_ALGO = hashlib.sha256
 
+# whether to allow unregistered types by default
+DEFAULT_ALLOW_UNREGISTERED = True
+
 BYTES_IN_PREFIX = 2  # type: int
 DEFAULT_BYTES_IN_DATA = 32  # type: int
 DEFAULT_BYTES_IN_CHECKSUM = BYTES_IN_PREFIX + DEFAULT_BYTES_IN_DATA  # type: int
