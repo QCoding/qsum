@@ -22,12 +22,15 @@ def raise_type_exception(_, data_type) -> None:
         "{} is registered as an invalid type for computing a data checksum".format(data_type))
 
 
+# since we use this one in the data checksum implementation and want to avoid looking it up every time
+TYPE_CLASS_TO_BYTES_FUNCTION = bytes_from_repr
+
 # maps a type to the function used to generate the bytes data that will be hashed in to a checksum
 TYPE_TO_BYTES_FUNCTION = {
     # simply get the bytes from the repr of the object
     int: bytes_from_repr,
     bool: bytes_from_repr,
-    type: bytes_from_repr,
+    type: TYPE_CLASS_TO_BYTES_FUNCTION,
     range: bytes_from_repr,
     type(None): singleton_to_bytes,
     type(Ellipsis): singleton_to_bytes,

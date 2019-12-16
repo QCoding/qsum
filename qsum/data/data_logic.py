@@ -3,7 +3,7 @@ import typing
 
 from qsum.core.constants import HashAlgoType, ChecksumType, CHECKSUM_CLASS_NAME
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
-from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION
+from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION, TYPE_CLASS_TO_BYTES_FUNCTION
 from qsum.types.type_map import PREFIX_BYTES
 
 
@@ -46,13 +46,16 @@ def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo: HashA
     return hasher.digest()
 
 
-def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType) -> bytes:
+def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType, checksum_type: typing.Optional[type] = None) -> bytes:
     """Generate a checksum for the object data
 
     Args:
         obj: object to generate a checksum of
         obj_type: the type of the object or the designed type of object methodology to checksum the data
         hash_algo: the hash algorithm to use to convert the bytes to a message digest
+        checksum_type: given this is a data_checksum by default we don't want to include the checksum_type in it,
+            but since we support unregistered types and don't them to compare equal, we'll add the type info
+            when we know we don't have a 'safe' unique prefix, note type info is not
 
     Returns:
         a message digest representing the obj
@@ -65,7 +68,15 @@ def data_checksum(obj: typing.Any, obj_type, hash_algo: HashAlgoType) -> bytes:
     except KeyError as err:
         raise QSumInvalidDataTypeException("{} is not a recognized checksummable type".format(obj_type)) from err
 
-    return bytes_to_digest(bytes_data_func(obj), hash_algo)
+    # generate the bytes using the custom method
+    data_bytes = bytes_data_func(obj)
+
+    if checksum_type is not None:
+        # TODO: the great separator debate, is it safe to just add extra bytes here or do we need a unique separator?
+        #       in all likelihood we do not, but adding a note in case that decision is ever reversed
+        data_bytes += TYPE_CLASS_TO_BYTES_FUNCTION(checksum_type)
+
+    return bytes_to_digest(data_bytes, hash_algo)
 
 
 def data_digest_from_checksum(checksum: ChecksumType) -> typing.Union[bytes, str]:

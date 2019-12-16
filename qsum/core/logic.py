@@ -9,15 +9,18 @@ from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTA
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
-from qsum.types.type_map import TYPE_TO_PREFIX
+from qsum.types.type_map import TYPE_TO_PREFIX, UNREGISTERED_TYPE_PREFIX
 
 
-def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO) -> bytes:
+def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
+             allow_unregistered: bool = True) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
         obj: object to generate a checksum of
         hash_algo: the hash algorithm to use to convert the bytes to a message digest
+        allow_unregistered: as long as the logic can handle it allow unregistered types to be checksummed,
+            currently the main purpose of this is to allow subclasses of supported containers to be checksummed
 
     Returns:
         checksum bytes representing the object's type and a message digest of the data
@@ -31,10 +34,11 @@ def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO) -> by
     '0103ed71fada8381439167d30ca1310e87af60e8f41e1fa320e0f626775f5b8cd908'
     """
     obj_type = type(obj)
-    return _checksum(obj, obj_type, obj_type, hash_algo)
+    return _checksum(obj, obj_type, obj_type, hash_algo, allow_unregistered=allow_unregistered)
 
 
-def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: HashAlgoType) -> bytes:
+def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: HashAlgoType,
+              allow_unregistered: bool = True) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
@@ -44,6 +48,8 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
             the type to use for the checksum prefix, useful when the process of checksumming one object involves
             transforming the data to another type but we want to return the original object type
         hash_algo: the hash algorithm to use to convert the bytes to a message digest
+        allow_unregistered: as long as the logic can handle it allow unregistered types to be checksummed,
+            currently the main purpose of this is to allow subclasses of supported containers to be checksummed
 
     Returns:
         checksum bytes
@@ -52,7 +58,8 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
-            checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo)
+            checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo,
+                                                        allow_unregistered=allow_unregistered)
             if is_sub_class(obj_type, tuple(UNORDERED_CONTAINER_TYPES)):
                 # compute the checksums and sort the checksums as we don't trust native python sorting across types
                 checksum_bytes = reduce(operator.add, sorted(map(checksum_func_with_args, obj)), bytearray())
@@ -63,7 +70,10 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
                 checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
-            return type_to_prefix(checksum_type) + data_checksum(checksum_bytes, bytes, hash_algo)
+            prefix = type_to_prefix(checksum_type)
+            # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
+            return prefix + data_checksum(checksum_bytes, bytes, hash_algo,
+                                          checksum_type=checksum_type if prefix == UNREGISTERED_TYPE_PREFIX else None)
 
         if is_sub_class(obj_type, dict):
             # obj.items() returns dict_items which appear list like but in fact we don't want to trust the stability
@@ -72,13 +82,16 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
             # checksums as our method for stabilizing the overall checksum of the object
             # for python 3.7 this means that even though dicts are ordered, we will ignore that order, this is a design
             # decision and may need to be re-visited/potentially have an option to pick the methodology
-            return _checksum(obj.items(), set, obj_type, hash_algo=hash_algo)
+            return _checksum(obj.items(), set, obj_type, hash_algo=hash_algo, allow_unregistered=allow_unregistered)
 
         raise QSumUnhandledContainerType(
             "{} has no checksumming implementation available".format(obj_type))  # pragma: no cover
 
     # For a simple object combine the type with the data checksum
-    return type_to_prefix(checksum_type) + data_checksum(obj, obj_type, hash_algo)
+    prefix = type_to_prefix(checksum_type)
+    # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
+    return prefix + data_checksum(obj, obj_type, hash_algo,
+                                  checksum_type=checksum_type if prefix == UNREGISTERED_TYPE_PREFIX else None)
 
 
 def checksum_hex(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO):
