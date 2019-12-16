@@ -16,5 +16,12 @@ def range_2_16():
 
 
 class Custom:
-    def __init__(self):
-        pass
+    pass
+
+
+class CustomDict1(dict):
+    pass
+
+
+class CustomDict2(dict):
+    pass

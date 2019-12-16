@@ -5,8 +5,8 @@ import pytest
 
 from qsum.core.constants import BYTES_IN_PREFIX
 from qsum.core.exceptions import QSumInvalidTypeException
-from qsum.core.logic import is_supported_type, checksum, checksum_hex
-from qsum.tests.helpers import Custom
+from qsum.core.logic import is_supported_type, checksum, checksum_hex, Checksum
+from qsum.tests.helpers import Custom, CustomDict1, CustomDict2
 
 
 class NotCheckSummable():
@@ -39,4 +39,18 @@ def test_invalid_type_without_allowing_unregistered():
 
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_invalid_type_with_allow_unregistered():
+    """A non collection type that can't be checksummed will still fail"""
     _ = checksum(Custom(), allow_unregistered=True)
+
+
+@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
+def test_disable_allow_unregistered_with_valid_collection():
+    """A valid custom collection will fail if allow_unregistered is set to false"""
+    _ = Checksum(CustomDict1(), allow_unregistered=False).hex()
+
+
+def test_different_unregistered_types():
+    checksum_1 = Checksum(CustomDict1(), allow_unregistered=True).hex()
+    checksum_2 = Checksum(CustomDict2(), allow_unregistered=True).hex()
+    assert checksum_1 != checksum_2, \
+        "Different types should always have different checksums, even if they are unregistered"
