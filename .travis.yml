@@ -3,6 +3,7 @@ cache: pip
 git:
   quiet: true
   submodules: false
+  depth: false
 python:
   - "3.5"
   - "3.6"      # current default Python on Travis CI
