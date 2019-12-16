@@ -3,26 +3,11 @@
 # pylint: disable=too-few-public-methods
 import pytest
 
-from qsum import checksum, Checksum
+from qsum import Checksum
 from qsum.core.exceptions import QSumInvalidTypeException, QSumInvalidPrefixException, QSumInvalidChecksum
-from qsum.tests.helpers import INT_CHECKSUM_OBJS
+from qsum.tests.helpers import INT_CHECKSUM_OBJS, Custom
 from qsum.types.type_logic import prefix_to_type, checksum_to_type, type_to_prefix
 from qsum.types.type_map import RESERVED_INVALID_PREFIX, UNREGISTERED_TYPE_PREFIX
-
-
-class Custom:
-    def __init__(self):
-        pass
-
-
-@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
-def test_invalid_type_without_allowing_unregistered():
-    _ = checksum(Custom(), allow_unregistered=False)
-
-
-@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
-def test_invalid_type_with_allow_unregistered():
-    _ = checksum(Custom(), allow_unregistered=True)
 
 
 @pytest.mark.xfail(raises=QSumInvalidPrefixException, strict=True)
