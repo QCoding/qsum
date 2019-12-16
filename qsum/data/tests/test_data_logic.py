@@ -8,12 +8,7 @@ from qsum.core.constants import DEFAULT_HASH_ALGO
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.data.data_logic import data_digest_from_checksum, resolve_hash_algo
-from qsum.tests.helpers import STR_CHECKSUM_OBJS
-
-
-class Custom:
-    def __init__(self):
-        pass
+from qsum.tests.helpers import STR_CHECKSUM_OBJS, Custom
 
 
 @pytest.mark.xfail(raises=QSumInvalidDataTypeException, strict=True)

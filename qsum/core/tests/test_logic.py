@@ -4,7 +4,9 @@ import hashlib
 import pytest
 
 from qsum.core.constants import BYTES_IN_PREFIX
+from qsum.core.exceptions import QSumInvalidTypeException
 from qsum.core.logic import is_supported_type, checksum, checksum_hex
+from qsum.tests.helpers import Custom
 
 
 class NotCheckSummable():
@@ -28,3 +30,13 @@ def test_sha_lengths(hash_algo, hash_length):
 @pytest.mark.parametrize('value', ('abc', '123', ('1', '2', '3')))
 def test_checkum_hex(value):
     assert checksum(value).hex() == checksum_hex((value))
+
+
+@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
+def test_invalid_type_without_allowing_unregistered():
+    _ = checksum(Custom(), allow_unregistered=False)
+
+
+@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
+def test_invalid_type_with_allow_unregistered():
+    _ = checksum(Custom(), allow_unregistered=True)

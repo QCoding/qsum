@@ -13,3 +13,8 @@ INT_CHECKSUM_OBJS = [Checksum(123), '0000a665a45920422f9d417e4867efdc4fb8a04a1f3
 def range_2_16():
     """Create a range fixture for use in pytests"""
     return range(-2 ** 16, 2 ** 16)
+
+
+class Custom:
+    def __init__(self):
+        pass
