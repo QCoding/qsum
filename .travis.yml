@@ -19,4 +19,4 @@ install:
 script:
   - python -c "import qsum; qsum.test()"
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -Z
+  - codecov
