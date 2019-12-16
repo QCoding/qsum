@@ -1,3 +1,4 @@
+# pylint: disable=too-few-public-methods
 import pytest
 
 from qsum import Checksum
@@ -16,12 +17,12 @@ def range_2_16():
 
 
 class Custom:
-    pass
+    """A Custom class to try and checksum"""
 
 
 class CustomDict1(dict):
-    pass
+    """A Custom Class that inherits from dict"""
 
 
 class CustomDict2(dict):
-    pass
+    """Another Custom Class that inherits from dict"""
