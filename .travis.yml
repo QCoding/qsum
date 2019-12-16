@@ -3,10 +3,12 @@ cache: pip
 git:
   quiet: true
   submodules: false
+  depth: false
 python:
   - "3.5"
   - "3.6"      # current default Python on Travis CI
   - "3.7"
+  - "3.8"
 # whenever you want to re-create the pip environment from scratch
 env:
   CACHE_VERSION=4
@@ -17,4 +19,4 @@ install:
 script:
   - python -c "import qsum; qsum.test()"
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -Z
+  - codecov

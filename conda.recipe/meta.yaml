@@ -33,10 +33,11 @@ test:
   imports:
     - qsum
     - qsum.core
-    - qsum.data
-    - qsum.types
     - qsum.core.logic
     - qsum.core.constants
+    - qsum.data
+    - qsum.types
+    - qsum.util
   commands:
     - python -c "import qsum; qsum.test(use_default_args=False)"
 
