@@ -3,11 +3,20 @@ Intuitive and extendable checksumming for python objects
 
 <table>
 <tr>
+  <td>Latest Release</td>
+  <td>
+    <a href="https://anaconda.org/qcoding/qsum">
+    <img src="https://anaconda.org/qcoding/qsum/badges/version.svg" alt="Anaconda Cloud"/>
+    </a>
+  </td>
+</tr>
+<tr>
   <td>Build Status</td>
   <td>
-    <a href="https://travis-ci.org/QCoding/qsum">
-    <img src="https://travis-ci.org/QCoding/qsum.svg?branch=master" alt="travis build status" />
+    <a href="https://travis-ci.com/QCoding/qsum">
+    <img src="https://travis-ci.com/QCoding/qsum.svg?branch=master" alt="travis build status" />
     </a>
+  </td>
 </tr>
 <tr>
  <td>Coverage</td>
@@ -25,7 +34,24 @@ Intuitive and extendable checksumming for python objects
   </a>
 </td>
 </tr>
+<tr>
+<td>Downloads</td>
+<td>
+  <a href="https://anaconda.org/qcoding/qsum">
+  <img src="https://anaconda.org/qcoding/qsum/badges/downloads.svg" alt="downloads" />
+  </a>
+</td>
+</tr>
+<tr>
+<td>Platforms</td>
+<td>
+  <a href="https://anaconda.org/qcoding/qsum">
+  <img src="https://anaconda.org/qcoding/qsum/badges/platforms.svg" alt="noarch" />
+  </a>
+</td>
+</tr>
 </table>
+
 
 ## Goals
 * Provide a checksumming toolkit for python with out of the box support for common types
@@ -50,6 +76,18 @@ Intuitive and extendable checksumming for python objects
 ### Support for Custom Containers
 * Custom container classes that inherit from common python containers (E.g. tuple, list, set, dict, etc.) are checksummable
 * The class name is not recoverable from the type prefix but will be added as salt to the data checksum to prevent collisions
+
+## Where to get it
+Source code is available on github: https://github.com/QCoding
+
+Install with conda:
+```
+# add the QCoding Channel
+conda config --append channels QCoding
+# install the latest version of QSum
+conda install qsum
+```
+
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
