@@ -6,7 +6,7 @@ from qsum.core.constants import ChecksumCollection
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides, \
     singleton_to_bytes
-from qsum.data.to_bytes_custom import complex_to_bytes, function_to_bytes
+from qsum.data.to_bytes_custom import complex_to_bytes, function_to_bytes, module_to_bytes
 
 
 def raise_type_exception(_, data_type) -> None:
@@ -52,6 +52,7 @@ TYPE_TO_BYTES_FUNCTION = {
 
     # very custom logic
     types.FunctionType: function_to_bytes,
+    types.ModuleType: module_to_bytes,
 
     # registered as invalid data types to checksum
     ChecksumCollection: functools.partial(raise_type_exception, data_type=ChecksumCollection),
