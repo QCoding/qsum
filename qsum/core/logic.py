@@ -92,10 +92,15 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
 
     # handle functions (which are a mini collection of python objects themselves)
     if is_sub_class(obj_type, types.FunctionType):
-        source_code = inspect.getsource(obj)
+        # removing leading and trailing whitespace (note this is not a proper solution as individual lines
+        # can still have whitespace differences that cause the same function to checksum differently
+        # TODO: evenly remove whitespace from each line
+        source_code = inspect.getsource(obj).strip()
         function_attributes = obj.__dict__
+        # choosing to use the module name here and not the module, but may revisit at some point or make an option
+        module_name = inspect.getmodule(obj).__name__
         # combine in to a tuple and use the standard logic for combining the elements but then mark as a function
-        return _checksum((source_code, function_attributes), tuple, obj_type, hash_algo=hash_algo,
+        return _checksum((source_code, function_attributes, module_name), tuple, obj_type, hash_algo=hash_algo,
                          allow_unregistered=allow_unregistered)
 
     # For a simple object combine the type with the data checksum

@@ -54,18 +54,3 @@ def test_different_unregistered_types():
     checksum_2 = Checksum(CustomDict2(), allow_unregistered=True).hex()
     assert checksum_1 != checksum_2, \
         "Different types should always have different checksums, even if they are unregistered"
-
-
-def test_function_attributes_change_checksum():
-    def foo1():
-        pass
-
-    before_attribute, no_change = checksum(foo1), checksum(foo1)
-    foo1.version = 1
-    after_attribute = checksum(foo1)
-    foo1.version += 1
-    changing_attribute = checksum(foo1)
-
-    assert before_attribute == no_change, "Function checksum unstable"
-    assert before_attribute != after_attribute, "Adding attribute should change checksum"
-    assert changing_attribute != after_attribute, "Changing attribute should change checksum"
