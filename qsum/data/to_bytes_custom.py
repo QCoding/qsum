@@ -23,19 +23,6 @@ def complex_to_bytes(obj) -> bytes:
     return bytes_from_repr(new_complex)
 
 
-def function_to_bytes(obj: types.FunctionType) -> bytes:
-    """Initial implementation will change every time the source code of the function source code changes
-
-    Args:
-        obj: function to convert to bytes
-
-    Returns:
-        byes representing the funciton
-    """
-    source_code = inspect.getsource(obj)
-    return source_code.encode()
-
-
 def module_to_bytes(obj: types.ModuleType) -> bytes:
     """Initial implementation will change every time the source code of the module source code changes
 

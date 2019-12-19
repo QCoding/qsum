@@ -1,5 +1,7 @@
 import functools
+import inspect
 import operator
+import types
 import typing
 from functools import reduce
 
@@ -87,6 +89,14 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
 
         raise QSumUnhandledContainerType(
             "{} has no checksumming implementation available".format(obj_type))  # pragma: no cover
+
+    # handle functions (which are a mini collection of python objects themselves)
+    if is_sub_class(obj_type, types.FunctionType):
+        source_code = inspect.getsource(obj)
+        function_attributes = obj.__dict__
+        # combine in to a tuple and use the standard logic for combining the elements but then mark as a function
+        return _checksum((source_code, function_attributes), tuple, obj_type, hash_algo=hash_algo,
+                         allow_unregistered=allow_unregistered)
 
     # For a simple object combine the type with the data checksum
     prefix = type_to_prefix(checksum_type)
