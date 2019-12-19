@@ -1,4 +1,4 @@
-# qsum: 
+# qsum: Python checksumming toolkit
 Intuitive and extendable checksumming for python objects
 
 <table>
@@ -58,24 +58,7 @@ Intuitive and extendable checksumming for python objects
 * Architect a framework for implementing customized checksumming logic
 * Produce high quality checksums with extraordinarily low collision rates
 * Build a toolkit for using and manipulating checksums
-* Test it all with 100% coverage and support python 3.5, 3.6, and 3.7
-
-## Relationship to `__hash__`
-* Respect the same contract as `__hash__` with regards to: 'The only required property is that objects which compare equal have the same hash value'
-* Do not salt hash values and maintain as much stability in checksums as possible throughout python sessions, python versions, and versions of this package
-* PYTHONHASHSEED should have no effect on checksums
-* Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
-* Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
-* Base checksums on object contents and permit the calculation of checksums on mutable objects
-
-## Checksum Design
-* The first two bytes of every checksum represent the type and will be referred to as the 'type prefix'
-* The rest of the checksum in a digest of the byte representation of the object and will be refered to as the 'data checksum'
-* QSUM CHECKSUM = TYPE PREFIX + DATA CHECKSUM
-
-### Support for Custom Containers
-* Custom container classes that inherit from common python containers (E.g. tuple, list, set, dict, etc.) are checksummable
-* The class name is not recoverable from the type prefix but will be added as salt to the data checksum to prevent collisions
+* Test it all with 100% coverage and support python 3.5, 3.6, 3.7 and 3.8
 
 ## Where to get it
 Source code is available on github: https://github.com/QCoding
@@ -87,7 +70,33 @@ conda config --append channels QCoding
 # install the latest version of QSum
 conda install qsum
 ```
+## Design
+* The first two bytes of every checksum represent the type and will be referred to as the 'type prefix'
+* The rest of the checksum in a digest of the byte representation of the object and will be refered to as the 'data checksum'
+* QSUM CHECKSUM = TYPE PREFIX + DATA CHECKSUM
 
+### Relationship to `__hash__`
+* Respect the same contract as `__hash__` with regards to: 'The only required property is that objects which compare equal have the same hash value'
+* Do not salt hash values and maintain as much stability in checksums as possible throughout python sessions, python versions, and versions of this package
+* PYTHONHASHSEED should have no effect on checksums
+* Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
+* Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
+* Base checksums on object contents and permit the calculation of checksums on mutable objects
+
+### Support for Custom Containers
+* Custom container classes that inherit from common python containers (E.g. tuple, list, set, dict, etc.) are checksummable
+* The class name is not recoverable from the type prefix but will be added as salt to the data checksum to prevent collisions
+
+## Using QSum 
+```
+# Functional Interface
+from qsum import checksum
+checksum('abc')
+
+# Class Interface
+from qsum import Checksum
+Checksum('abc').checksum_bytes
+```
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
