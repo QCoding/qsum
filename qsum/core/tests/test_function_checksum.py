@@ -1,5 +1,6 @@
+# pylint: disable=missing-function-docstring,function-redefined
 from qsum import checksum
-from qsum.tests.helpers import foo, foo_checksum
+from qsum.tests.helpers import foo_checksum
 
 
 def test_function_attributes_change_checksum():
@@ -18,39 +19,39 @@ def test_function_attributes_change_checksum():
 
 
 def test_function_source_changes():
-    def foo():
+    def another_foo_function():
         return 1
 
-    return_1 = checksum(foo)
+    return_1 = checksum(another_foo_function)
 
-    def foo():
+    def another_foo_function():
         return 2
 
-    return_2 = checksum(foo)
+    return_2 = checksum(another_foo_function)
 
     assert return_1 != return_2
 
 
 def test_function_same_module_same_source_stable():
-    def foo():
+    def another_foo_function():
         pass
 
-    original = checksum(foo)
+    original = checksum(another_foo_function)
 
-    def foo():
+    def another_foo_function():
         pass
 
-    redefined = checksum(foo)
+    redefined = checksum(another_foo_function)
 
     assert original == redefined
 
 
-def foo():
+def foo_function():
     pass
 
 
 def local_foo_checksum():
-    return checksum(foo)
+    return checksum(foo_function)
 
 
 def test_same_function_different_module_different_checksum():

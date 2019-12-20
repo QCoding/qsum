@@ -1,4 +1,4 @@
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods,missing-function-docstring
 import pytest
 
 from qsum import Checksum, checksum
@@ -28,9 +28,9 @@ class CustomDict2(dict):
     """Another Custom Class that inherits from dict"""
 
 
-def foo():
+def foo_function():
     pass
 
 
 def foo_checksum():
-    return checksum(foo)
+    return checksum(foo_function)
