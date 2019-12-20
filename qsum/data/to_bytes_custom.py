@@ -7,6 +7,8 @@ from qsum.data.to_bytes import bytes_from_repr
 def int_to_bytes(obj: int) -> bytes:
     """Convert int's in to the most compact byte representation possible
 
+    CURRENTLY UNUSED, while cleverly packing integers tightly it's actually ~5x slower then just calling repr
+
     Args:
         obj: integer to convert to bytes
 
