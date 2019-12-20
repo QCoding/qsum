@@ -1,12 +1,9 @@
-# pylint: disable=redefined-outer-name
-# pylint: disable=missing-function-docstring
-# pylint: disable=wildcard-import
-# pylint: disable=unused-wildcard-import
+# pylint: disable=redefined-outer-name,missing-function-docstring,wildcard-import,unused-wildcard-import
 
 """Some type specific tests that are hard to do in test_by_type"""
 from qsum.core.constants import ChecksumCollection
 from qsum.core.exceptions import QSumInvalidDataTypeException
-from qsum.core.logic import checksum, Checksum
+from qsum.core.logic import checksum
 
 # noinspection PyUnresolvedReferences
 from qsum.tests.helpers import *

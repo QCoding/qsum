@@ -2,7 +2,23 @@
 import inspect
 import types
 
+import math
+
 from qsum.data.to_bytes import bytes_from_repr
+
+
+def int_to_bytes(obj: int) -> bytes:
+    """Convert int's in to the most compact byte representation possible
+
+    CURRENTLY UNUSED, while cleverly packing integers tightly it's actually ~5x slower then just calling repr
+
+    Args:
+        obj: integer to convert to bytes
+
+    Returns:
+        bytes representing integer
+    """
+    return obj.to_bytes(1 if obj == 0 else math.floor((math.log2(abs(obj)) + 1) / 8 + 1), byteorder='big', signed=True)
 
 
 def complex_to_bytes(obj) -> bytes:
