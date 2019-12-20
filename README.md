@@ -70,6 +70,18 @@ conda config --append channels QCoding
 # install the latest version of QSum
 conda install qsum
 ```
+
+## How to use it
+```
+# Functional Interface
+from qsum import checksum
+checksum('abc')
+
+# Class Interface
+from qsum import Checksum
+Checksum('abc').checksum_bytes
+```
+
 ## Design
 * The first two bytes of every checksum represent the type and will be referred to as the 'type prefix'
 * The rest of the checksum in a digest of the byte representation of the object and will be refered to as the 'data checksum'
@@ -83,20 +95,19 @@ conda install qsum
 * Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
 * Base checksums on object contents and permit the calculation of checksums on mutable objects
 
-### Support for Custom Containers
-* Custom container classes that inherit from common python containers (E.g. tuple, list, set, dict, etc.) are checksummable
+## Type Support
+* The great majority of [Built-in Types](https://docs.python.org/3.7/library/stdtypes.html) including collections are checksummable
+    * _int, float, str, bytes, tuple, list, dict, set, etc._
+* Common types have registered type prefixes which can be used to recover the type from the checksum
+
+###  Custom Containers
+* Custom container classes that inherit from common python containers _(E.g. tuple, list, set, dict)_ are checksummable
 * The class name is not recoverable from the type prefix but will be added as salt to the data checksum to prevent collisions
 
-## Using QSum 
-```
-# Functional Interface
-from qsum import checksum
-checksum('abc')
+### Functions and Modules
+* Functions are checksummed based on a combination of their source code, attributes and module location
+* Modules are checksummed simply based on the hash of their source code
 
-# Class Interface
-from qsum import Checksum
-Checksum('abc').checksum_bytes
-```
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
