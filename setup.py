@@ -20,6 +20,8 @@ def setup_package():
         description="Intuitive and extendable checksumming for python objects",
         summary="Python Checksumming Library",
         python_requires='>=3.5',
+        keywords="checksum checksumming hashing",
+        tests_require=['pytest'],
     )
 
     setup(**metadata)
