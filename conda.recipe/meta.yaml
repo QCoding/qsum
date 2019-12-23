@@ -6,12 +6,11 @@ package:
   version: {{data.get('version')}}
 
 source:
-  git_url: ../
+  path: ../
 
 build:
   noarch: python
   number: 0
-  script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
   build:
@@ -24,9 +23,9 @@ requirements:
 
 test:
   files:
-    - ../pytest.ini
-    - ../mypy.ini
-    - ../.pylintrc
+    - pytest.ini
+    - mypy.ini
+    - .pylintrc
   requires:
     - pytest >=4.4.0
     - pytest-pylint
