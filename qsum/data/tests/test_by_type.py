@@ -2,12 +2,15 @@
 """
 Generalized parametrized tests that should be added for every support type
 """
+import types
 from collections import deque
 
 import pytest
 
 from qsum import checksum, Checksum
 from qsum.core.constants import DEFAULT_BYTES_IN_CHECKSUM
+from qsum.tests import helpers
+from qsum.tests.helpers import foo_function
 
 TYPE_TO_VALUE_EXAMPLES = (
     (str, "adsfsdfdgerrgdgdggddg"),
@@ -28,6 +31,9 @@ TYPE_TO_VALUE_EXAMPLES = (
     (frozenset, frozenset([3, 4.3, 5])),
     (type(None), None),
     (type(Ellipsis), Ellipsis),
+    (types.FunctionType, foo_function),
+    (types.ModuleType, helpers),
+
 )
 
 VALUE_TO_CHECKSUM_EXAMPLES = (
@@ -89,6 +95,12 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
     # Ellipsis
     (Ellipsis, '000b6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d'),
+
+    # Function
+    (foo_function, '00ff57155365be65f118fcc96e2d3ee556aaf62e72baa2a16bd8b36da39120987743'),
+
+    # Module (whenever you add to helpers this checksum has to be adjusted)
+    (helpers, '00ccf0aed8a77e814394a6f6194a4f8052fb33cfa6ad8bb6572f8f5caf28f693083f'),
 )
 
 
