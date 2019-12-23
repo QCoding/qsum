@@ -13,4 +13,5 @@ def test_integer_conversion_to_bytes(range_2_16):
 
 
 def test_module_to_bytes_different_modules():
+    """Verify two different modules result in two different checksums"""
     assert checksum(helpers) != checksum(to_bytes_custom)
