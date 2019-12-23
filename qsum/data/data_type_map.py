@@ -1,11 +1,12 @@
 import functools
+import types
 import typing
 
 from qsum.core.constants import ChecksumCollection
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides, \
     singleton_to_bytes
-from qsum.data.to_bytes_custom import complex_to_bytes
+from qsum.data.to_bytes_custom import complex_to_bytes, module_to_bytes
 
 
 def raise_type_exception(_, data_type) -> None:
@@ -25,7 +26,11 @@ def raise_type_exception(_, data_type) -> None:
 # since we use this one in the data checksum implementation and want to avoid looking it up every time
 TYPE_CLASS_TO_BYTES_FUNCTION = bytes_from_repr
 
-# maps a type to the function used to generate the bytes data that will be hashed in to a checksum
+# The following maps a type to the function used to generate the bytes data that will be hashed in to a checksum
+#
+# Note certain complex objects (mainly collections) aren't listed here as there implementations need to be done
+# at a higher level within the checksumming code, these types are able to map a single object to bytes without
+# having to interpret other objects
 TYPE_TO_BYTES_FUNCTION = {
     # simply get the bytes from the repr of the object
     int: bytes_from_repr,
@@ -48,6 +53,9 @@ TYPE_TO_BYTES_FUNCTION = {
     # some custom logic required
     float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'}),
     complex: complex_to_bytes,
+
+    # very custom logic
+    types.ModuleType: module_to_bytes,
 
     # registered as invalid data types to checksum
     ChecksumCollection: functools.partial(raise_type_exception, data_type=ChecksumCollection),

@@ -2,6 +2,7 @@
 
 # BE REALLY CAREFUL WHAT YOU IMPORT HERE, constants should be lowest level module
 import hashlib
+import types
 import typing
 from collections import deque
 
@@ -26,6 +27,9 @@ CUSTOM_CONTAINER_TYPES = (dict,)  # type: tuple
 
 # all supported container types
 CONTAINER_TYPES = CUSTOM_CONTAINER_TYPES + MAPPABLE_CONTAINER_TYPES  # type: tuple
+
+# all special types implemented in _checksum code
+SPECIAL_TYPES = (types.FunctionType,)
 
 # Used for typing in places where we can't impor the class directly
 CHECKSUM_CLASS_NAME = 'Checksum'

@@ -7,6 +7,7 @@ table, please observe the following reserved groups:
     \x01: builtin python containers and collections
     \xff: special types used by qsum
 """
+import types
 from collections import deque
 
 from qsum.core.constants import ChecksumCollection
@@ -34,6 +35,8 @@ TYPE_TO_PREFIX = {
     # https://stackoverflow.com/questions/15844714/why-am-i-getting-an-error-message-in-python-cannot-import-name-nonetype
     type(None): b'\x00\x0a',
     type(Ellipsis): b'\x00\x0b',
+    types.ModuleType: b'\x00\xcc',  # module is special, let's get it a code name \xcc
+    types.FunctionType: b'\x00\xff',  # function is pretty special, let it have the \xff name
 
     # \x01: builtin python containers and collections that require custom logic to handle breaking open contents
     tuple: b'\x01\x00',

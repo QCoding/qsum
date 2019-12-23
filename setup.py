@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 MAJOR = 0
-MINOR = 0
+MINOR = 1
 PATCH = 0
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 

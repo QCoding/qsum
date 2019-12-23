@@ -1,4 +1,7 @@
 """Specialized to_bytes methods for specific types"""
+import inspect
+import types
+
 import math
 
 from qsum.data.to_bytes import bytes_from_repr
@@ -26,7 +29,7 @@ def complex_to_bytes(obj) -> bytes:
         obj: complex object to convert to bytes
 
     Returns:
-        bytes representing the object
+        bytes representing the complex object
     """
 
     real, imag = obj.real, obj.imag
@@ -34,3 +37,16 @@ def complex_to_bytes(obj) -> bytes:
     new_complex = complex(0.0 if real == 0.0 else real, 0.0 if imag == 0.0 else imag)
 
     return bytes_from_repr(new_complex)
+
+
+def module_to_bytes(obj: types.ModuleType) -> bytes:
+    """Initial implementation will change every time the source code of the module source code changes
+
+    Args:
+        obj: module to convert to bytes
+
+    Returns:
+        byes representing the funciton
+    """
+    source_code = inspect.getsource(obj)
+    return source_code.encode()
