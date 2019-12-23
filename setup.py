@@ -22,6 +22,7 @@ def setup_package():
         python_requires='>=3.5',
         keywords="checksum checksumming hashing",
         tests_require=['pytest'],
+        zip_safe=False,
     )
 
     setup(**metadata)
