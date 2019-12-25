@@ -10,7 +10,7 @@ source:
 
 build:
   noarch: python
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -41,8 +41,9 @@ test:
     - python -c "import qsum; qsum.test(use_default_args=False)"
 
 about:
-  license_file: LICENSE
+  license_file: LICENSE.txt
   license: {{data.get('license')}}
   home: {{data.get('url')}}
-  description: {{data.get('description')}}
-  summary: {{data.get('summary')}}
+  summary: {{data.get('description')}}
+  description: {{data.get('long_description')}}
+  dev_url: {{data.get('url')}}
