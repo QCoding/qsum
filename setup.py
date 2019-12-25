@@ -17,12 +17,27 @@ def setup_package():
         version=VERSION,
         packages=packages,
         url="https://github.com/QCoding/qsum",
-        description="Intuitive and extendable checksumming for python objects",
-        summary="Python Checksumming Library",
+        # in pkg-info this maps to 'summary'
+        description="Python Checksumming Library",
+        # in pkg-info this maps to 'description'
+        long_description="Intuitive and extendable checksumming for python objects",
         python_requires='>=3.5',
         keywords="checksum checksumming hashing",
         tests_require=['pytest'],
         zip_safe=False,
+        platforms="any",
+        extras_require={
+            "test": [
+                "pytest>=4.4.0",
+                "pytest-pylint",
+            ]
+        },
+        classifiers=[
+            "Programming Language :: Python :: 3.5",
+            "Programming Language :: Python :: 3.6",
+            "Programming Language :: Python :: 3.7",
+            "Programming Language :: Python :: 3.8",
+        ]
     )
 
     setup(**metadata)
