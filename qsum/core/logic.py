@@ -70,7 +70,7 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
         return _checksum((obj, resolved_deps), obj_type=tuple, checksum_type=obj_type, hash_algo=hash_algo,
                          allow_unregistered=allow_unregistered)  # we have handled the depends_on so don't pass it again
 
-        # Handle containers with multiple objects that need to be individual checksummed and then combined
+    # Handle containers with multiple objects that need to be individual checksummed and then combined
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
             checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo,
