@@ -1,5 +1,5 @@
 """Functions used throughout qsum that maintain a cache"""
-
+import sys
 from functools import lru_cache
 
 import pkg_resources
@@ -22,4 +22,7 @@ def get_package_version(package: str) -> str:
     Raises:
         pkg_resources.DistributionNotFound: when the package info can't be located
     """
+    if package == 'python':
+        return ".".join(map(str,sys.version_info[0:3]))
+
     return pkg_resources.get_distribution(package).version

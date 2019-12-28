@@ -10,6 +10,11 @@ def test_get_package_version_bad_package():
     get_package_version('foo')
 
 
-def test_get_package_version():
+def test_get_package_version_pytest():
     """Validate we can pull a package version"""
     assert tuple(map(int, get_package_version('pytest').split('.'))) > (4, 4, 0)
+
+
+def test_package_version_python():
+    """Validate the special case of asking for the python version works"""
+    assert tuple(map(int, get_package_version('python').split('.'))) > (3, 5, 0)
