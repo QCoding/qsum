@@ -21,7 +21,7 @@ def test_blank_checksum_file(tmp_path):
     """Blank files should have predicable checksums"""
     # write a blank file
     blank_file_path = tmp_path / 'blank_file.txt'
-    with open(blank_file_path, 'w'):
+    with open(str(blank_file_path), 'w'):
         pass
 
     # text read mode
