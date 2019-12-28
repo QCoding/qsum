@@ -37,11 +37,7 @@ def test_checksum_file_changes(tmp_path):
     """Changing a file should change it's checksum"""
     # write a file
     file_path = tmp_path / 'file_to_checksum.txt'
-    with open(file_path, 'w') as file_to_write:
-        file_to_write.writelines(
-            ["A great file",
-             "Is only as good as"])
-
+    file_path.write_text("A great file\nIs only as good as")
     # text read mode
     text_file = open(file_path, mode='r')
     text_file_org_checksum = checksum(text_file)
@@ -51,9 +47,7 @@ def test_checksum_file_changes(tmp_path):
     binary_file_org_checksum = checksum(binary_file)
 
     # change the file
-    with open(file_path, 'w') as file_to_write:
-        file_to_write.writelines(
-            ["It's weakeast line"])
+    file_path.write_text("It's weakeast line")
 
     # ensure the checksum changes when the file changes
     assert checksum(text_file) != text_file_org_checksum
