@@ -1,9 +1,9 @@
 """Specialized to_bytes methods for specific types"""
 import inspect
+import math
 import types
 
-import math
-
+from qsum.core.constants import FILE_IO_CHUNK_SIZE
 from qsum.data.to_bytes import bytes_from_repr
 
 
@@ -46,7 +46,43 @@ def module_to_bytes(obj: types.ModuleType) -> bytes:
         obj: module to convert to bytes
 
     Returns:
-        byes representing the funciton
+        byes representing the function
     """
     source_code = inspect.getsource(obj)
     return source_code.encode()
+
+
+def _file_to_bytes_generator(obj):
+    """A generator to read the lines of a file"
+    Args:
+        obj: file handle to iterate
+    Returns:
+        The full bytes of a file while preserving the original position
+    """
+    # store the original position
+    org_position = obj.tell()
+    # start at the beginning of the file
+    obj.seek(0)
+    while True:
+        # if the file is in reading bytes mode return the bytes directly otherwise encode the string to bytes
+        # note we never read lines as the line separator should be included even when reading text files
+        chunk = obj.read(FILE_IO_CHUNK_SIZE) if obj.mode == 'rb' else obj.read(FILE_IO_CHUNK_SIZE).encode()
+
+        if len(chunk) == 0:
+            break
+        else:
+            yield chunk
+    # restore the original position
+    obj.seek(org_position)
+
+
+def file_to_bytes(obj) -> bytes:
+    """Extract the bytes of a file, but do not include the path itself in the bytes
+
+    Args:
+        obj: file to extract the bytes of
+
+    Returns:
+        Generator that extracts all the bytes of a file
+    """
+    return _file_to_bytes_generator(obj)

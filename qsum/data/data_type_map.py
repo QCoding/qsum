@@ -1,12 +1,13 @@
 import functools
 import types
 import typing
+from io import TextIOWrapper, BufferedReader, BufferedWriter
 
 from qsum.core.constants import ChecksumCollection, DependsOn
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides, \
     singleton_to_bytes
-from qsum.data.to_bytes_custom import complex_to_bytes, module_to_bytes
+from qsum.data.to_bytes_custom import complex_to_bytes, module_to_bytes, file_to_bytes
 
 
 def raise_type_exception(_, data_type) -> None:
@@ -56,6 +57,10 @@ TYPE_TO_BYTES_FUNCTION = {
 
     # very custom logic
     types.ModuleType: module_to_bytes,
+
+    # file open types
+    TextIOWrapper: file_to_bytes,
+    BufferedReader: file_to_bytes,
 
     # required to be checksummable b/c of internal use in _checksum logic
     DependsOn: bytes_from_repr,
