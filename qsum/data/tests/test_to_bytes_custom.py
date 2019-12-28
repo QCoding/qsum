@@ -25,11 +25,11 @@ def test_blank_checksum_file(tmp_path):
         pass
 
     # text read mode
-    text_file = open(blank_file_path, mode='r')
+    text_file = open(str(blank_file_path), mode='r')
     assert Checksum(text_file).hex() == '00f0e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
     # binary read mode
-    binary_file = open(blank_file_path, mode='rb')
+    binary_file = open(str(blank_file_path), mode='rb')
     assert Checksum(binary_file).hex() == '00f1e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
 
