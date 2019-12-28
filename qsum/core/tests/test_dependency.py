@@ -1,6 +1,9 @@
+import pytest
+
 from qsum import checksum, Checksum
 from qsum.core.constants import DependsOn, DEFAULT_BYTES_IN_CHECKSUM
-from qsum.core.dependency import resolve_dependencies
+from qsum.core.dependency import resolve_dependencies, resolve_dependency
+from qsum.core.exceptions import QSumInvalidDependsOn
 
 
 def test_resolve_dependencies_collection_type_independent():
@@ -22,3 +25,8 @@ def test_dependency_original_type():
 def test_python_env_dependency():
     """Simple test of DependsOn.PythonEnv"""
     assert len(checksum('abc', depends_on=(DependsOn.PythonEnv,))) == DEFAULT_BYTES_IN_CHECKSUM
+
+
+@pytest.mark.xfail(raises=QSumInvalidDependsOn)
+def test_invalid_dependency():
+    resolve_dependency(1)
