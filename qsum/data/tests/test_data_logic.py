@@ -4,9 +4,9 @@ import hashlib
 import pytest
 
 from qsum.core.constants import DEFAULT_HASH_ALGO
-from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
+from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum, QSumInvalidBytesDataType
 from qsum.data import data_checksum
-from qsum.data.data_logic import data_digest_from_checksum, resolve_hash_algo
+from qsum.data.data_logic import data_digest_from_checksum, resolve_hash_algo, bytes_to_digest
 from qsum.tests.helpers import STR_CHECKSUM_OBJS, Custom
 
 
@@ -31,3 +31,8 @@ def test_invalid_type_passed_to_data_digest_from_checksum():
 
 def test_consistent_hash_algo_resolution():
     assert resolve_hash_algo('sha256') == resolve_hash_algo(hashlib.sha256)
+
+
+@pytest.mark.xfail(raises=QSumInvalidBytesDataType)
+def test_bytes_to_digest_invalid_bytes_data():
+    bytes_to_digest([1, 2, 3], hash_algo=DEFAULT_HASH_ALGO)
