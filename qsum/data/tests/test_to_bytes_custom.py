@@ -39,11 +39,11 @@ def test_checksum_file_changes(tmp_path):
     file_path = tmp_path / 'file_to_checksum.txt'
     file_path.write_text("A great file\nIs only as good as")
     # text read mode
-    text_file = open(file_path, mode='r')
+    text_file = open(str(file_path), mode='r')
     text_file_org_checksum = checksum(text_file)
 
     # binary read mode
-    binary_file = open(file_path, mode='rb')
+    binary_file = open(str(file_path), mode='rb')
     binary_file_org_checksum = checksum(binary_file)
 
     # change the file
