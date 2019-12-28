@@ -29,4 +29,5 @@ def test_python_env_dependency():
 
 @pytest.mark.xfail(raises=QSumInvalidDependsOn)
 def test_invalid_dependency():
+    """Make sure that a misc type passed to resolve_dependency fails"""
     resolve_dependency(1)
