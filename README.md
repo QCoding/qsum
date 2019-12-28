@@ -83,9 +83,9 @@ Checksum('abc').checksum_bytes
 ```
 
 ## Design
-* The first two bytes of every checksum represent the type and will be referred to as the 'type prefix'
-* The rest of the checksum in a digest of the byte representation of the object and will be refered to as the 'data checksum'
-* QSUM CHECKSUM = TYPE PREFIX + DATA CHECKSUM
+* QSUM CHECKSUM = TYPE PREFIX + DATA CHECKSUM 
+    * The first two bytes of every checksum represent the type and will be referred to as the 'type prefix'
+    * The rest of the checksum in a digest of the byte representation of the object and will be refered to as the 'data checksum'
 
 ### Relationship to `__hash__`
 * Respect the same contract as `__hash__` with regards to: 'The only required property is that objects which compare equal have the same hash value'
@@ -94,6 +94,9 @@ Checksum('abc').checksum_bytes
 * Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
 * Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
 * Base checksums on object contents and permit the calculation of checksums on mutable objects
+
+### Adding Salt
+* By default the environment is not included in the checksum but individual package versions can be included if the package name is added via the depends_on argument
 
 ## Type Support
 * The great majority of [Built-in Types](https://docs.python.org/3.7/library/stdtypes.html) including collections are checksummable
@@ -107,7 +110,6 @@ Checksum('abc').checksum_bytes
 ### Functions and Modules
 * Functions are checksummed based on a combination of their source code, attributes and module location
 * Modules are checksummed simply based on the hash of their source code
-
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
