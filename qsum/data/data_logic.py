@@ -1,5 +1,4 @@
 import hashlib
-import inspect
 import types
 import typing
 
@@ -53,7 +52,7 @@ def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray, typing.Generator]
         for bytes_data_iteration in bytes_data:
             hasher.update(bytes_data_iteration)
     else:
-        raise QSumInvalidBytesDataType("'{}' type is not valid for bytes data", type(bytes_data))
+        raise QSumInvalidBytesDataType("'{}' type is not valid for bytes data".format(type(bytes_data)))
 
     return hasher.digest()
 

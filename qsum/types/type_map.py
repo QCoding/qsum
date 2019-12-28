@@ -9,7 +9,7 @@ table, please observe the following reserved groups:
 """
 import types
 from collections import deque
-from io import TextIOWrapper, BufferedReader, BufferedWriter
+from io import TextIOWrapper, BufferedReader
 
 from qsum.core.constants import ChecksumCollection, DependsOn
 

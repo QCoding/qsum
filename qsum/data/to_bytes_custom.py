@@ -70,8 +70,7 @@ def _file_to_bytes_generator(obj):
 
         if len(chunk) == 0:
             break
-        else:
-            yield chunk
+        yield chunk
     # restore the original position
     obj.seek(org_position)
 

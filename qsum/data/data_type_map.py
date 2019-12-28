@@ -1,7 +1,7 @@
 import functools
 import types
 import typing
-from io import TextIOWrapper, BufferedReader, BufferedWriter
+from io import TextIOWrapper, BufferedReader
 
 from qsum.core.constants import ChecksumCollection, DependsOn
 from qsum.core.exceptions import QSumInvalidDataTypeException
