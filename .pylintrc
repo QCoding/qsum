@@ -507,8 +507,9 @@ valid-metaclass-classmethod-first-arg=cls
 
 [DESIGN]
 
+# QSUM Override: Increasing to allow for more complex functions
 # Maximum number of arguments for function / method.
-max-args=5
+max-args=10
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes=7
