@@ -7,6 +7,8 @@ import typing
 from collections import deque
 
 # the default hash algo to use
+from enum import Enum
+
 DEFAULT_HASH_ALGO = hashlib.sha256
 
 # whether to allow unregistered types by default
@@ -40,8 +42,14 @@ ChecksumType = typing.Union[CHECKSUM_CLASS_NAME, bytes, str]
 # hash algo can be a str of a method in hashlib or the callable itself
 HashAlgoType = typing.Union['str', typing.Callable]
 
+
+class DependsOn(Enum):
+    """Special Values that can be added to the depends on argument"""
+    PythonEnv = 'PythonEnv'
+
+
 # depends on types
-DependsOnType = typing.Optional[typing.Union[tuple, list, set]]
+DependsOnType = typing.Optional[typing.Union[tuple, list, set, DependsOn]]
 
 
 class ChecksumCollection:  # pylint: disable=too-few-public-methods

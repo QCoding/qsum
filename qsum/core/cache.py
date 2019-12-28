@@ -26,3 +26,14 @@ def get_package_version(package: str) -> str:
         return ".".join(map(str, sys.version_info[0:3]))
 
     return pkg_resources.get_distribution(package).version
+
+
+# since the environment shouldn't change within a session only need to cache one value
+@lru_cache(maxsize=1)
+def all_package_versions() -> dict:
+    """Get all the package names with their versions in the environment
+    Returns:
+        dict mapping package name to package version
+    """
+    return {package.project_name: package.version for package in
+            pkg_resources.working_set}  # pylint: disable=not-an-iterable
