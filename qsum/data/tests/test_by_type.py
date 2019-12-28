@@ -8,7 +8,7 @@ from collections import deque
 import pytest
 
 from qsum import checksum, Checksum
-from qsum.core.constants import DEFAULT_BYTES_IN_CHECKSUM
+from qsum.core.constants import DEFAULT_BYTES_IN_CHECKSUM, DependsOn
 from qsum.tests import helpers
 from qsum.tests.helpers import foo_function
 
@@ -33,6 +33,7 @@ TYPE_TO_VALUE_EXAMPLES = (
     (type(Ellipsis), Ellipsis),
     (types.FunctionType, foo_function),
     (types.ModuleType, helpers),
+    (DependsOn, DependsOn.PythonEnv)
 
 )
 
@@ -101,6 +102,9 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
     # Module (whenever you add to helpers this checksum has to be adjusted)
     (helpers, '00ccf0aed8a77e814394a6f6194a4f8052fb33cfa6ad8bb6572f8f5caf28f693083f'),
+
+    # DependsOn
+    (DependsOn.PythonEnv, 'ffc01b5376344d56a72494651932ca29d63df34921e01e98b296210f21848337a796'),
 )
 
 

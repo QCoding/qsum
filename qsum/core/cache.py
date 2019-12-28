@@ -35,4 +35,5 @@ def all_package_versions() -> dict:
     Returns:
         dict mapping package name to package version
     """
-    return {package.project_name: package.version for package in pkg_resources.working_set}
+    return {package.project_name: package.version for package in
+            pkg_resources.working_set}  # pylint: disable=not-an-iterable

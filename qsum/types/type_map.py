@@ -10,7 +10,7 @@ table, please observe the following reserved groups:
 import types
 from collections import deque
 
-from qsum.core.constants import ChecksumCollection
+from qsum.core.constants import ChecksumCollection, DependsOn
 
 PREFIX_BYTES = 2
 
@@ -48,5 +48,6 @@ TYPE_TO_PREFIX = {
 
     ### \xff: special types used by qsum
     ChecksumCollection: b'\xff\x11',
+    DependsOn: b'\xff\xc0',
 }
 PREFIX_TO_TYPE = {v: k for k, v in TYPE_TO_PREFIX.items()}

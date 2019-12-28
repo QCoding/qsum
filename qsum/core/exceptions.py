@@ -24,3 +24,7 @@ class QSumUnhandledContainerType(QSumException):
 
 class QSumInvalidChecksum(QSumException):
     """Where a checksum like object was expected an invalid object was given"""
+
+
+class QSumInvalidDependsOn(QSumException):
+    """Invalid type of value passed to depends on"""
