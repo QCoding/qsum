@@ -17,7 +17,7 @@ from qsum.types.type_map import TYPE_TO_PREFIX, UNREGISTERED_TYPE_PREFIX
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
-             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED, depends_on: DependsOnType= None) -> bytes:
+             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED, depends_on: DependsOnType = None) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
