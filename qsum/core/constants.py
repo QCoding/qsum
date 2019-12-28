@@ -40,6 +40,9 @@ ChecksumType = typing.Union[CHECKSUM_CLASS_NAME, bytes, str]
 # hash algo can be a str of a method in hashlib or the callable itself
 HashAlgoType = typing.Union['str', typing.Callable]
 
+# depends on types
+DependsOnType = typing.Optional[typing.Union[tuple, list, set]]
+
 
 class ChecksumCollection:  # pylint: disable=too-few-public-methods
     """Dummy class to provide a type for combined checksums"""

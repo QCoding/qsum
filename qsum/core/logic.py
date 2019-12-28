@@ -8,7 +8,7 @@ from functools import reduce
 from qsum.core.cache import is_sub_class
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
     UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType, \
-    DEFAULT_ALLOW_UNREGISTERED
+    DEFAULT_ALLOW_UNREGISTERED, DependsOnType
 from qsum.core.dependency import resolve_dependencies
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
@@ -17,7 +17,7 @@ from qsum.types.type_map import TYPE_TO_PREFIX, UNREGISTERED_TYPE_PREFIX
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
-             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED, depends_on: typing.Collection = None) -> bytes:
+             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED, depends_on: DependsOnType= None) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -44,7 +44,7 @@ def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
 
 
 def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: HashAlgoType,
-              allow_unregistered: bool, depends_on: typing.Collection = None) -> bytes:
+              allow_unregistered: bool, depends_on: DependsOnType = None) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:

@@ -1,6 +1,5 @@
-import typing
-
 from qsum.core.cache import get_package_version
+from qsum.core.constants import DependsOnType
 
 
 def resolve_dependency(dep):
@@ -15,7 +14,7 @@ def resolve_dependency(dep):
     return get_package_version(dep)
 
 
-def resolve_dependencies(depends_on: typing.Collection):
+def resolve_dependencies(depends_on: DependsOnType):
     """Map the individual deps to their resolution
 
     Args:
