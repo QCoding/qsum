@@ -35,4 +35,8 @@ def resolve_dependencies(depends_on: DependsOnType):
         output type
 
     """
+    # support a single DependsOn value
+    if isinstance(depends_on, DependsOn):
+        depends_on = (depends_on,)
+
     return {d: resolve_dependency(d) for d in depends_on}

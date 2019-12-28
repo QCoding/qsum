@@ -23,8 +23,8 @@ def test_dependency_original_type():
 
 
 def test_python_env_dependency():
-    """Simple test of DependsOn.PythonEnv"""
-    assert len(checksum('abc', depends_on=(DependsOn.PythonEnv,))) == DEFAULT_BYTES_IN_CHECKSUM
+    """Simple test of DependsOn.PythonEnv that also validates depends_on support of single DependsOn enum values"""
+    assert len(checksum('abc', depends_on=DependsOn.PythonEnv)) == DEFAULT_BYTES_IN_CHECKSUM
 
 
 @pytest.mark.xfail(raises=QSumInvalidDependsOn)

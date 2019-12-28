@@ -49,7 +49,7 @@ class DependsOn(Enum):
 
 
 # depends on types
-DependsOnType = typing.Optional[typing.Union[tuple, list, set]]
+DependsOnType = typing.Optional[typing.Union[tuple, list, set, DependsOn]]
 
 
 class ChecksumCollection:  # pylint: disable=too-few-public-methods
