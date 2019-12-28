@@ -8,7 +8,8 @@ from functools import reduce
 from qsum.core.cache import is_sub_class
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
     UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType, \
-    DEFAULT_ALLOW_UNREGISTERED
+    DEFAULT_ALLOW_UNREGISTERED, DependsOnType
+from qsum.core.dependency import resolve_dependencies
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
 from qsum.types.type_logic import checksum_to_type, type_to_prefix
@@ -16,7 +17,7 @@ from qsum.types.type_map import TYPE_TO_PREFIX, UNREGISTERED_TYPE_PREFIX
 
 
 def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
-             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED) -> bytes:
+             allow_unregistered: bool = DEFAULT_ALLOW_UNREGISTERED, depends_on: DependsOnType = None) -> bytes:
     """Generate a checksum for a given object based on it's type and contents
 
     Args:
@@ -24,6 +25,8 @@ def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
         hash_algo: the hash algorithm to use to convert the bytes to a message digest
         allow_unregistered: as long as the logic can handle it allow unregistered types to be checksummed,
             currently the main purpose of this is to allow subclasses of supported containers to be checksummed
+        depends_on: collection of dependencies, strings represent python package distributions,
+            adding 'python' will include the python version in the hash
 
     Returns:
         checksum bytes representing the object's type and a message digest of the data
@@ -37,27 +40,37 @@ def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
     '0103ed71fada8381439167d30ca1310e87af60e8f41e1fa320e0f626775f5b8cd908'
     """
     obj_type = type(obj)
-    return _checksum(obj, obj_type, obj_type, hash_algo, allow_unregistered=allow_unregistered)
+    return _checksum(obj, obj_type, obj_type, hash_algo, allow_unregistered=allow_unregistered, depends_on=depends_on)
 
 
 def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type, hash_algo: HashAlgoType,
-              allow_unregistered) -> bytes:
+              allow_unregistered: bool, depends_on: DependsOnType = None) -> bytes:
     """Checksum the given obj, assuming it's of obj_type and return a checksum of type checksum_type
 
     Args:
         obj: object to checksum
-        obj_type: the type of logic to use for checksumming the data
+        obj_type:
+            the type of logic to use for checksumming the data,
+            useful to aliasing one type to another's checksum methodology while maintaining the correct prefix
         checksum_type:
             the type to use for the checksum prefix, useful when the process of checksumming one object involves
             transforming the data to another type but we want to return the original object type
         hash_algo: the hash algorithm to use to convert the bytes to a message digest
         allow_unregistered: as long as the logic can handle it allow unregistered types to be checksummed,
             currently the main purpose of this is to allow subclasses of supported containers to be checksummed
+        depends_on: collection of dependencies, strings represent python package distributions
 
     Returns:
         checksum bytes
 
     """
+    # if depends_on is specified then we need to combine the hash of the resolved dependencies with the hash of obj
+    # note recursive calls to _checksum never pass depends_on since it always handled in the first call from checksum
+    if depends_on is not None:
+        resolved_deps = resolve_dependencies(depends_on)
+        return _checksum((obj, resolved_deps), obj_type=tuple, checksum_type=obj_type, hash_algo=hash_algo,
+                         allow_unregistered=allow_unregistered)  # we have handled the depends_on so don't pass it again
+
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
