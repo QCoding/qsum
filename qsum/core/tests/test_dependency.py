@@ -1,4 +1,5 @@
 from qsum import checksum, Checksum
+from qsum.core.constants import DependsOn, DEFAULT_BYTES_IN_CHECKSUM
 from qsum.core.dependency import resolve_dependencies
 
 
@@ -16,3 +17,8 @@ def test_checksum_changes_with_dependency():
 def test_dependency_original_type():
     """Ensure we get the original type right even if adding depends_on"""
     assert Checksum('abc', depends_on=('pytest',)).type == str
+
+
+def test_python_env_dependency():
+    """Simple test of DependsOn.PythonEnv"""
+    assert len(checksum('abc', depends_on=(DependsOn.PythonEnv,))) == DEFAULT_BYTES_IN_CHECKSUM

@@ -1,7 +1,10 @@
 import pkg_resources
 
-from qsum.core import exceptions
+# import useful core modules to the top level package
+from qsum.core import exceptions, cache, constants
+# import the most common core functions to the top level package
 from qsum.core.logic import checksum, checksum_hex, Checksum, is_supported_type
+# it should always be easy to run tests, which are shipped with the qsum package
 from qsum.util._tester import test
 
 try:
