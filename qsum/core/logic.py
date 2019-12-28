@@ -25,7 +25,8 @@ def checksum(obj: typing.Any, hash_algo: HashAlgoType = DEFAULT_HASH_ALGO,
         hash_algo: the hash algorithm to use to convert the bytes to a message digest
         allow_unregistered: as long as the logic can handle it allow unregistered types to be checksummed,
             currently the main purpose of this is to allow subclasses of supported containers to be checksummed
-        depends_on: collection of dependencies, strings represent python package distributions
+        depends_on: collection of dependencies, strings represent python package distributions,
+            adding 'python' will include the python version in the hash
 
     Returns:
         checksum bytes representing the object's type and a message digest of the data
