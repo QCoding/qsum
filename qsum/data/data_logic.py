@@ -1,8 +1,9 @@
 import hashlib
+import types
 import typing
 
 from qsum.core.constants import HashAlgoType, ChecksumType, CHECKSUM_CLASS_NAME
-from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum
+from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum, QSumInvalidBytesDataType
 from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION, TYPE_CLASS_TO_BYTES_FUNCTION
 from qsum.types.type_map import PREFIX_BYTES
 
@@ -31,18 +32,28 @@ def resolve_hash_algo(hash_algo: HashAlgoType) -> typing.Callable:
     return hash_algo
 
 
-def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray], hash_algo: HashAlgoType) -> bytes:
+def bytes_to_digest(bytes_data: typing.Union[bytes, bytearray, typing.Generator], hash_algo: HashAlgoType) -> bytes:
     """Convert bytes in to message digest using the given hash algo
 
     Args:
-        bytes_data: the bytes representing the data
+        bytes_data: the bytes representing the data or a generator that iterates bytes
         hash_algo:  the hash algorithm to use to convert the bytes to a message digest
 
     Returns:
         a digest of the bytes
     """
     hasher = resolve_hash_algo(hash_algo)()
-    hasher.update(bytes_data)
+
+    # if given resolved bytes
+    if isinstance(bytes_data, (bytes, bytearray)):
+        hasher.update(bytes_data)
+    # if we have a generator then iterate through it
+    elif isinstance(bytes_data, types.GeneratorType):
+        for bytes_data_iteration in bytes_data:
+            hasher.update(bytes_data_iteration)
+    else:
+        raise QSumInvalidBytesDataType("'{}' type is not valid for bytes data".format(type(bytes_data)))
+
     return hasher.digest()
 
 

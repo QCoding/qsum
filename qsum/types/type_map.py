@@ -9,6 +9,7 @@ table, please observe the following reserved groups:
 """
 import types
 from collections import deque
+from io import TextIOWrapper, BufferedReader
 
 from qsum.core.constants import ChecksumCollection, DependsOn
 
@@ -18,6 +19,10 @@ PREFIX_BYTES = 2
 CHECKSUM_TYPE_PREFIX = b'\xff\x00'  # Checksum class
 UNREGISTERED_TYPE_PREFIX = b'\xff\xaa'  # An unregistered type
 RESERVED_INVALID_PREFIX = b'\xff\xff'  # Invalid prefix for testing
+
+# mostly for validating uniqueness
+SPECIAL_PREFIXES = {CHECKSUM_TYPE_PREFIX, UNREGISTERED_TYPE_PREFIX, RESERVED_INVALID_PREFIX}
+
 # *************************
 
 TYPE_TO_PREFIX = {
@@ -35,6 +40,12 @@ TYPE_TO_PREFIX = {
     # https://stackoverflow.com/questions/15844714/why-am-i-getting-an-error-message-in-python-cannot-import-name-nonetype
     type(None): b'\x00\x0a',
     type(Ellipsis): b'\x00\x0b',
+
+    # types from open built-in function
+    TextIOWrapper: b'\x00\xf0',
+    BufferedReader: b'\x00\xf1',
+
+    # types requiring use of types module for definition
     types.ModuleType: b'\x00\xcc',  # module is special, let's get it a code name \xcc
     types.FunctionType: b'\x00\xff',  # function is pretty special, let it have the \xff name
 
@@ -46,7 +57,7 @@ TYPE_TO_PREFIX = {
     set: b'\x01\x04',
     frozenset: b'\x01\x05',
 
-    ### \xff: special types used by qsum
+    # \xff: special types used by qsum
     ChecksumCollection: b'\xff\x11',
     DependsOn: b'\xff\xc0',
 }

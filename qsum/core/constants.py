@@ -54,3 +54,8 @@ DependsOnType = typing.Optional[typing.Union[tuple, list, set, DependsOn]]
 
 class ChecksumCollection:  # pylint: disable=too-few-public-methods
     """Dummy class to provide a type for combined checksums"""
+
+
+# Read 1mb of files at a time to checksum them, this could probably use some tuning
+# Changes this should not alter the value of the checksums
+FILE_IO_CHUNK_SIZE = 1024 * 1024

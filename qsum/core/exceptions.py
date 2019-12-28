@@ -28,3 +28,8 @@ class QSumInvalidChecksum(QSumException):
 
 class QSumInvalidDependsOn(QSumException):
     """Invalid type of value passed to depends on"""
+
+
+class QSumInvalidBytesDataType(QSumException):
+    """Invalid type of bytes data, must be bytes, bytearray
+    or a valid generator that produces bytes or bytearray values"""

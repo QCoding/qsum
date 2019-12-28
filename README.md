@@ -97,6 +97,11 @@ Checksum('abc').checksum_bytes
 
 ### Adding Salt
 * By default the environment is not included in the checksum but individual package versions can be included if the package name is added via the depends_on argument
+* To include the entire python environment in the checksum:
+    ```
+    from qsum import checksum, DependsOn
+    checksum('abc', depends_on=DependsOn.PythonEnv)
+    ```
 
 ## Type Support
 * The great majority of [Built-in Types](https://docs.python.org/3.7/library/stdtypes.html) including collections are checksummable
@@ -110,6 +115,9 @@ Checksum('abc').checksum_bytes
 ### Functions and Modules
 * Functions are checksummed based on a combination of their source code, attributes and module location
 * Modules are checksummed simply based on the hash of their source code
+
+### Files
+* When passed an open file handle qsum will include all the bytes of the file in the checksum calculation
 
 ## References
 [Wikipedia Checksum](https://en.wikipedia.org/wiki/Checksum)
