@@ -5,6 +5,8 @@ from functools import lru_cache
 import pkg_resources
 
 # the maxsize here should be ~ # of common types * # of groupings used (~3)
+from qsum.core.constants import UNKNOWN_VERSION
+
 is_sub_class = lru_cache(maxsize=256)(issubclass)  # pylint: disable=invalid-name
 
 
@@ -46,3 +48,13 @@ def all_package_versions(include_python_version=True) -> dict:
         all_packages['python'] = get_package_version('python')
 
     return all_packages
+
+
+# Used for calculating both __version__ and internal qsum calls
+@lru_cache(maxsize=1)
+def qsum_version():
+    """Gets the version of qsum"""
+    try:
+        return pkg_resources.get_distribution('qsum').version
+    except pkg_resources.DistributionNotFound:
+        return UNKNOWN_VERSION

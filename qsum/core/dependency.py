@@ -1,6 +1,8 @@
-from qsum.core.cache import get_package_version, all_package_versions
-from qsum.core.constants import DependsOnType, DependsOn
-from qsum.core.exceptions import QSumInvalidDependsOn
+import sys
+
+from qsum.core.cache import get_package_version, all_package_versions, qsum_version
+from qsum.core.constants import DependsOnType, DependsOn, UNKNOWN_VERSION
+from qsum.core.exceptions import QSumInvalidDependsOn, QSumUnknownVersionDependency
 
 
 def resolve_dependency(dep):
@@ -19,8 +21,15 @@ def resolve_dependency(dep):
     # Custom case each DependsOn value
     if dep == DependsOn.PythonEnv:
         return all_package_versions()
-    elif dep == DependsOn.PythonVer:
+    if dep == DependsOn.PythonVer:
         return get_package_version('python')
+    if dep == DependsOn.Platform:
+        return sys.platform
+    if dep == DependsOn.QSumVer:
+        qsum_resolved_version = qsum_version()
+        if qsum_resolved_version == UNKNOWN_VERSION:
+            raise QSumUnknownVersionDependency()  # pragma: no cover
+        return qsum_resolved_version  # pragma: no cover
 
     raise QSumInvalidDependsOn("{} is not a valid dependency to resolve")
 
