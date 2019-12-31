@@ -29,11 +29,20 @@ def get_package_version(package: str) -> str:
 
 
 # since the environment shouldn't change within a session only need to cache one value
-@lru_cache(maxsize=1)
-def all_package_versions() -> dict:
+@lru_cache(maxsize=2)
+def all_package_versions(include_python_version=True) -> dict:
     """Get all the package names with their versions in the environment
+
+    Args:
+        include_python_version: if True then include the version of python itself
     Returns:
         dict mapping package name to package version
     """
-    return {package.project_name: package.version for package in
-            pkg_resources.working_set}  # pylint: disable=not-an-iterable
+    all_packages = {package.project_name: package.version for package in
+                    pkg_resources.working_set}  # pylint: disable=not-an-iterable
+
+    # include the version of python itself if requested
+    if include_python_version:
+        all_packages['python'] = get_package_version('python')
+
+    return all_packages
