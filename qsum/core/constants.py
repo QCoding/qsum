@@ -43,9 +43,12 @@ ChecksumType = typing.Union[CHECKSUM_CLASS_NAME, bytes, str]
 HashAlgoType = typing.Union['str', typing.Callable]
 
 
+# TODO: after dropping py 3.5 support consider switching to https://docs.python.org/3.6/library/enum.html#enum.IntFlag
+#       so that flags can be combined using binary operations instead of providing a tuple
 class DependsOn(Enum):
     """Special Values that can be added to the depends on argument"""
-    PythonEnv = 'PythonEnv'
+    PythonEnv = 'PythonEnv'  # versions of all the packages in the environment
+    PythonVer = 'PythonVer'  # just the version of python itself
 
 
 # depends on types

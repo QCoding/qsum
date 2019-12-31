@@ -19,6 +19,8 @@ def resolve_dependency(dep):
     # Custom case each DependsOn value
     if dep == DependsOn.PythonEnv:
         return all_package_versions()
+    elif dep == DependsOn.PythonVer:
+        return get_package_version('python')
 
     raise QSumInvalidDependsOn("{} is not a valid dependency to resolve")
 
