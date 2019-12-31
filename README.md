@@ -6,7 +6,7 @@ Intuitive and extendable checksumming for python objects
   <td>Latest Release</td>
   <td>
     <a href="https://anaconda.org/qcoding/qsum">
-    <img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=1" alt="Anaconda Cloud"/>
+    <img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=2" alt="Anaconda Cloud"/>
     </a>
   </td>
 </tr>
@@ -89,7 +89,7 @@ Checksum('abc').checksum_bytes
 
 ### Relationship to `__hash__`
 * Respect the same contract as `__hash__` with regards to: 'The only required property is that objects which compare equal have the same hash value'
-* Do not salt hash values and maintain as much stability in checksums as possible throughout python sessions, python versions, and versions of this package
+* Do not salt hash values (unless requested) and maintain stability in checksums throughout python sessions and versions along with releases of this package
 * PYTHONHASHSEED should have no effect on checksums
 * Provide significantly longer checksums than `__hash__` which 'is typically 8 bytes on 64-bit builds and 4 bytes on 32-bit builds'
 * Represent all checksums as bytes but provide a toolkit to view more human readable formats like hexdigests
@@ -105,7 +105,7 @@ Checksum('abc').checksum_bytes
 
 ## Type Support
 * The great majority of [Built-in Types](https://docs.python.org/3.7/library/stdtypes.html) including collections are checksummable
-    * _int, float, str, bytes, tuple, list, dict, set, etc._
+    * _bool, int, float, complex, str, bytes, tuple, list, dict, set, deque, etc._
 * Common types have registered type prefixes which can be used to recover the type from the checksum
 
 ###  Custom Containers

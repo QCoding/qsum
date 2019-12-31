@@ -33,3 +33,8 @@ class QSumInvalidDependsOn(QSumException):
 class QSumInvalidBytesDataType(QSumException):
     """Invalid type of bytes data, must be bytes, bytearray
     or a valid generator that produces bytes or bytearray values"""
+
+
+class QSumUnknownVersionDependency(QSumException):
+    """QSum version is being added via DependsOn but the package version can not be resolved,
+    this may happen if you are running qsum locally and not via a conda installation"""
