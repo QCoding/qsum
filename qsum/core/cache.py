@@ -58,3 +58,11 @@ def qsum_version():
         return pkg_resources.get_distribution('qsum').version
     except pkg_resources.DistributionNotFound:
         return UNKNOWN_VERSION
+
+
+def clear_caches():  # pragma: no cover
+    """Clear all qsum caches"""
+    is_sub_class.cache_clear()
+    get_package_version.cache_clear()
+    all_package_versions.cache_clear()
+    qsum_version.cache_clear()
