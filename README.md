@@ -6,7 +6,7 @@ Intuitive and extendable checksumming for python objects
   <td>Latest Release</td>
   <td>
     <a href="https://anaconda.org/qcoding/qsum">
-    <img src="https://anaconda.org/qcoding/qsum/badges/version.svg" alt="Anaconda Cloud"/>
+    <img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=1" alt="Anaconda Cloud"/>
     </a>
   </td>
 </tr>
