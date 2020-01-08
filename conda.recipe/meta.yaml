@@ -16,9 +16,10 @@ requirements:
   build:
     - python >=3.5.0
     - setuptools
-  run:
-    - python >=3.5
   host:
+    - python >=3.5
+    - setuptools
+  run:
     - python >=3.5
 
 test:
