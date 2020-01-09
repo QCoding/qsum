@@ -13,7 +13,7 @@ Intuitive and extendable checksumming for python objects
 <tr>
    <td></td>
   <td>
-    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://anaconda.org/conda-forge/qsum/badges/version.svg" alt="Anaconda Cloud"/></a>
+    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/conda-forge/qsum.svg" alt="Anaconda Cloud"/></a>
   </td>
 </tr>
 <tr>
