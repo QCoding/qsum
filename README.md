@@ -6,14 +6,20 @@ Intuitive and extendable checksumming for python objects
   <td>Latest Release</td>
   <td>
     <a href="https://pypi.org/project/qsum/">
-    <img src="https://img.shields.io/pypi/v/qsum.svg" alt="latest release" />
+    <img src="https://img.shields.io/pypi/v/qsum.svg" alt="latest pypi release" />
     </a>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td>
+    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/conda-forge/qsum.svg" alt="latest conda forge release"/></a>
   </td>
 </tr>
 <tr>
    <td></td>
   <td>
-    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/conda-forge/qsum.svg" alt="Anaconda Cloud"/></a>
+    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/QCoding/qsum.svg" alt="latest QCoding release"/></a>
   </td>
 </tr>
 <tr>
@@ -24,6 +30,15 @@ Intuitive and extendable checksumming for python objects
     </a>
   </td>
 </tr>
+<tr>
+  <td></td>
+  <td>
+      <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8816&branchName=master">
+        <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/qsum-feedstock?branchName=master">
+      </a>
+  </td>
+</tr>
+
 <tr>
  <td>Coverage</td>
   <td>
@@ -43,7 +58,7 @@ Intuitive and extendable checksumming for python objects
 <tr>
 <td>Downloads</td>
 <td>
-  <a href="https://anaconda.org/qcoding/qsum">
+  <a href="https://anaconda.org/conda-forge/qsum">
   <img src="https://anaconda.org/conda-forge/qsum/badges/downloads.svg" alt="downloads" />
   </a>
 </td>
@@ -51,8 +66,8 @@ Intuitive and extendable checksumming for python objects
 <tr>
 <td>Platforms</td>
 <td>
-  <a href="https://anaconda.org/qcoding/qsum">
-  <img src="https://anaconda.org/qcoding/qsum/badges/platforms.svg" alt="noarch" />
+  <a href="https://anaconda.org/conda-forge/qsum">
+  <img src="https://img.shields.io/conda/pn/conda-forge/qsum.svg" alt="noarch" />
   </a>
 </td>
 </tr>
