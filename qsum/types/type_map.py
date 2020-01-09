@@ -9,6 +9,7 @@ table, please observe the following reserved groups:
 """
 import types
 from collections import deque
+from datetime import date
 from io import TextIOWrapper, BufferedReader
 
 from qsum.core.constants import ChecksumCollection, DependsOn
@@ -56,6 +57,9 @@ TYPE_TO_PREFIX = {
     dict: b'\x01\x03',
     set: b'\x01\x04',
     frozenset: b'\x01\x05',
+
+    # \x10: python standard library types
+    date: b'\x10\xdd',
 
     # \xff: special types used by qsum
     ChecksumCollection: b'\xff\x11',

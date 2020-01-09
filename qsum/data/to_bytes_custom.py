@@ -2,9 +2,10 @@
 import inspect
 import math
 import types
+from datetime import date
 
 from qsum.core.constants import FILE_IO_CHUNK_SIZE
-from qsum.data.to_bytes import bytes_from_repr
+from qsum.data.to_bytes import bytes_from_repr, str_to_bytes
 
 
 def int_to_bytes(obj: int) -> bytes:
@@ -85,3 +86,13 @@ def file_to_bytes(obj) -> bytes:
         Generator that extracts all the bytes of a file
     """
     return _file_to_bytes_generator(obj)
+
+
+def date_to_bytes(obj: date) -> bytes:
+    """Convert a date in to bytes
+    Args:
+        obj: date to convert in to bytes
+    Returns:
+        bytes representing the date
+    """
+    return str_to_bytes("{}{}{}".format(obj.year, obj.month, obj.day))

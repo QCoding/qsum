@@ -1,13 +1,14 @@
 import functools
 import types
 import typing
+from datetime import date
 from io import TextIOWrapper, BufferedReader
 
 from qsum.core.constants import ChecksumCollection, DependsOn
 from qsum.core.exceptions import QSumInvalidDataTypeException
 from qsum.data.to_bytes import str_to_bytes, bytes_from_repr, bytes_to_bytes, bytes_from_repr_with_overrides, \
     singleton_to_bytes
-from qsum.data.to_bytes_custom import complex_to_bytes, module_to_bytes, file_to_bytes
+from qsum.data.to_bytes_custom import complex_to_bytes, module_to_bytes, file_to_bytes, date_to_bytes
 
 
 def raise_type_exception(_, data_type) -> None:
@@ -54,6 +55,7 @@ TYPE_TO_BYTES_FUNCTION = {
     # some custom logic required
     float: functools.partial(bytes_from_repr_with_overrides, repr_overrides={'-0.0': '0.0'}),
     complex: complex_to_bytes,
+    date: date_to_bytes,
 
     # very custom logic
     types.ModuleType: module_to_bytes,
