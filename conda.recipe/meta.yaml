@@ -16,7 +16,6 @@ build:
 requirements:
   host:
     - python >=3.5
-    - setuptools
   run:
     - python >=3.5
 
@@ -42,6 +41,7 @@ test:
 about:
   license_file: LICENSE.txt
   license: {{data.get('license')}}
+  license_family: MIT
   home: {{data.get('url')}}
   summary: "Python Checksumming Library"
   description: {{data.get('description')}}
