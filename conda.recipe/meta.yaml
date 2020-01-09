@@ -1,5 +1,5 @@
 # https://conda.io/projects/conda-build/en/latest/resources/define-metadata.html
-{% set data = load_setup_py_data() %}
+  {% set data = load_setup_py_data() %}
 
 package:
   name: qsum
@@ -45,6 +45,6 @@ about:
   license_file: LICENSE.txt
   license: {{data.get('license')}}
   home: {{data.get('url')}}
-  summary: {{data.get('description')}}
-  description: {{data.get('long_description')}}
+  summary: "Python Checksumming Library",
+  description: {{data.get('description')}}
   dev_url: {{data.get('url')}}
