@@ -5,9 +5,15 @@ Intuitive and extendable checksumming for python objects
 <tr>
   <td>Latest Release</td>
   <td>
-    <a href="https://anaconda.org/qcoding/qsum">
-    <img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=2" alt="Anaconda Cloud"/>
+    <a href="https://pypi.org/project/qsum/">
+    <img src="https://img.shields.io/pypi/v/qsum.svg" alt="latest release" />
     </a>
+  </td>
+</tr>
+<tr>
+   <td></td>
+  <td>
+    <a href="https://anaconda.org/qcoding/qsum"><img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=3" alt="Anaconda Cloud"/></a>
   </td>
 </tr>
 <tr>
@@ -63,9 +69,15 @@ Intuitive and extendable checksumming for python objects
 ## Where to get it
 Source code is available on github: https://github.com/QCoding
 
+Install with pip:
+```
+# from PyPI: https://pypi.org/project/qsum/
+pip install qsum
+```
+
 Install with conda:
 ```
-# add the QCoding Channel
+# add the QCoding Channel: https://anaconda.org/QCoding/qsum
 conda config --append channels QCoding
 # install the latest version of QSum
 conda install qsum
