@@ -13,7 +13,7 @@ Intuitive and extendable checksumming for python objects
 <tr>
    <td></td>
   <td>
-    <a href="https://anaconda.org/qcoding/qsum"><img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=3" alt="Anaconda Cloud"/></a>
+    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://anaconda.org/conda-forge/qsum/badges/version.svg" alt="Anaconda Cloud"/></a>
   </td>
 </tr>
 <tr>
@@ -44,7 +44,7 @@ Intuitive and extendable checksumming for python objects
 <td>Downloads</td>
 <td>
   <a href="https://anaconda.org/qcoding/qsum">
-  <img src="https://anaconda.org/qcoding/qsum/badges/downloads.svg" alt="downloads" />
+  <img src="https://anaconda.org/conda-forge/qsum/badges/downloads.svg" alt="downloads" />
   </a>
 </td>
 </tr>
@@ -69,18 +69,16 @@ Intuitive and extendable checksumming for python objects
 ## Where to get it
 Source code is available on github: https://github.com/QCoding
 
+Install with conda:
+```
+# from conda forge: https://anaconda.org/conda-forge/qsum
+conda install qsum
+```
+
 Install with pip:
 ```
 # from PyPI: https://pypi.org/project/qsum/
 pip install qsum
-```
-
-Install with conda:
-```
-# add the QCoding Channel: https://anaconda.org/QCoding/qsum
-conda config --append channels QCoding
-# install the latest version of QSum
-conda install qsum
 ```
 
 ## How to use it
