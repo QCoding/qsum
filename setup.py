@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 MAJOR = 0
 MINOR = 2
-PATCH = 1
+PATCH = 0
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
 # https://packaging.python.org/guides/making-a-pypi-friendly-readme/
