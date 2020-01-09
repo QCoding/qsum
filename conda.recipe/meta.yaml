@@ -13,9 +13,6 @@ build:
   number: 0
 
 requirements:
-  build:
-    - python >=3.5.0
-    - setuptools
   host:
     - python >=3.5
     - setuptools
@@ -45,6 +42,6 @@ about:
   license_file: LICENSE.txt
   license: {{data.get('license')}}
   home: {{data.get('url')}}
-  summary: "Python Checksumming Library",
+  summary: "Python Checksumming Library"
   description: {{data.get('description')}}
   dev_url: {{data.get('url')}}
