@@ -6,14 +6,20 @@ Intuitive and extendable checksumming for python objects
   <td>Latest Release</td>
   <td>
     <a href="https://pypi.org/project/qsum/">
-    <img src="https://img.shields.io/pypi/v/qsum.svg" alt="latest release" />
+    <img src="https://img.shields.io/pypi/v/qsum.svg" alt="latest pypi release" />
     </a>
+  </td>
+</tr>
+<tr>
+  <td></td>
+  <td>
+    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/conda-forge/qsum.svg" alt="latest conda forge release"/></a>
   </td>
 </tr>
 <tr>
    <td></td>
   <td>
-    <a href="https://anaconda.org/qcoding/qsum"><img src="https://anaconda.org/qcoding/qsum/badges/version.svg?update=3" alt="Anaconda Cloud"/></a>
+    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/QCoding/qsum.svg" alt="latest QCoding release"/></a>
   </td>
 </tr>
 <tr>
@@ -24,6 +30,15 @@ Intuitive and extendable checksumming for python objects
     </a>
   </td>
 </tr>
+<tr>
+  <td></td>
+  <td>
+      <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8816&branchName=master">
+        <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/qsum-feedstock?branchName=master">
+      </a>
+  </td>
+</tr>
+
 <tr>
  <td>Coverage</td>
   <td>
@@ -43,16 +58,16 @@ Intuitive and extendable checksumming for python objects
 <tr>
 <td>Downloads</td>
 <td>
-  <a href="https://anaconda.org/qcoding/qsum">
-  <img src="https://anaconda.org/qcoding/qsum/badges/downloads.svg" alt="downloads" />
+  <a href="https://anaconda.org/conda-forge/qsum">
+  <img src="https://anaconda.org/conda-forge/qsum/badges/downloads.svg" alt="downloads" />
   </a>
 </td>
 </tr>
 <tr>
 <td>Platforms</td>
 <td>
-  <a href="https://anaconda.org/qcoding/qsum">
-  <img src="https://anaconda.org/qcoding/qsum/badges/platforms.svg" alt="noarch" />
+  <a href="https://anaconda.org/conda-forge/qsum">
+  <img src="https://img.shields.io/conda/pn/conda-forge/qsum.svg" alt="noarch" />
   </a>
 </td>
 </tr>
@@ -69,18 +84,16 @@ Intuitive and extendable checksumming for python objects
 ## Where to get it
 Source code is available on github: https://github.com/QCoding
 
+Install with conda:
+```
+# from conda forge: https://anaconda.org/conda-forge/qsum
+conda install qsum
+```
+
 Install with pip:
 ```
 # from PyPI: https://pypi.org/project/qsum/
 pip install qsum
-```
-
-Install with conda:
-```
-# add the QCoding Channel: https://anaconda.org/QCoding/qsum
-conda config --append channels QCoding
-# install the latest version of QSum
-conda install qsum
 ```
 
 ## How to use it
