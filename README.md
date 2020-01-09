@@ -71,13 +71,13 @@ Source code is available on github: https://github.com/QCoding
 
 Install with pip:
 ```
-# add the QCoding Channel
+# from PyPI: https://pypi.org/project/qsum/
 pip install qsum
 ```
 
 Install with conda:
 ```
-# add the QCoding Channel
+# add the QCoding Channel: https://anaconda.org/QCoding/qsum
 conda config --append channels QCoding
 # install the latest version of QSum
 conda install qsum
