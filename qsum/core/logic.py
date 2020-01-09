@@ -64,26 +64,28 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
         checksum bytes
 
     """
+    # bind the args that won't change with internal recursive calls
+    _checksum_w_args = functools.partial(_checksum, hash_algo=hash_algo, allow_unregistered=allow_unregistered)
+
     # if depends_on is specified then we need to combine the hash of the resolved dependencies with the hash of obj
     # note recursive calls to _checksum never pass depends_on since it always handled in the first call from checksum
     if depends_on is not None:
         resolved_deps = resolve_dependencies(depends_on)
-        return _checksum((obj, resolved_deps), obj_type=tuple, checksum_type=obj_type, hash_algo=hash_algo,
-                         allow_unregistered=allow_unregistered)  # we have handled the depends_on so don't pass it again
+        return _checksum_w_args(obj=(obj, resolved_deps), obj_type=tuple,
+                                checksum_type=obj_type)  # we have handled the depends_on so don't pass it again
 
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
-            checksum_func_with_args = functools.partial(checksum, hash_algo=hash_algo,
-                                                        allow_unregistered=allow_unregistered)
+            checksum_w_args = functools.partial(checksum, hash_algo=hash_algo, allow_unregistered=allow_unregistered)
             if is_sub_class(obj_type, tuple(UNORDERED_CONTAINER_TYPES)):
                 # compute the checksums and sort the checksums as we don't trust native python sorting across types
-                checksum_bytes = reduce(operator.add, sorted(map(checksum_func_with_args, obj)), bytearray())
+                checksum_bytes = reduce(operator.add, sorted(map(checksum_w_args, obj)), bytearray())
             else:
                 # compute the checksums of the elements of the mappable collection and build up a byte array
                 # we are capturing the type and data checksums of all of the elements here
                 # container types that hit this logic should have a predicable iteration order
-                checksum_bytes = reduce(operator.add, map(checksum_func_with_args, obj), bytearray())
+                checksum_bytes = reduce(operator.add, map(checksum_w_args, obj), bytearray())
 
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
             prefix = type_to_prefix(checksum_type, allow_unregistered=allow_unregistered)
@@ -98,7 +100,7 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
             # checksums as our method for stabilizing the overall checksum of the object
             # for python 3.7 this means that even though dicts are ordered, we will ignore that order, this is a design
             # decision and may need to be re-visited/potentially have an option to pick the methodology
-            return _checksum(obj.items(), set, obj_type, hash_algo=hash_algo, allow_unregistered=allow_unregistered)
+            return _checksum_w_args(obj=obj.items(), obj_type=set, checksum_type=obj_type)
 
         raise QSumUnhandledContainerType(
             "{} has no checksumming implementation available".format(obj_type))  # pragma: no cover
@@ -113,13 +115,12 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
         # choosing to use the module name here and not the module, but may revisit at some point or make an option
         module_name = inspect.getmodule(obj).__name__
         # combine in to a tuple and use the standard logic for combining the elements but then mark as a function
-        return _checksum((source_code, function_attributes, module_name), tuple, obj_type, hash_algo=hash_algo,
-                         allow_unregistered=allow_unregistered)
+        return _checksum_w_args((source_code, function_attributes, module_name), tuple, obj_type)
 
     # For a simple object combine the type with the data checksum
     prefix = type_to_prefix(checksum_type)
     # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
-    return prefix + data_checksum(obj, obj_type, hash_algo,
+    return prefix + data_checksum(obj, obj_type, hash_algo=hash_algo,
                                   checksum_type=checksum_type if prefix == UNREGISTERED_TYPE_PREFIX else None)
 
 
