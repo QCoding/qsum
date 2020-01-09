@@ -10,15 +10,14 @@ source:
 
 build:
   noarch: python
-  number: 0
+  number: 1
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
 
 requirements:
-  build:
-    - python >=3.5.0
-    - setuptools
-  run:
-    - python >=3.5
   host:
+    - python >=3.5
+    - pip
+  run:
     - python >=3.5
 
 test:
@@ -43,7 +42,8 @@ test:
 about:
   license_file: LICENSE.txt
   license: {{data.get('license')}}
+  license_family: MIT
   home: {{data.get('url')}}
-  summary: {{data.get('description')}}
-  description: {{data.get('long_description')}}
+  summary: "Python Checksumming Library"
+  description: {{data.get('description')}}
   dev_url: {{data.get('url')}}

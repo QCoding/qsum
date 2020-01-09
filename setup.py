@@ -1,9 +1,16 @@
+from os import path
+
 from setuptools import setup, find_packages
 
 MAJOR = 0
 MINOR = 2
 PATCH = 0
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
+
+# https://packaging.python.org/guides/making-a-pypi-friendly-readme/
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 
 def setup_package():
@@ -17,10 +24,13 @@ def setup_package():
         version=VERSION,
         packages=packages,
         url="https://github.com/QCoding/qsum",
+        dev_url="https://github.com/QCoding/qsum",
+        summary="Python Checksumming Library",
         # in pkg-info this maps to 'summary'
-        description="Python Checksumming Library",
+        description="Intuitive and extendable checksumming for python objects",
         # in pkg-info this maps to 'description'
-        long_description="Intuitive and extendable checksumming for python objects",
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         python_requires='>=3.5',
         keywords="checksum checksumming hashing",
         tests_require=['pytest'],
