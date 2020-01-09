@@ -44,6 +44,6 @@ about:
   license: {{data.get('license')}}
   license_family: MIT
   home: {{data.get('url')}}
-  summary: "Python Checksumming Library"
+  summary: {{data.get('summary')}}
   description: {{data.get('description')}}
   dev_url: {{data.get('url')}}
