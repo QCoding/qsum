@@ -44,6 +44,6 @@ about:
   license: {{data.get('license')}}
   license_family: MIT
   home: {{data.get('url')}}
-  summary: {{data.get('summary')}}
-  description: {{data.get('description')}}
+  summary: {{data.get('description')}}
+  description: {{data.get('long_description')}}
   dev_url: {{data.get('url')}}
