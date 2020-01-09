@@ -1,5 +1,5 @@
 # https://conda.io/projects/conda-build/en/latest/resources/define-metadata.html
-  {% set data = load_setup_py_data() %}
+{% set data = load_setup_py_data() %}
 
 package:
   name: qsum
