@@ -13,11 +13,11 @@ def setup_package():
     metadata = dict(
         name="qsum",
         author="QCoding",
+        author_email='quats111@gmail.com',
         license='MIT',
         version=VERSION,
         packages=packages,
         url="https://github.com/QCoding/qsum",
-        dev_url="https://github.com/QCoding/qsum",
         # in pkg-info this maps to 'summary'
         description="Python Checksumming Library",
         # in pkg-info this maps to 'description'
