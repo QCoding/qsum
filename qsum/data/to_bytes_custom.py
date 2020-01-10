@@ -3,7 +3,7 @@ import datetime
 import inspect
 import math
 import types
-from datetime import date
+from datetime import date, timezone
 
 from qsum.core.constants import FILE_IO_CHUNK_SIZE
 from qsum.data.to_bytes import bytes_from_repr, str_to_bytes
@@ -110,4 +110,4 @@ def datetime_to_bytes(obj: datetime) -> bytes:
     # use seconds since epoc in order to properly compare different time zones
     # https://docs.python.org/3.8/library/datetime.html#datetime.datetime.timestamp
     # we trust this to be a well behaved float (not swapping 0.0 for -0.0, so use bytes_from_repr directly
-    return bytes_from_repr(obj.timestamp())
+    return bytes_from_repr(obj.astimezone(timezone.utc))
