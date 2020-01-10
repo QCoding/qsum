@@ -7,7 +7,7 @@ from qsum import checksum
 
 def main():
     """main method"""
-    long_list = list(range(0, 100000))
+    long_list = list(range(0, 1000000))
     print(checksum(long_list).hex())
 
 
