@@ -73,6 +73,7 @@ def test_unique_date_bytes(year):
 
 
 def test_different_time_zones():
+    """Different time zones with the same seconds since epoc should result in the same bytes representation"""
     cst_time = datetime(2011, 8, 15, 7, 15, 12, 0, timezone(timedelta(hours=-6), 'CST'))
     cst_different_time = datetime(2011, 8, 15, 8, 15, 12, 0, timezone(timedelta(hours=-6), 'CST'))
     est_time = datetime(2011, 8, 15, 8, 15, 12, 0, timezone(timedelta(hours=-5), 'EST'))
