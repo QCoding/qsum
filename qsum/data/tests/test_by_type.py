@@ -4,6 +4,7 @@ Generalized parametrized tests that should be added for every support type
 """
 import types
 from collections import deque
+from datetime import date, datetime
 
 import pytest
 
@@ -33,7 +34,9 @@ TYPE_TO_VALUE_EXAMPLES = (
     (type(Ellipsis), Ellipsis),
     (types.FunctionType, foo_function),
     (types.ModuleType, helpers),
-    (DependsOn, DependsOn.PythonEnv)
+    (DependsOn, DependsOn.PythonEnv),
+    (date, date(1964, 1, 15)),
+    (datetime, datetime(1980, 1, 5, 1, 2, 3)),
 
 )
 
@@ -105,6 +108,12 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
 
     # DependsOn
     (DependsOn.PythonEnv, 'ffc01b5376344d56a72494651932ca29d63df34921e01e98b296210f21848337a796'),
+
+    # Date
+    (date(2012, 1, 1), '10dd5bb050078f9028efcf5ce1e6c8107c582bdc3607346ab17fc9e8622b586acd6e'),
+
+    # DateTime
+    (datetime(2012, 1, 1, 4, 30, 20), '10d0914d41e66a79cd9cdf0422cb9fa6f650174e372db98c55ad37f2ee7c013ed685'),
 )
 
 

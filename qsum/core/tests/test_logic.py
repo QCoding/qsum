@@ -18,6 +18,11 @@ def test_is_supported_type():
     assert not is_supported_type(NotCheckSummable)
 
 
+def test_is_supported_type_subclass():
+    assert is_supported_type(list)
+    assert is_supported_type(CustomDict1)
+
+
 @pytest.mark.parametrize('hash_algo,hash_length', [
     (hashlib.sha1, 20),
     (hashlib.sha224, 28),
