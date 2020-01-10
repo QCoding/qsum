@@ -1,10 +1,10 @@
 # pylint: disable=redefined-outer-name,missing-function-docstring,wildcard-import,unused-wildcard-import
 
 """Some type specific tests that are hard to do in test_by_type"""
-from qsum.core.constants import ChecksumCollection
-from qsum.core.exceptions import QSumInvalidDataTypeException
-from qsum.core.logic import checksum
+from copy import deepcopy
 
+from qsum.core.constants import ChecksumCollection, DEFAULT_BYTES_IN_CHECKSUM
+from qsum.core.exceptions import QSumInvalidDataTypeException
 # noinspection PyUnresolvedReferences
 from qsum.tests.helpers import *
 
@@ -75,7 +75,7 @@ def test_nested_changing_dict():
     assert checksum(dict_1) != checksum(dict_2)
 
 
-def test_multi_key_type_dict():
+def test_multi_key_type_dict_comparison():
     dict_1 = {'a': 10, 2: 20, 3.0: 30}
     dict_2 = {2: 20, 3.0: 30, 'a': 10}
     assert checksum(dict_1) == checksum(dict_2)
@@ -94,3 +94,19 @@ def test_singleton_constant(obj):
 def test_checksum_collection():
     checksum_collection = ChecksumCollection()
     checksum(checksum_collection)
+
+
+# keep this right near the limit of the current depth so we know when we've made the stock more complex
+# note older minor versions of python 3.x are the limiting factor
+@pytest.mark.parametrize('depth', range(0, 90))
+def test_deep_nested_dict(depth):
+    """Ensure deeply nested dicts can be checksummed"""
+    nested_dict = {'foo': 'abc'}
+    for key in range(0, depth):
+        nested_dict = {key: deepcopy(nested_dict)}
+    assert len(checksum(nested_dict)) == DEFAULT_BYTES_IN_CHECKSUM
+
+
+def test_long_list(range_2_16):
+    long_list = list(range_2_16)
+    checksum(long_list)
