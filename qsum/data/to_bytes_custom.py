@@ -1,4 +1,5 @@
 """Specialized to_bytes methods for specific types"""
+import datetime
 import inspect
 import math
 import types
@@ -95,4 +96,18 @@ def date_to_bytes(obj: date) -> bytes:
     Returns:
         bytes representing the date
     """
-    return str_to_bytes("{}{}{}".format(obj.year, obj.month, obj.day))
+    # if you're wondering about the spaces here, remove them and run test_unique_date_bytes
+    return str_to_bytes("{} {} {}".format(obj.year, obj.month, obj.day))
+
+
+def datetime_to_bytes(obj: datetime) -> bytes:
+    """Convert a datetime in to bytes
+    Args:
+        obj: datetime to convert in to bytes
+    Returns:
+        bytes representing the datetime
+    """
+    # use seconds since epoc in order to properly compare different time zones
+    # https://docs.python.org/3.8/library/datetime.html#datetime.datetime.timestamp
+    # we trust this to be a well behaved float (not swapping 0.0 for -0.0, so use bytes_from_repr directly
+    return bytes_from_repr(obj.timestamp())

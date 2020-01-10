@@ -7,6 +7,7 @@ table, please observe the following reserved groups:
     \x01: builtin python containers and collections
     \xff: special types used by qsum
 """
+import datetime
 import types
 from collections import deque
 from datetime import date
@@ -59,7 +60,9 @@ TYPE_TO_PREFIX = {
     frozenset: b'\x01\x05',
 
     # \x10: python standard library types
+    datetime: b'\x10\xd0',
     date: b'\x10\xdd',
+
 
     # \xff: special types used by qsum
     ChecksumCollection: b'\xff\x11',
