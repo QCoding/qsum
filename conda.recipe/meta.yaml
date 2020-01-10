@@ -34,6 +34,9 @@ test:
     - qsum.core.logic
     - qsum.core.constants
     - qsum.data
+    - qsum.examples
+    - qsum.tests
+    - qsum.tools
     - qsum.types
     - qsum.util
   commands:
