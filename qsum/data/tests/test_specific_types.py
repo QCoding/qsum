@@ -97,7 +97,7 @@ def test_checksum_collection():
 
 
 # keep this right near the limit of the current depth so we know when we've made the stock more complex
-@pytest.mark.parametrize('depth', range(0, 100))
+@pytest.mark.parametrize('depth', range(0, 90))
 def test_deep_nested_dict(depth):
     """Ensure deeply nested dicts can be checksummed"""
     nested_dict = {'foo': 'abc'}
