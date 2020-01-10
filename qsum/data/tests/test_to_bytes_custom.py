@@ -87,3 +87,9 @@ def test_different_time_zones():
 def test_pre_epoc_fails():
     """.timestamp() fails for pre-epoc times"""
     _ = datetime(1969, 1, 5, 1, 1, 1).timestamp()
+
+
+def test_datetime_microsecond_difference():
+    """Confirm a microsecond difference effects the bytes"""
+    assert datetime_to_bytes(datetime(2011, 8, 15, 7, 15, 12, 1000)) != datetime_to_bytes(
+        datetime(2011, 8, 15, 7, 15, 12, 1001))
