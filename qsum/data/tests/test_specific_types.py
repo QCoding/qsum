@@ -96,10 +96,10 @@ def test_checksum_collection():
     checksum(checksum_collection)
 
 
-@pytest.mark.parametrize('depth', range(1, 100))
+@pytest.mark.parametrize('depth', range(0, 90))
 def test_deep_nested_dict(depth):
     """Ensure deeply nested dicts can be checksummed"""
-    nested_dict = {'foo': 1}
+    nested_dict = {'foo': 'abc'}
     for key in range(0, depth):
         nested_dict = {key: deepcopy(nested_dict)}
     assert len(checksum(nested_dict)) == DEFAULT_BYTES_IN_CHECKSUM
