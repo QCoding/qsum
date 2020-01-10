@@ -30,8 +30,11 @@ CUSTOM_CONTAINER_TYPES = (dict,)  # type: tuple
 # all supported container types
 CONTAINER_TYPES = CUSTOM_CONTAINER_TYPES + MAPPABLE_CONTAINER_TYPES  # type: tuple
 
-# all special types implemented in _checksum code
-SPECIAL_TYPES = (types.FunctionType,)
+# additional special types implemented in _checksum code
+SPECIAL_TYPES = (types.FunctionType,)  # type: tuple
+
+# all types supported via subclass logic
+ALL_SUBCLASS_TYPES = CONTAINER_TYPES + SPECIAL_TYPES  # type: tuple
 
 # Used for typing in places where we can't impor the class directly
 CHECKSUM_CLASS_NAME = 'Checksum'

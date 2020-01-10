@@ -8,7 +8,7 @@ from functools import reduce
 from qsum.core.cache import is_sub_class
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
     UNORDERED_CONTAINER_TYPES, HashAlgoType, CHECKSUM_CLASS_NAME, ChecksumCollection, ChecksumType, \
-    DEFAULT_ALLOW_UNREGISTERED, DependsOnType
+    DEFAULT_ALLOW_UNREGISTERED, DependsOnType, ALL_SUBCLASS_TYPES
 from qsum.core.dependency import resolve_dependencies
 from qsum.core.exceptions import QSumUnhandledContainerType, QSumInvalidChecksum
 from qsum.data import data_checksum
@@ -261,4 +261,5 @@ def is_supported_type(the_type: type) -> bool:
     Returns:
         Whether the given type is checksummable
     """
-    return the_type in TYPE_TO_PREFIX
+    # first the quick lookup and then check subclasses
+    return the_type in TYPE_TO_PREFIX or is_sub_class(the_type, ALL_SUBCLASS_TYPES)
