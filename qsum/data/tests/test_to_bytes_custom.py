@@ -81,3 +81,9 @@ def test_different_time_zones():
     assert datetime_to_bytes(cst_time) == datetime_to_bytes(est_time)
     assert est_time != cst_different_time
     assert datetime_to_bytes(cst_time) != datetime_to_bytes(cst_different_time)
+
+
+@pytest.mark.xfail(raises=OSError, strict=True)
+def test_pre_epoc_fails():
+    """.timestamp() fails for pre-epoc times"""
+    _ = datetime(1969, 1, 5, 1, 1, 1).timestamp()
