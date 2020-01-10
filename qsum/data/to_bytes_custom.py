@@ -109,8 +109,13 @@ def datetime_to_bytes(obj: datetime) -> bytes:
     """
     # use seconds since epoc in order to properly compare different time zones
     # https://docs.python.org/3.8/library/datetime.html#datetime.datetime.timestamp
-    # we trust this to be a well behaved float (not swapping 0.0 for -0.0, so use bytes_from_repr directly
-    utc_time = obj.astimezone(timezone.utc)
+    # if tz aware convert to utc before extracting the raw time
+    if obj.tzinfo is not None:
+        # we trust this to be a well behaved float (not swapping 0.0 for -0.0, so use bytes_from_repr directly
+        new_time = obj.astimezone(timezone.utc)
+    else:
+        # if non-tz aware then we can just pull all the raw time values
+        new_time = obj
     return str_to_bytes(
-        "{} {} {} {} {} {} {}".format(utc_time.year, utc_time.month, utc_time.day, utc_time.hour, utc_time.minute,
-                                      utc_time.second, utc_time.microsecond))
+        "{} {} {} {} {} {} {}".format(new_time.year, new_time.month, new_time.day, new_time.hour, new_time.minute,
+                                      new_time.second, new_time.microsecond))

@@ -113,7 +113,7 @@ VALUE_TO_CHECKSUM_EXAMPLES = (
     (date(2012, 1, 1), '10dd5bb050078f9028efcf5ce1e6c8107c582bdc3607346ab17fc9e8622b586acd6e'),
 
     # DateTime
-    (datetime(2012, 1, 1, 4, 30, 20), '10d01f2db0e7b1951bba86ead2fe47722dad899f54c81cc3a4c16db7357c8e787769'),
+    (datetime(2012, 1, 1, 4, 30, 20), '10d0914d41e66a79cd9cdf0422cb9fa6f650174e372db98c55ad37f2ee7c013ed685'),
 )
 
 
