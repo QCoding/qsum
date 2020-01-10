@@ -75,7 +75,7 @@ def test_nested_changing_dict():
     assert checksum(dict_1) != checksum(dict_2)
 
 
-def test_multi_key_type_dict():
+def test_multi_key_type_dict_comparison():
     dict_1 = {'a': 10, 2: 20, 3.0: 30}
     dict_2 = {2: 20, 3.0: 30, 'a': 10}
     assert checksum(dict_1) == checksum(dict_2)
@@ -96,10 +96,16 @@ def test_checksum_collection():
     checksum(checksum_collection)
 
 
-@pytest.mark.parametrize('depth', range(0, 90))
+# keep this right near the limit of the current depth so we know when we've made the stock more complex
+@pytest.mark.parametrize('depth', range(0, 100))
 def test_deep_nested_dict(depth):
     """Ensure deeply nested dicts can be checksummed"""
     nested_dict = {'foo': 'abc'}
     for key in range(0, depth):
         nested_dict = {key: deepcopy(nested_dict)}
     assert len(checksum(nested_dict)) == DEFAULT_BYTES_IN_CHECKSUM
+
+
+def test_long_list(range_2_16):
+    long_list = list(range_2_16)
+    checksum(long_list)

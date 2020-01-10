@@ -1,9 +1,7 @@
 import functools
 import inspect
-import operator
 import types
 import typing
-from functools import reduce
 
 from qsum.core.cache import is_sub_class
 from qsum.core.constants import BYTES_IN_PREFIX, CONTAINER_TYPES, MAPPABLE_CONTAINER_TYPES, DEFAULT_HASH_ALGO, \
@@ -78,15 +76,16 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
             checksum_w_args = functools.partial(checksum, hash_algo=hash_algo, allow_unregistered=allow_unregistered)
+            checksum_bytes = bytearray()
             if is_sub_class(obj_type, tuple(UNORDERED_CONTAINER_TYPES)):
                 # compute the checksums and sort the checksums as we don't trust native python sorting across types
-                checksum_bytes = reduce(operator.add, sorted(map(checksum_w_args, obj)), bytearray())
+                checksum_bytes = checksum_bytes.join(sorted([checksum_w_args(obj_item) for obj_item in obj]))
             else:
                 # compute the checksums of the elements of the mappable collection and build up a byte array
                 # we are capturing the type and data checksums of all of the elements here
                 # container types that hit this logic should have a predicable iteration order
-                checksum_bytes = reduce(operator.add, map(checksum_w_args, obj), bytearray())
-
+                for obj_item in obj:
+                    checksum_bytes += checksum_w_args(obj_item)
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
             prefix = type_to_prefix(checksum_type, allow_unregistered=allow_unregistered)
             # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
