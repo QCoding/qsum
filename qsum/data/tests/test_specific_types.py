@@ -1,10 +1,10 @@
 # pylint: disable=redefined-outer-name,missing-function-docstring,wildcard-import,unused-wildcard-import
 
 """Some type specific tests that are hard to do in test_by_type"""
-from qsum.core.constants import ChecksumCollection
-from qsum.core.exceptions import QSumInvalidDataTypeException
-from qsum.core.logic import checksum
+from copy import deepcopy
 
+from qsum.core.constants import ChecksumCollection, DEFAULT_BYTES_IN_CHECKSUM
+from qsum.core.exceptions import QSumInvalidDataTypeException
 # noinspection PyUnresolvedReferences
 from qsum.tests.helpers import *
 
@@ -94,3 +94,12 @@ def test_singleton_constant(obj):
 def test_checksum_collection():
     checksum_collection = ChecksumCollection()
     checksum(checksum_collection)
+
+
+@pytest.mark.parametrize('depth', range(1, 100))
+def test_deep_nested_dict(depth):
+    """Ensure deeply nested dicts can be checksummed"""
+    nested_dict = {'foo': 1}
+    for key in range(0, depth):
+        nested_dict = {key: deepcopy(nested_dict)}
+    assert len(checksum(nested_dict)) == DEFAULT_BYTES_IN_CHECKSUM

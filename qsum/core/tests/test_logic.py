@@ -34,7 +34,7 @@ def test_sha_lengths(hash_algo, hash_length):
 
 @pytest.mark.parametrize('value', ('abc', '123', ('1', '2', '3')))
 def test_checkum_hex(value):
-    assert checksum(value).hex() == checksum_hex((value))
+    assert checksum(value).hex() == checksum_hex(value)
 
 
 @pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
