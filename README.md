@@ -59,7 +59,7 @@ Intuitive and extendable checksumming for python objects
 <td>Downloads</td>
 <td>
   <a href="https://anaconda.org/conda-forge/qsum">
-  <img src="https://anaconda.org/conda-forge/qsum/badges/downloads.svg?update=1" alt="downloads" />
+  <img src="https://img.shields.io/conda/dn/conda-forge/qsum.svg" alt="downloads" />
   </a>
 </td>
 </tr>
