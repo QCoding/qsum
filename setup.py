@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 MAJOR = 0
 MINOR = 2
-PATCH = 1
+PATCH = 2
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
 
@@ -12,12 +12,12 @@ def setup_package():
 
     metadata = dict(
         name="qsum",
-        author="Justin M. Quartiere",
+        author="QCoding",
+        author_email='quats111@gmail.com',
         license='MIT',
         version=VERSION,
         packages=packages,
         url="https://github.com/QCoding/qsum",
-        dev_url="https://github.com/QCoding/qsum",
         # in pkg-info this maps to 'summary'
         description="Python Checksumming Library",
         # in pkg-info this maps to 'description'
@@ -34,6 +34,7 @@ def setup_package():
             ]
         },
         classifiers=[
+            "Development Status :: 4 - Beta",
             "Operating System :: OS Independent",
             "Programming Language :: Python",
             "Programming Language :: Python :: 3",
@@ -41,6 +42,7 @@ def setup_package():
             "Programming Language :: Python :: 3.6",
             "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
+            "Topic :: Scientific/Engineering",
         ]
     )
 
