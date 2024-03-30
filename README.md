@@ -17,12 +17,6 @@ Intuitive and extendable checksumming for python objects
   </td>
 </tr>
 <tr>
-   <td></td>
-  <td>
-    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/QCoding/qsum.svg" alt="latest QCoding release"/></a>
-  </td>
-</tr>
-<tr>
   <td>Build Status</td>
   <td>
     <a href="https://github.com/QCoding/qsum/actions/workflows/python-tests.yml/badge.svg">
