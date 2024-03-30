@@ -25,8 +25,8 @@ Intuitive and extendable checksumming for python objects
 <tr>
   <td>Build Status</td>
   <td>
-    <a href="https://github.com/QCoding/qsum/actions/workflows/main.yml/badge.svg">
-    <img src="https://github.com/QCoding/qsum/actions/workflows/main.yml/badge.svg" alt="github build status" />
+    <a href="https://github.com/QCoding/qsum/actions/workflows/python-tests.yml/badge.svg">
+    <img src="https://github.com/QCoding/qsum/actions/workflows/python-tests/badge.svg" alt="github build status" />
     </a>
   </td>
 </tr>
