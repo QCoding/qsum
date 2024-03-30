@@ -9,6 +9,7 @@ python:
   - "3.6"      # current default Python on Travis CI
   - "3.7"
   - "3.8"
+  - "3.9"
 # whenever you want to re-create the pip environment from scratch
 env:
   CACHE_VERSION=4
