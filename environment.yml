@@ -1,4 +1,3 @@
-name: qsum_dev
 channels:
   - conda-forge
 dependencies:
