@@ -1,4 +1,6 @@
 flake8
+pylint
+pylint-exit
 pytest>=4.4.0
 pytest-cov
 pytest-mypy
