@@ -1,9 +1,9 @@
 name: qsum_dev
 dependencies:
-  - python=3.7
+  - pylint
   - pytest>=4.4.0
   - pytest-cov
+  - pytest-mypy
+  - pytest-repeat
   - pytest-xdist
-  - pip:
-    - pytest-pylint
-    - pytest-mypy
+  - setuptools
