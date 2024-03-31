@@ -24,14 +24,6 @@ Intuitive and extendable checksumming for python objects
     </a>
   </td>
 </tr>
-<tr>
-  <td></td>
-  <td>
-      <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=8816&branchName=master">
-        <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/qsum-feedstock?branchName=master">
-      </a>
-  </td>
-</tr>
 
 <tr>
  <td>Coverage</td>
