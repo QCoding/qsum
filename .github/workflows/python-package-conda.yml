@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       run: |
         conda update -n base conda
-        conda create --file environment.yml -n qsum_dev
+        conda create --file environment.yml -n qsum_dev -c conda-forge
         conda active qsum_dev
     - name: Lint with flake8
       run: |
