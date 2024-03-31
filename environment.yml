@@ -1,6 +1,3 @@
-channels: !!python/tuple
-  - !!python/unicode
-    'conda-forge'
 dependencies:
   - python=3.11
   - pytest>=4.4.0
