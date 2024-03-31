@@ -1,6 +1,4 @@
 name: qsum_dev
-channels:
-  - conda-forge
 dependencies:
   - pylint
   - pytest>=4.4.0

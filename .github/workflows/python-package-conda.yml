@@ -12,17 +12,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: conda-incubator/setup-miniconda@v3
       with:
+        auto-update-conda: true
+        activate-environment: qsum_dev
+        environment-file: environment.yml
         python-version: ${{ matrix.python-version }}
-    - name: Add conda to system path
-      run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        echo $CONDA/bin >> $GITHUB_PATH
-    - name: Install dependencies
-      run: |
-        conda env create --file environment.yml -n qsum_dev
-        source activate qsum_dev
+        channels: conda-forge
+        channel-priority: strict
+        use-only-tar-bz2: true
     - name: Test with pytest
       run: |
         pytest
