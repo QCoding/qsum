@@ -1,6 +1,10 @@
 name: Python Package using Conda
 
-on: [push]
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build-linux:
@@ -15,12 +19,16 @@ jobs:
       uses: conda-incubator/setup-miniconda@v3
       with:
         auto-update-conda: true
+        auto-activate-base: false
         activate-environment: qsum_dev
         environment-file: environment.yml
         python-version: ${{ matrix.python-version }}
         channels: conda-forge
         channel-priority: strict
         use-only-tar-bz2: true
+    - run: |
+        conda info
+        conda list
     - name: Test with pytest
       run: |
         pytest
