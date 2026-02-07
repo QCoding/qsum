@@ -25,11 +25,11 @@ def test(use_default_args: bool = True, extra_args: typing.Union[str, list] = No
         import pytest
     except ImportError:
         raise ImportError("Need pytest to run tests")
-    cmd = DEFAULT_ARGS if use_default_args else []
+    cmd = list(DEFAULT_ARGS) if use_default_args else []
     if extra_args:
         if not isinstance(extra_args, list):
             extra_args = [extra_args]
-        cmd = extra_args
+        cmd += extra_args
     cmd += [PKG]
     print("running: pytest {}".format(" ".join(cmd)))
     sys.exit(pytest.main(cmd))
