@@ -9,3 +9,4 @@ pytest-pylint
 pytest-repeat
 pytest-xdist
 setuptools
+wheel
