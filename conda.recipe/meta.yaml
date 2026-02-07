@@ -26,7 +26,8 @@ test:
     - mypy.ini
     - .pylintrc
   requires:
-    - pytest >=8.0.0
+    - attrs
+    - pytest >=4.4.0
     - pytest-pylint
   imports:
     - qsum
