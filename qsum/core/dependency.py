@@ -19,17 +19,18 @@ def resolve_dependency(dep):
         return get_package_version(dep)
 
     # Custom case each DependsOn value
-    if dep == DependsOn.PythonEnv:
-        return all_package_versions()
-    if dep == DependsOn.PythonVer:
-        return get_package_version('python')
-    if dep == DependsOn.Platform:
-        return sys.platform
-    if dep == DependsOn.QSumVer:
-        qsum_resolved_version = qsum_version()
-        if qsum_resolved_version == UNKNOWN_VERSION:
-            raise QSumUnknownVersionDependency()  # pragma: no cover
-        return qsum_resolved_version  # pragma: no cover
+    if isinstance(dep, DependsOn):
+        if dep == DependsOn.PythonEnv:
+            return all_package_versions()
+        if dep == DependsOn.PythonVer:
+            return get_package_version('python')
+        if dep == DependsOn.Platform:
+            return sys.platform
+        if dep == DependsOn.QSumVer:
+            qsum_resolved_version = qsum_version()
+            if qsum_resolved_version == UNKNOWN_VERSION:
+                raise QSumUnknownVersionDependency()  # pragma: no cover
+            return qsum_resolved_version  # pragma: no cover
 
     raise QSumInvalidDependsOn("{} is not a valid dependency to resolve")
 
@@ -48,6 +49,6 @@ def resolve_dependencies(depends_on: DependsOnType):
     """
     # support a single DependsOn value
     if isinstance(depends_on, DependsOn):
-        depends_on = (depends_on,)
+        depends_on = [d for d in DependsOn if (depends_on & d) == d]
 
     return {d: resolve_dependency(d) for d in depends_on}

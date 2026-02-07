@@ -7,7 +7,7 @@ import typing
 from collections import deque
 
 # the default hash algo to use
-from enum import Enum
+from enum import IntFlag
 
 DEFAULT_HASH_ALGO = hashlib.sha256
 
@@ -46,15 +46,13 @@ ChecksumType = typing.Union[CHECKSUM_CLASS_NAME, bytes, str]
 HashAlgoType = typing.Union['str', typing.Callable]
 
 
-# TODO: after dropping py 3.5 support consider switching to https://docs.python.org/3.6/library/enum.html#enum.IntFlag
-#       so that flags can be combined using binary operations instead of providing a tuple
-class DependsOn(Enum):
+class DependsOn(IntFlag):
     """Special Values that can be added to the depends on argument"""
-    PythonEnv = 'PythonEnv'  # versions of all the packages in the environment
-    PythonVer = 'PythonVer'  # just the version of python itself
-    Platform = 'Platform'  # include sys.platform as salt (win32, linux, darwin)
+    PythonEnv = 1  # versions of all the packages in the environment
+    PythonVer = 2  # just the version of python itself
+    Platform = 4  # include sys.platform as salt (win32, linux, darwin)
     # NOTE: this will cause all checksums to change everytime qsum in updated in your environment
-    QSumVer = 'QSumVer'  # include the major.minor.patch version of qsum as salt
+    QSumVer = 8  # include the major.minor.patch version of qsum as salt
 
 
 # depends on types
