@@ -1,10 +1,10 @@
 flake8
 pylint
 pylint-exit
-pytest>=4.4.0
+pytest>=8.0.0
 pytest-cov
 pytest-mypy
 pytest-pylint
 pytest-repeat
-pytest-xdist
+pytest-xdist>=3.5.0
 setuptools
