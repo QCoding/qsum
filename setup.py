@@ -24,7 +24,7 @@ def setup_package():
         long_description="Intuitive and extendable checksumming for python objects",
         python_requires='>=3.8',
         keywords="checksum checksumming hashing",
-        tests_require=['pytest>=4.4.0', 'attrs'],
+        tests_require=['pytest>=4.4.0', 'attrs', 'wheel'],
         zip_safe=False,
         platforms="any",
         extras_require={
@@ -32,6 +32,7 @@ def setup_package():
                 "pytest>=4.4.0",
                 "pytest-pylint",
                 "attrs",
+                "wheel",
             ]
         },
         classifiers=[
