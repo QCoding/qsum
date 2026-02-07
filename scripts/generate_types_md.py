@@ -1,10 +1,11 @@
 import csv
+import sys
 import os
 
-# Define paths
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CSV_PATH = os.path.join(REPO_ROOT, 'qsum', 'types.csv')
-MD_PATH = os.path.join(REPO_ROOT, 'TYPES.md')
+# Ensure we can import from qsum
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from qsum.util._paths import CSV_PATH, MD_PATH
 
 def generate_markdown(csv_path, md_path):
     with open(csv_path, 'r', newline='') as csvfile:

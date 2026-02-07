@@ -1,11 +1,6 @@
 import csv
 import os
-
-# We need to find the paths
-# qsum/tests/test_types_doc.py -> qsum/tests -> qsum -> root
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-CSV_PATH = os.path.join(REPO_ROOT, 'qsum', 'types.csv')
-MD_PATH = os.path.join(REPO_ROOT, 'TYPES.md')
+from qsum.util._paths import CSV_PATH, MD_PATH
 
 def test_types_md_is_up_to_date():
     """
