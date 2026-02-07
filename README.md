@@ -65,7 +65,7 @@ Intuitive and extendable checksumming for python objects
 * Architect a framework for implementing customized checksumming logic
 * Produce high quality checksums with extraordinarily low collision rates
 * Build a toolkit for using and manipulating checksums
-* Test it all with 100% coverage and support python 3.7, 3.8, 3.9, 3.10, 3.11 and 3.12
+* Test it all with 100% coverage and support python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13 and 3.14
 
 ## Where to get it
 Source code is available on github: https://github.com/QCoding
