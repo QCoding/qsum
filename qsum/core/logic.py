@@ -75,18 +75,17 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
-            checksum_bytes = bytearray()
             if is_sub_class(obj_type, tuple(UNORDERED_CONTAINER_TYPES)):
                 # compute the checksums and sort the checksums as we don't trust native python sorting across types
-                checksum_bytes = checksum_bytes.join(
-                    sorted([_checksum_w_args(obj_item, type(obj_item), type(obj_item)) for obj_item in obj]))
+                checksum_bytes = b''.join(
+                    sorted(_checksum_w_args(obj_item, obj_item_type, obj_item_type)
+                           for obj_item in obj for obj_item_type in (type(obj_item),)))
             else:
                 # compute the checksums of the elements of the mappable collection and build up a byte array
                 # we are capturing the type and data checksums of all of the elements here
                 # container types that hit this logic should have a predicable iteration order
-                for obj_item in obj:
-                    obj_item_type = type(obj_item)
-                    checksum_bytes += _checksum_w_args(obj_item, obj_item_type, obj_item_type)
+                checksum_bytes = b''.join(_checksum_w_args(obj_item, obj_item_type, obj_item_type)
+                                          for obj_item in obj for obj_item_type in (type(obj_item),))
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
             prefix = type_to_prefix(checksum_type, allow_unregistered=allow_unregistered)
             # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
