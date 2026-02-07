@@ -38,7 +38,7 @@ jobs:
       if: matrix.python-version == '3.14' || matrix.python-version == '3.13'
       run: |
         # Explicitly install newer pytest for Python 3.14 compatibility (ast.Str removal)
-        pip install "pytest>=8.1.0" "pytest-xdist>=3.5.0"
+        conda install -y "pytest>=8.1.0" "pytest-xdist>=3.5.0"
     - name: Test with pytest
       run: |
         pytest
