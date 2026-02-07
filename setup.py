@@ -22,7 +22,7 @@ def setup_package():
         description="Python Checksumming Library",
         # in pkg-info this maps to 'description'
         long_description="Intuitive and extendable checksumming for python objects",
-        python_requires='>=3.7',
+        python_requires='>=3.8',
         keywords="checksum checksumming hashing",
         tests_require=['pytest'],
         zip_safe=False,
@@ -38,7 +38,6 @@ def setup_package():
             "Operating System :: OS Independent",
             "Programming Language :: Python",
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.7",
             "Programming Language :: Python :: 3.8",
             "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
