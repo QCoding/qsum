@@ -1,6 +1,7 @@
 name: qsum_dev
 dependencies:
-  - pytest>=4.4.0
+  - attrs
+  - pytest
   - pytest-mypy
   - pytest-repeat
   - pytest-xdist

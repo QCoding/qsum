@@ -1,7 +1,8 @@
 flake8
 pylint
+attrs
 pylint-exit
-pytest>=4.4.0
+pytest
 pytest-cov
 pytest-mypy
 pytest-pylint
