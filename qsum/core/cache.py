@@ -60,7 +60,7 @@ def qsum_version():
         return UNKNOWN_VERSION
 
 
-def clear_caches():  # pragma: no cover
+def clear_caches():
     """Clear all qsum caches"""
     is_sub_class.cache_clear()
     get_package_version.cache_clear()
