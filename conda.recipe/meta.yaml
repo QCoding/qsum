@@ -26,6 +26,7 @@ test:
     - mypy.ini
     - .pylintrc
   requires:
+    - attrs
     - pytest >=4.4.0
     - pytest-pylint
   imports:

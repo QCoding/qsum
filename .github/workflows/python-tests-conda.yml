@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12" ]
+        python-version: [ "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14" ]
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -34,6 +34,17 @@ jobs:
       run: |
         conda info
         conda list
+    - name: Update pytest for Python 3.14
+      if: matrix.python-version == '3.14' || matrix.python-version == '3.13'
+      run: |
+        # Explicitly install newer pytest for Python 3.14 compatibility (ast.Str removal)
+        conda install -y "pytest>=8.1.0" "pytest-xdist>=3.5.0"
     - name: Test with pytest
       run: |
-        pytest
+        pytest --junitxml=junit.xml -o junit_family=legacy
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        report-type: test_results
