@@ -42,7 +42,7 @@ jobs:
         pip install "pytest>=8.1.0" "pytest-xdist>=3.5.0"
     - name: Test with pytest
       run: |
-        pytest --cov=./qsum --cov-report=xml --junitxml=junit.xml -o junit_family=legacy
+        pytest --cov=./qsum --cov-report=xml --junitxml=junit.xml -o junit_family=xunit1
     - name: Upload coverage to Codecov
       if: ${{ !cancelled() }}
       uses: codecov/codecov-action@v5
@@ -57,5 +57,6 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        files: junit.xml
         report-type: test_results
 
