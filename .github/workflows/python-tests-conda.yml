@@ -26,8 +26,8 @@ jobs:
         activate-environment: qsum_dev
         environment-file: environment.yml
         python-version: ${{ matrix.python-version }}
-        channels: conda-forge
-        channel-priority: strict
+        channels: conda-forge,defaults
+        channel-priority: flexible
         show-channel-urls: true
         use-only-tar-bz2: true
     - name: Conda Info
