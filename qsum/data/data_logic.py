@@ -28,7 +28,11 @@ def resolve_hash_algo(hash_algo: HashAlgoType) -> typing.Callable:
     <built-in function openssl_md5>
     """
     if isinstance(hash_algo, str):
-        return getattr(hashlib, hash_algo)
+        if hash_algo in hashlib.algorithms_available:
+            return getattr(hashlib, hash_algo) if hasattr(hashlib, hash_algo) else lambda: hashlib.new(hash_algo)
+
+        raise QSumInvalidDataTypeException("{} is not a valid hash algorithm".format(hash_algo))
+
     return hash_algo
 
 

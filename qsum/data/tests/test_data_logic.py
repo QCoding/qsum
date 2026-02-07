@@ -33,6 +33,25 @@ def test_consistent_hash_algo_resolution():
     assert resolve_hash_algo('sha256') == resolve_hash_algo(hashlib.sha256)
 
 
+@pytest.mark.xfail(raises=QSumInvalidDataTypeException, strict=True)
+def test_resolve_hash_algo_invalid():
+    resolve_hash_algo('invalid_algo')
+
+
+def test_resolve_hash_algo_fallback():
+    # find an algorithm that is in available but not in hashlib
+    available_not_in_hashlib = list(hashlib.algorithms_available - set(dir(hashlib)))
+    for algo_name in available_not_in_hashlib:
+        try:
+            algo = resolve_hash_algo(algo_name)
+            # check that the algo name matches the requested one (ignoring case and dashes)
+            assert algo().name.replace('-', '').lower() == algo_name.replace('-', '').lower()
+            return
+        except ValueError:
+            # some algorithms in available might not be usable in the current environment
+            continue
+
+
 @pytest.mark.xfail(raises=QSumInvalidBytesDataType)
 def test_bytes_to_digest_invalid_bytes_data():
     bytes_to_digest([1, 2, 3], hash_algo=DEFAULT_HASH_ALGO)
