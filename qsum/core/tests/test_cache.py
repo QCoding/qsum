@@ -1,10 +1,10 @@
-import pkg_resources
+from importlib.metadata import PackageNotFoundError
 import pytest
 
 from qsum.core.cache import get_package_version, all_package_versions
 
 
-@pytest.mark.xfail(raises=pkg_resources.DistributionNotFound, strict=True)
+@pytest.mark.xfail(raises=PackageNotFoundError, strict=True)
 def test_get_package_version_bad_package():
     """Validate that a bad package name raises the expected exception"""
     get_package_version('foo')

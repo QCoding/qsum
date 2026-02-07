@@ -2,7 +2,7 @@
 import sys
 from functools import lru_cache
 
-import pkg_resources
+from importlib.metadata import version, distributions, PackageNotFoundError
 
 # the maxsize here should be ~ # of common types * # of groupings used (~3)
 from qsum.core.constants import UNKNOWN_VERSION
@@ -27,7 +27,7 @@ def get_package_version(package: str) -> str:
     if package == 'python':
         return ".".join(map(str, sys.version_info[0:3]))
 
-    return pkg_resources.get_distribution(package).version
+    return version(package)
 
 
 # since the environment shouldn't change within a session only need to cache one value
@@ -40,8 +40,7 @@ def all_package_versions(include_python_version=True) -> dict:
     Returns:
         dict mapping package name to package version
     """
-    all_packages = {package.project_name: package.version for package in
-                    pkg_resources.working_set}  # pylint: disable=not-an-iterable
+    all_packages = {dist.metadata['Name']: dist.version for dist in distributions()}
 
     # include the version of python itself if requested
     if include_python_version:
@@ -55,8 +54,8 @@ def all_package_versions(include_python_version=True) -> dict:
 def qsum_version():
     """Gets the version of qsum"""
     try:
-        return pkg_resources.get_distribution('qsum').version
-    except pkg_resources.DistributionNotFound:
+        return version('qsum')
+    except PackageNotFoundError:
         return UNKNOWN_VERSION
 
 
