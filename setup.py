@@ -21,7 +21,8 @@ def setup_package():
         # in pkg-info this maps to 'summary'
         description="Python Checksumming Library",
         # in pkg-info this maps to 'description'
-        long_description="Intuitive and extendable checksumming for python objects",
+        long_description=open("README.md", "r", encoding="utf-8").read(),
+        long_description_content_type="text/markdown",
         python_requires='>=3.8',
         keywords="checksum checksumming hashing",
         tests_require=['pytest>=4.4.0', 'attrs', 'wheel'],
