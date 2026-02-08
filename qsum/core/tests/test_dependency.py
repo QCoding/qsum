@@ -37,7 +37,7 @@ def test_depends_on_qsum_version():
     assert len(checksum('abc', depends_on=DependsOn.QSumVer)) == DEFAULT_BYTES_IN_CHECKSUM
 
 
-@pytest.mark.xfail(raises=QSumInvalidDependsOn)
 def test_invalid_dependency():
     """Make sure that a misc type passed to resolve_dependency fails"""
-    resolve_dependency(1)
+    with pytest.raises(QSumInvalidDependsOn):
+        resolve_dependency(1)
