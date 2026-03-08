@@ -6,8 +6,13 @@ import pytest
 from qsum.core.constants import DEFAULT_HASH_ALGO
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum, QSumInvalidBytesDataType
 from qsum.data import data_checksum
-from qsum.data.data_logic import data_digest_from_checksum, resolve_hash_algo, bytes_to_digest
+from qsum.data.data_logic import data_digest_from_checksum, resolve_hash_algo, bytes_to_digest, all_data_types
+from qsum.data.data_type_map import TYPE_TO_BYTES_FUNCTION
 from qsum.tests.helpers import STR_CHECKSUM_OBJS, Custom
+
+
+def test_all_data_types():
+    assert all_data_types() == TYPE_TO_BYTES_FUNCTION.keys()
 
 
 def test_invalid_type():
