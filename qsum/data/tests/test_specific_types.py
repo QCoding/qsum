@@ -37,6 +37,13 @@ def test_float_0_0_equality():
     assert checksum(-0.0) == checksum(0.0)
 
 
+def test_complex_0_0_equality():
+    assert checksum(complex(0.0, 0.0)) == checksum(complex(-0.0, -0.0))
+    assert checksum(complex(0.0, -0.0)) == checksum(complex(-0.0, 0.0))
+    assert checksum(complex(0.0, 1.0)) == checksum(complex(-0.0, 1.0))
+    assert checksum(complex(1.0, 0.0)) == checksum(complex(1.0, -0.0))
+
+
 def test_tuple_changes():
     assert checksum((0, 1, 2)) != checksum((-1, 1, 2))
     assert checksum((0, 1, 2)) != checksum((2, 1, 0))
@@ -90,10 +97,10 @@ def test_singleton_constant(obj):
     assert checksum(obj) == checksum(obj)
 
 
-@pytest.mark.xfail(raises=QSumInvalidDataTypeException, strict=True)
 def test_checksum_collection():
     checksum_collection = ChecksumCollection()
-    checksum(checksum_collection)
+    with pytest.raises(QSumInvalidDataTypeException):
+        checksum(checksum_collection)
 
 
 # keep this right near the limit of the current depth so we know when we've made the stock more complex

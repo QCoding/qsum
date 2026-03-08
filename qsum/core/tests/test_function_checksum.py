@@ -62,3 +62,45 @@ def test_same_function_different_module_different_checksum():
     is defined in to it's checksum
     """
     assert foo_checksum() != local_foo_checksum()
+
+
+def test_function_whitespace_normalization():
+    """Verify that different whitespace (trailing spaces, indentation) don't affect function checksum"""
+
+    def outer_no_trailing():
+        def f():
+            pass
+
+        return f
+
+    def outer_with_trailing():
+        def f():
+            pass
+
+        return f
+
+    assert checksum(outer_no_trailing()) == checksum(outer_with_trailing())
+
+
+def test_function_indentation_normalization():
+    """Verify that different indentation levels for nested functions don't affect function checksum"""
+
+    def outer1():
+        def inner():
+            pass
+
+        return inner
+
+    def outer2():
+        def inner():
+            pass
+
+        return inner
+
+    # Note: the definition of outer2 below uses extra indentation for the inner function
+    def outer2_extra_indent():
+            def inner():
+                pass
+            return inner
+
+    assert checksum(outer1()) == checksum(outer2_extra_indent())

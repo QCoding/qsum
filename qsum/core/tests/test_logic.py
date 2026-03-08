@@ -37,21 +37,21 @@ def test_checkum_hex(value):
     assert checksum(value).hex() == checksum_hex(value)
 
 
-@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_invalid_type_without_allowing_unregistered():
-    _ = checksum(Custom(), allow_unregistered=False)
+    with pytest.raises(QSumInvalidTypeException):
+        checksum(Custom(), allow_unregistered=False)
 
 
-@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_invalid_type_with_allow_unregistered():
     """A non collection type that can't be checksummed will still fail"""
-    _ = checksum(Custom(), allow_unregistered=True)
+    with pytest.raises(QSumInvalidTypeException):
+        checksum(Custom(), allow_unregistered=True)
 
 
-@pytest.mark.xfail(raises=QSumInvalidTypeException, strict=True)
 def test_disable_allow_unregistered_with_valid_collection():
     """A valid custom collection will fail if allow_unregistered is set to false"""
-    _ = Checksum(CustomDict1(), allow_unregistered=False).hex()
+    with pytest.raises(QSumInvalidTypeException):
+        Checksum(CustomDict1(), allow_unregistered=False).hex()
 
 
 def test_different_unregistered_types():

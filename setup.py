@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 MAJOR = 0
-MINOR = 2
-PATCH = 2
+MINOR = 3
+PATCH = 0
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 
 
@@ -36,7 +36,7 @@ def setup_package():
             ]
         },
         classifiers=[
-            "Development Status :: 4 - Beta",
+            "Development Status :: 5 - Production/Stable",
             "Operating System :: OS Independent",
             "Programming Language :: Python",
             "Programming Language :: Python :: 3",

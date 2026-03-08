@@ -4,10 +4,10 @@ import pytest
 from qsum.core.cache import get_package_version, all_package_versions, is_sub_class, qsum_version, clear_caches
 
 
-@pytest.mark.xfail(raises=PackageNotFoundError, strict=True)
 def test_get_package_version_bad_package():
     """Validate that a bad package name raises the expected exception"""
-    get_package_version('foo')
+    with pytest.raises(PackageNotFoundError):
+        get_package_version('foo')
 
 
 def test_get_package_version_pytest():

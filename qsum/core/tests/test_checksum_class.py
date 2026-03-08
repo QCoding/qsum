@@ -74,9 +74,9 @@ def test_checksum_class_repr_eval(checksum_class):
     assert checksum_class.checksum_bytes == eval(checksum_repr).checksum_bytes  # pylint: disable=eval-used
 
 
-@pytest.mark.xfail(raises=QSumInvalidChecksum, strict=True)
 def test_checksum_non_checksum_like_object():
-    Checksum(1, is_checksum=True)
+    with pytest.raises(QSumInvalidChecksum):
+        Checksum(1, is_checksum=True)
 
 
 def test_checksum_add():
