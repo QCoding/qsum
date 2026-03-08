@@ -1,5 +1,6 @@
 import inspect
 import itertools
+import textwrap
 import types
 import typing
 
@@ -105,10 +106,14 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
 
     # handle functions (which are a mini collection of python objects themselves)
     if is_sub_class(obj_type, types.FunctionType):
-        # removing leading and trailing whitespace (note this is not a proper solution as individual lines
-        # can still have whitespace differences that cause the same function to checksum differently
-        # TODO: evenly remove whitespace from each line
-        source_code = inspect.getsource(obj).strip()
+        # removing leading and trailing whitespace and normalizing indentation so that
+        # functions with different formatting but same logic produce the same checksum
+        source_code = inspect.getsource(obj)
+        # remove common leading whitespace from each line
+        source_code = textwrap.dedent(source_code)
+        # remove trailing whitespace from each line and then strip the whole block
+        source_code = "\n".join(line.rstrip() for line in source_code.splitlines()).strip()
+
         function_attributes = obj.__dict__
         # choosing to use the module name here and not the module, but may revisit at some point or make an option
         module_name = inspect.getmodule(obj).__name__
