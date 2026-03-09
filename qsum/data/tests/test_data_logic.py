@@ -1,5 +1,6 @@
 # pylint: disable=missing-function-docstring,missing-class-docstring,too-few-public-methods
 import hashlib
+from unittest import mock
 
 import pytest
 
@@ -17,8 +18,17 @@ def test_all_data_types():
 
 def test_invalid_type():
     custom = Custom()
-    with pytest.raises(QSumInvalidDataTypeException):
+    with pytest.raises(QSumInvalidDataTypeException) as err:
         data_checksum(custom, type(custom), hash_algo=DEFAULT_HASH_ALGO)
+    assert str(err.value) == "{} is not a recognized checksummable type".format(type(custom))
+
+
+def test_data_checksum_key_error_mock():
+    """Verify that a KeyError in TYPE_TO_BYTES_FUNCTION is caught and reraised as QSumInvalidDataTypeException"""
+    with mock.patch.dict('qsum.data.data_logic.TYPE_TO_BYTES_FUNCTION', {}, clear=True):
+        with pytest.raises(QSumInvalidDataTypeException) as err:
+            data_checksum('abc', str, hash_algo=DEFAULT_HASH_ALGO)
+        assert str(err.value) == "<class 'str'> is not a recognized checksummable type"
 
 
 @pytest.mark.parametrize('checksum_obj', STR_CHECKSUM_OBJS)
