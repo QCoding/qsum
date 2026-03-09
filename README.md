@@ -1,63 +1,13 @@
 # qsum: Python checksumming toolkit
 Intuitive and extendable checksumming for python objects
 
-<table>
-<tr>
-  <td>Latest Release</td>
-  <td>
-    <a href="https://pypi.org/project/qsum/">
-    <img src="https://img.shields.io/pypi/v/qsum.svg" alt="latest pypi release" />
-    </a>
-  </td>
-</tr>
-<tr>
-  <td></td>
-  <td>
-    <a href="https://anaconda.org/conda-forge/qsum"><img src="https://img.shields.io/conda/vn/conda-forge/qsum.svg" alt="latest conda forge release"/></a>
-  </td>
-</tr>
-<tr>
-  <td>Build Status</td>
-  <td>
-    <a href="https://github.com/QCoding/qsum/actions/workflows/python-tests-pip.yml">
-      <img src="https://github.com/QCoding/qsum/actions/workflows/python-tests-pip.yml/badge.svg" alt="github build status">
-    </a>
-  </td>
-</tr>
-
-<tr>
- <td>Coverage</td>
-  <td>
-    <a href="https://codecov.io/gh/QCoding/qsum">
-    <img src="https://codecov.io/github/QCoding/qsum/coverage.svg?branch=master" alt="coverage" />
-    </a>
-  </td>
-</tr>
-<tr>
-<td>License</td>
-<td>
-  <a href="https://opensource.org/licenses/MIT">
-  <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="license" />
-  </a>
-</td>
-</tr>
-<tr>
-<td>Downloads</td>
-<td>
-  <a href="https://anaconda.org/conda-forge/qsum">
-  <img src="https://img.shields.io/conda/dn/conda-forge/qsum.svg" alt="downloads" />
-  </a>
-</td>
-</tr>
-<tr>
-<td>Platforms</td>
-<td>
-  <a href="https://anaconda.org/conda-forge/qsum">
-  <img src="https://img.shields.io/conda/pn/conda-forge/qsum.svg" alt="noarch" />
-  </a>
-</td>
-</tr>
-</table>
+[![latest pypi release](https://img.shields.io/pypi/v/qsum.svg)](https://pypi.org/project/qsum/)
+[![latest conda forge release](https://img.shields.io/conda/vn/conda-forge/qsum.svg)](https://anaconda.org/conda-forge/qsum)
+[![github build status](https://github.com/QCoding/qsum/actions/workflows/python-tests-pip.yml/badge.svg)](https://github.com/QCoding/qsum/actions/workflows/python-tests-pip.yml)
+[![coverage](https://codecov.io/github/QCoding/qsum/coverage.svg?branch=master)](https://codecov.io/gh/QCoding/qsum)
+[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![downloads](https://img.shields.io/conda/dn/conda-forge/qsum.svg)](https://anaconda.org/conda-forge/qsum)
+[![noarch](https://img.shields.io/conda/pn/conda-forge/qsum.svg)](https://anaconda.org/conda-forge/qsum)
 
 
 ## Goals
@@ -65,7 +15,7 @@ Intuitive and extendable checksumming for python objects
 * Architect a framework for implementing customized checksumming logic
 * Produce high quality checksums with extraordinarily low collision rates
 * Build a toolkit for using and manipulating checksums
-* Test it all with 100% coverage and support python 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13 and 3.14
+* Test it all with 100% coverage and support python 3.8, 3.9, 3.10, 3.11, 3.12, 3.13 and 3.14
 
 ## Where to get it
 Source code is available on github: https://github.com/QCoding
@@ -115,7 +65,7 @@ Checksum('abc').checksum_bytes
     ```
 
 ## Type Support
-* The great majority of [Built-in Types](https://docs.python.org/3.7/library/stdtypes.html) including collections are checksummable
+* The great majority of [Built-in Types](https://docs.python.org/3/library/stdtypes.html) including collections are checksummable
     * _bool, int, float, complex, str, bytes, tuple, list, dict, set, deque, etc._
 * Common types have registered type prefixes which can be used to recover the type from the checksum
 
