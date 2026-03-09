@@ -1,6 +1,7 @@
 import hashlib
 import types
 import typing
+from functools import lru_cache
 
 from qsum.core.constants import HashAlgoType, ChecksumType, CHECKSUM_CLASS_NAME
 from qsum.core.exceptions import QSumInvalidDataTypeException, QSumInvalidChecksum, QSumInvalidBytesDataType
@@ -13,6 +14,7 @@ def all_data_types():
     return TYPE_TO_BYTES_FUNCTION.keys()
 
 
+@lru_cache(maxsize=32)
 def resolve_hash_algo(hash_algo: HashAlgoType) -> typing.Callable:
     """Resolve the hash_algo to a callable function
 

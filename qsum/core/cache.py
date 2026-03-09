@@ -61,7 +61,9 @@ def qsum_version():
 
 def clear_caches():
     """Clear all qsum caches"""
+    from qsum.data.data_logic import resolve_hash_algo
     is_sub_class.cache_clear()
     get_package_version.cache_clear()
     all_package_versions.cache_clear()
     qsum_version.cache_clear()
+    resolve_hash_algo.cache_clear()
