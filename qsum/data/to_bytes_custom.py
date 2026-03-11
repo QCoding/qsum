@@ -65,14 +65,20 @@ def _file_to_bytes_generator(obj):
     org_position = obj.tell()
     # start at the beginning of the file
     obj.seek(0)
-    while True:
-        # if the file is in reading bytes mode return the bytes directly otherwise encode the string to bytes
-        # note we never read lines as the line separator should be included even when reading text files
-        chunk = obj.read(FILE_IO_CHUNK_SIZE) if obj.mode == 'rb' else obj.read(FILE_IO_CHUNK_SIZE).encode()
 
-        if len(chunk) == 0:
-            break
-        yield chunk
+    if obj.mode == 'rb':
+        while True:
+            chunk = obj.read(FILE_IO_CHUNK_SIZE)
+            if not chunk:
+                break
+            yield chunk
+    else:
+        while True:
+            chunk = obj.read(FILE_IO_CHUNK_SIZE)
+            if not chunk:
+                break
+            yield chunk.encode()
+
     # restore the original position
     obj.seek(org_position)
 
