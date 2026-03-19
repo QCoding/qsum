@@ -1,5 +1,4 @@
 import inspect
-import itertools
 import textwrap
 import types
 import typing
@@ -73,19 +72,17 @@ def _checksum(obj: typing.Any, obj_type: typing.Type, checksum_type: typing.Type
     # Handle containers with multiple objects that need to be individual checksummed and then combined
     if is_sub_class(obj_type, CONTAINER_TYPES):
         if is_sub_class(obj_type, MAPPABLE_CONTAINER_TYPES):
-            obj_types = tuple(map(type, obj))
             if is_sub_class(obj_type, tuple(UNORDERED_CONTAINER_TYPES)):
                 # compute the checksums and sort the checksums as we don't trust native python sorting across types
                 checksum_bytes = b''.join(
-                    sorted(map(_checksum, obj, obj_types, obj_types, itertools.repeat(hash_algo),
-                               itertools.repeat(allow_unregistered), itertools.repeat(None))))
+                    sorted([_checksum(item, type(item), type(item), hash_algo, allow_unregistered, None)
+                            for item in obj]))
             else:
                 # compute the checksums of the elements of the mappable collection and build up a byte array
                 # we are capturing the type and data checksums of all of the elements here
                 # container types that hit this logic should have a predicable iteration order
-                checksum_bytes = b''.join(
-                    map(_checksum, obj, obj_types, obj_types, itertools.repeat(hash_algo),
-                        itertools.repeat(allow_unregistered), itertools.repeat(None)))
+                checksum_bytes = b''.join([_checksum(item, type(item), type(item), hash_algo, allow_unregistered, None)
+                                           for item in obj])
             # let's use the container type for the type_checksum but tell the data_checksum to use the bytes logic
             prefix = type_to_prefix(checksum_type, allow_unregistered=allow_unregistered)
             # if we are using an unregistered type prefix then checksum_type needs to be included in the data checksum
